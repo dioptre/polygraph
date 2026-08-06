@@ -39,6 +39,7 @@ class AppController {
       sluttinessIndex: 0.86,
       cheatingLikelihood: 10,
       nDegrees: 4,
+      partyLoopbackPct: 40,
       condomUsageInternal: 0.0,
       condomUsageExternal: 0.90,
       condomUsageCheating: 0.1,
@@ -393,13 +394,21 @@ class AppController {
     setQ('q-input-ejaculation', 'q-val-ejaculation', p.ejaculationPct, '%');
 
     setQ('q-input-direct', 'q-val-direct', p.egoPartners);
+    setQ('q-input-newPartners', 'q-val-newPartners', p.newPartnersPerMonth);
     setQ('q-input-fluidActs', 'q-val-fluidActs', p.fluidActsPerMonth, ' Acts');
     setQ('q-input-casualActs', 'q-val-casualActs', p.casualActsInitial, ' Acts');
+    setQ('q-input-coolidgeDecayRate', 'q-val-coolidgeDecayRate', p.coolidgeDecayRate);
+    setQ('q-input-casualActsFloor', 'q-val-casualActsFloor', p.casualActsFloor, ' Acts');
 
     setQ('q-input-mono', 'q-val-mono', p.monogamousPct, '%');
     setQ('q-input-poly', 'q-val-poly', p.polyculePct, '%');
     setQ('q-input-slut', 'q-val-slut', p.slutPct, '%');
     setQ('q-input-sluttiness', 'q-val-sluttiness', Math.round(p.sluttinessIndex * 100), '%');
+    setQ('q-input-polyculeSize', 'q-val-polyculeSize', p.polyculeSize);
+    setQ('q-input-slutAvgPartners', 'q-val-slutAvgPartners', p.slutAvgPartners);
+    setQ('q-input-cheatingLikelihood', 'q-val-cheatingLikelihood', p.cheatingLikelihood, '%');
+    setQ('q-input-nDegrees', 'q-val-nDegrees', p.nDegrees, ' Steps');
+    setQ('q-input-partyLoopback', 'q-val-partyLoopback', p.partyLoopbackPct !== undefined ? p.partyLoopbackPct : 40, '%');
 
     setQ('q-input-condomInternal', 'q-val-condomInternal', Math.round(p.condomUsageInternal * 100), '%');
     setQ('q-input-condomExternal', 'q-val-condomExternal', Math.round(p.condomUsageExternal * 100), '%');
@@ -437,13 +446,21 @@ class AppController {
     p.ejaculationPct = getVal('q-input-ejaculation');
 
     p.egoPartners = getVal('q-input-direct');
+    p.newPartnersPerMonth = getVal('q-input-newPartners');
     p.fluidActsPerMonth = getVal('q-input-fluidActs');
     p.casualActsInitial = getVal('q-input-casualActs');
+    p.coolidgeDecayRate = getVal('q-input-coolidgeDecayRate');
+    p.casualActsFloor = getVal('q-input-casualActsFloor');
 
     p.monogamousPct = getVal('q-input-mono');
     p.polyculePct = getVal('q-input-poly');
     p.slutPct = getVal('q-input-slut');
     p.sluttinessIndex = getVal('q-input-sluttiness', 100);
+    p.polyculeSize = getVal('q-input-polyculeSize');
+    p.slutAvgPartners = getVal('q-input-slutAvgPartners');
+    p.cheatingLikelihood = getVal('q-input-cheatingLikelihood');
+    p.nDegrees = getVal('q-input-nDegrees');
+    p.partyLoopbackPct = getVal('q-input-partyLoopback');
 
     p.condomUsageInternal = getVal('q-input-condomInternal', 100);
     p.condomUsageExternal = getVal('q-input-condomExternal', 100);
@@ -496,12 +513,20 @@ class AppController {
       { id: 'q-input-duration', valId: 'q-val-duration', suffix: ' min' },
       { id: 'q-input-ejaculation', valId: 'q-val-ejaculation', suffix: '%' },
       { id: 'q-input-direct', valId: 'q-val-direct', suffix: '' },
+      { id: 'q-input-newPartners', valId: 'q-val-newPartners', suffix: '' },
       { id: 'q-input-fluidActs', valId: 'q-val-fluidActs', suffix: ' Acts' },
       { id: 'q-input-casualActs', valId: 'q-val-casualActs', suffix: ' Acts' },
+      { id: 'q-input-coolidgeDecayRate', valId: 'q-val-coolidgeDecayRate', suffix: '' },
+      { id: 'q-input-casualActsFloor', valId: 'q-val-casualActsFloor', suffix: ' Acts' },
       { id: 'q-input-mono', valId: 'q-val-mono', suffix: '%' },
       { id: 'q-input-poly', valId: 'q-val-poly', suffix: '%' },
       { id: 'q-input-slut', valId: 'q-val-slut', suffix: '%' },
       { id: 'q-input-sluttiness', valId: 'q-val-sluttiness', suffix: '%' },
+      { id: 'q-input-polyculeSize', valId: 'q-val-polyculeSize', suffix: '' },
+      { id: 'q-input-slutAvgPartners', valId: 'q-val-slutAvgPartners', suffix: '' },
+      { id: 'q-input-cheatingLikelihood', valId: 'q-val-cheatingLikelihood', suffix: '%' },
+      { id: 'q-input-nDegrees', valId: 'q-val-nDegrees', suffix: ' Steps' },
+      { id: 'q-input-partyLoopback', valId: 'q-val-partyLoopback', suffix: '%' },
       { id: 'q-input-condomInternal', valId: 'q-val-condomInternal', suffix: '%' },
       { id: 'q-input-condomExternal', valId: 'q-val-condomExternal', suffix: '%' }
     ];
@@ -581,6 +606,7 @@ class AppController {
       { id: 'input-sluttinessIndex', param: 'sluttinessIndex', valId: 'val-sluttinessIndex', suffix: '%', scale: 100 },
       { id: 'input-cheatingLikelihood', param: 'cheatingLikelihood', valId: 'val-cheatingLikelihood', suffix: '%' },
       { id: 'input-nDegrees', param: 'nDegrees', valId: 'val-nDegrees', suffix: ' Steps' },
+      { id: 'input-partyLoopbackPct', param: 'partyLoopbackPct', valId: 'val-partyLoopbackPct', suffix: '%' },
       { id: 'input-condomInternal', param: 'condomUsageInternal', valId: 'val-condomInternal', suffix: '%', scale: 100 },
       { id: 'input-condomExternal', param: 'condomUsageExternal', valId: 'val-condomExternal', suffix: '%', scale: 100 },
       { id: 'input-newPartners', param: 'newPartnersPerMonth', valId: 'val-newPartners', suffix: '' }
@@ -674,6 +700,20 @@ class AppController {
         reader.readAsText(file);
       }
     });
+
+    // Toggle help-icon popover on click
+    document.querySelectorAll('.help-icon').forEach(icon => {
+      icon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isActive = icon.classList.contains('active');
+        document.querySelectorAll('.help-icon').forEach(i => i.classList.remove('active'));
+        if (!isActive) icon.classList.add('active');
+      });
+    });
+
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.help-icon').forEach(i => i.classList.remove('active'));
+    });
   }
 
   syncUIWithParams() {
@@ -722,6 +762,7 @@ class AppController {
     setVal('input-sluttinessIndex', 'val-sluttinessIndex', Math.round(p.sluttinessIndex * 100), '%');
     setVal('input-cheatingLikelihood', 'val-cheatingLikelihood', p.cheatingLikelihood, '%');
     setVal('input-nDegrees', 'val-nDegrees', p.nDegrees, ' Steps');
+    setVal('input-partyLoopbackPct', 'val-partyLoopbackPct', p.partyLoopbackPct !== undefined ? p.partyLoopbackPct : 40, '%');
     setVal('input-condomInternal', 'val-condomInternal', Math.round(p.condomUsageInternal * 100), '%');
     setVal('input-condomExternal', 'val-condomExternal', Math.round(p.condomUsageExternal * 100), '%');
     setVal('input-newPartners', 'val-newPartners', p.newPartnersPerMonth);

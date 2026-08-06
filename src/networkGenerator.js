@@ -1,93 +1,76 @@
 import Graph from 'graphology';
 
-/**
- * Generates both the "Known" network and "Theoretical Extended (N Degrees)" network
- * based on user parameters.
- */
 export class NetworkGenerator {
   constructor(params = {}) {
-    this.updateParams(params);
+    this.params = params;
   }
 
   updateParams(params) {
-    this.params = {
-      egoPartners: params.egoPartners ?? 3,
-      monogamousPct: params.monogamousPct ?? 25, // % of direct partners who are monogamous
-      polyculePct: params.polyculePct ?? 50,     // % of direct partners in an ingroup polycule
-      slutPct: params.slutPct ?? 25,             // % of direct partners who are high-degree sluts
-      
-      polyculeSize: params.polyculeSize ?? 4,
-      cheatingLikelihood: params.cheatingLikelihood ?? 20, // % chance monogamous partner cheats
-      sluttinessIndex: params.sluttinessIndex ?? 0.6,       // 0 = closed polycule, 1 = completely open
-      slutAvgPartners: params.slutAvgPartners ?? 17,       // avg partners for a slut node
-      
-      condomUsageInternal: params.condomUsageInternal ?? 0.8, // 80% condom use inside polycule
-      condomUsageExternal: params.condomUsageExternal ?? 0.3, // 30% condom use outside
-      condomUsageCheating: params.condomUsageCheating ?? 0.1, // 10% condom use during cheating
-      
-      nDegrees: params.nDegrees ?? 3,               // How many degrees deep to expand
-      previewExtended: params.previewExtended ?? false, // Preview theoretical extended network toggle
-      maxNodesLimit: params.maxNodesLimit ?? 400   // Cap max visual nodes for smooth rendering
-    };
+    this.params = { ...this.params, ...params };
   }
 
+  /**
+   * Generates a Graphology network graph modeling Ego, direct partners,
+   * polycules, monogamous cheaters, and extended N-degree connections
+   * with Party Scene Triadic Closure (Loopback) dynamics.
+   */
   generateGraph() {
     const graph = new Graph({ type: 'undirected' });
     const p = this.params;
 
-    // Node counter & ID tracking
-    let nodeIdCounter = 0;
-    const createNode = (type, label, degree, extra = {}) => {
-      const id = `node_${nodeIdCounter++}`;
-      let color = '#8a2be2'; // default violet
-      let size = 8;
+    let nodeCounter = 0;
+    const maxNodes = p.maxNodesLimit || 250;
+
+    const createNode = (type, label, degree = 1, extra = {}) => {
+      nodeCounter++;
+      const id = `node_${nodeCounter}_${type}`;
+      
+      let color = '#9d4edd';
+      let size = 10;
 
       if (type === 'ego') {
-        color = '#ff2a85'; // Glowing Pink
+        color = '#ff2a85';
         size = 18;
       } else if (type === 'polycule') {
-        color = '#9d4edd'; // Purple
+        color = '#00f0ff';
         size = 12;
       } else if (type === 'monogamous') {
-        color = '#00f0ff'; // Electric Cyan
-        size = 10;
+        color = '#00ff87';
+        size = 11;
       } else if (type === 'slut') {
-        color = '#ff4757'; // Hot Coral / Red
+        color = '#ff2a85';
         size = 14;
       } else if (type === 'cheater_secret') {
-        color = '#ffa500'; // Amber
-        size = 10;
-      } else if (degree === 2) {
-        color = '#00ff87'; // Spring Green
-        size = 7;
-      } else if (degree >= 3) {
-        color = '#70a1ff'; // Light Blue / Teal
-        size = 5;
+        color = '#ff4757';
+        size = 9;
       }
 
       graph.addNode(id, {
-        label: label || `Node ${id}`,
-        nodeType: type,
-        degree: degree,
-        color: color,
-        size: size,
+        label: `${label} ${type === 'slut' ? '❤️' : ''}`,
+        relationshipType: type,
+        degree,
+        color,
+        size,
         ...extra
       });
+
       return id;
     };
 
-    const addEdge = (source, target, relationshipType, protectedRatio) => {
-      if (graph.hasEdge(source, target) || source === target) return;
+    const addEdge = (source, target, relationshipType, protectedRatio = 0.5) => {
+      if (graph.hasEdge(source, target) || graph.hasEdge(target, source)) return;
 
-      let edgeColor = '#00f0ff'; // protected default
-      let size = 2;
+      let edgeColor = '#3b82f644';
+      let size = 1.5;
 
       if (relationshipType === 'internal') {
-        edgeColor = protectedRatio > 0.5 ? '#9d4edd' : '#ff4757';
-      } else if (relationshipType === 'external') {
-        edgeColor = protectedRatio > 0.5 ? '#00f0ff' : '#ff2a85';
+        edgeColor = '#00f0ff88';
+        size = 2.5;
       } else if (relationshipType === 'cheating') {
-        edgeColor = '#ffa500';
+        edgeColor = '#ff4757aa';
+        size = 2.0;
+      } else if (relationshipType === 'external') {
+        edgeColor = '#ff2a8566';
       }
 
       graph.addEdge(source, target, {
@@ -135,7 +118,6 @@ export class NetworkGenerator {
       directPartnerNodes.push({ id: mId, type: 'monogamous' });
       addEdge(egoId, mId, 'internal', p.condomUsageInternal);
 
-      // Cheating logic: If partner cheats, add hidden outside partner link
       const isCheating = Math.random() * 100 < p.cheatingLikelihood;
       if (isCheating) {
         const secretId = createNode('cheater_secret', `Secret Hookup (Mono ${i + 1})`, 2, {
@@ -154,45 +136,58 @@ export class NetworkGenerator {
       addEdge(egoId, sId, 'external', p.condomUsageExternal);
     }
 
-    // 3. Extended Theoretical Network Expansion (Degree 2 to Degree N)
+    // 3. Extended Network Expansion with Party Scene Loopback Dynamics
+    const loopbackRatio = ((p.partyLoopbackPct !== undefined ? p.partyLoopbackPct : 40) / 100);
+
     if (p.previewExtended && p.nDegrees >= 2) {
       let currentDegreeNodes = [...directPartnerNodes.map(d => ({ ...d, degree: 1 }))];
 
       for (let degree = 2; degree <= p.nDegrees; degree++) {
-        if (graph.order >= p.maxNodesLimit) break;
+        if (graph.order >= maxNodes) break;
         const nextDegreeNodes = [];
 
         for (const parent of currentDegreeNodes) {
-          if (graph.order >= p.maxNodesLimit) break;
+          if (graph.order >= maxNodes) break;
 
-          // Branch factor depends on partner type & sluttiness index
           let numBranch = 1;
           if (parent.type === 'slut') {
             numBranch = Math.min(
               Math.round(p.slutAvgPartners * (degree === 2 ? 0.7 : 0.3)),
-              15
+              12
             );
           } else if (parent.type === 'polycule') {
             numBranch = Math.round(p.polyculeSize * p.sluttinessIndex * (3 / degree));
           } else if (parent.type === 'monogamous') {
             numBranch = Math.random() < (p.cheatingLikelihood / 100) ? 1 : 0;
           } else {
-            // Extended generic nodes
-            numBranch = Math.round(3 * p.sluttinessIndex);
+            numBranch = Math.round(2.5 * p.sluttinessIndex);
           }
 
           for (let b = 0; b < numBranch; b++) {
-            if (graph.order >= p.maxNodesLimit) break;
+            if (graph.order >= maxNodes) break;
 
-            // Mixture of node types for extended theoretical partners
+            // Party Scene Triadic Closure / Loopback: Connect to existing partner in scene
+            const candidatesForLoopback = currentDegreeNodes.filter(n => n.id !== parent.id);
+            if (candidatesForLoopback.length > 2 && Math.random() < loopbackRatio) {
+              const targetExisting = candidatesForLoopback[Math.floor(Math.random() * candidatesForLoopback.length)];
+              if (!graph.hasEdge(parent.id, targetExisting.id)) {
+                const condomRate = (parent.type === 'polycule' && targetExisting.type === 'polycule') 
+                  ? p.condomUsageInternal 
+                  : p.condomUsageExternal;
+                addEdge(parent.id, targetExisting.id, 'external', condomRate);
+                continue; // Loopback link established!
+              }
+            }
+
+            // Otherwise spawn new extended partner
             const randType = Math.random();
             let childType = 'extended';
             let label = `Deg ${degree} Partner`;
 
-            if (randType < 0.2) {
+            if (randType < 0.25) {
               childType = 'slut';
               label = `Extended Slut (Deg ${degree})`;
-            } else if (randType < 0.5) {
+            } else if (randType < 0.55) {
               childType = 'polycule';
               label = `Extended Poly (Deg ${degree})`;
             } else {
@@ -220,23 +215,24 @@ export class NetworkGenerator {
 
   /**
    * Calculates mathematical extended network node statistics
-   * (including unrendered theoretical node count up to N degrees)
+   * incorporating Party Scene Loopback / Triadic Closure saturation
    */
   calculateNetworkMetrics(graph) {
     const p = this.params;
     const egoPartners = p.egoPartners;
+    const loopbackRatio = ((p.partyLoopbackPct !== undefined ? p.partyLoopbackPct : 40) / 100);
     
-    // Average branching factor per degree
     const slutRatio = p.slutPct / 100;
     const polyRatio = p.polyculePct / 100;
     const monoRatio = p.monogamousPct / 100;
 
-    const avgDirectBranching = (slutRatio * p.slutAvgPartners) + 
-                              (polyRatio * p.polyculeSize * p.sluttinessIndex) + 
-                              (monoRatio * (1 + (p.cheatingLikelihood / 100)));
+    const rawBranching = (slutRatio * p.slutAvgPartners) + 
+                         (polyRatio * p.polyculeSize * p.sluttinessIndex) + 
+                         (monoRatio * (1 + (p.cheatingLikelihood / 100)));
 
-    // Cumulative theoretical nodes by degree
-    const theoreticalCountByDegree = [1]; // Degree 0 (Ego)
+    const avgDirectBranching = rawBranching * (1 - (loopbackRatio * 0.45));
+
+    const theoreticalCountByDegree = [1];
     let cumulativeTheoretical = 1;
 
     for (let d = 1; d <= p.nDegrees; d++) {
@@ -244,16 +240,14 @@ export class NetworkGenerator {
         theoreticalCountByDegree.push(egoPartners);
         cumulativeTheoretical += egoPartners;
       } else {
-        // Compound growth factor
         const prevCount = theoreticalCountByDegree[d - 1];
-        const effectiveBranch = Math.max(1.1, avgDirectBranching * (1 - (d * 0.12)));
+        const effectiveBranch = Math.max(0.2, avgDirectBranching * Math.pow(1 - (loopbackRatio * 0.25), d - 1));
         const degreeCount = Math.round(prevCount * effectiveBranch);
         theoreticalCountByDegree.push(degreeCount);
         cumulativeTheoretical += degreeCount;
       }
     }
 
-    // Sluttiness index formula: ratio of external sex acts to total acts
     const ingroupRatio = 1 - p.sluttinessIndex;
 
     return {
