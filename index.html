@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PolyGraph — Extended Sexual Network & STI Epidemiology Visualizer</title>
+  <meta name="description" content="Interactive network visualization and epidemiological STI transmission risk calculator for polyamorous, open, and slutty sexual networks.">
+  <script type="module" crossorigin src="./assets/index-BvT-AEn1.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Cik4ajKF.css">
+</head>
+<body>
+  <!-- Top Bar / Header -->
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-logo">PG</div>
+      <div class="brand-title">PolyGraph Viz</div>
+    </div>
+    
+    <div class="preset-controls">
+      <label for="preset-select" style="font-size: 13px; color: var(--text-muted);">Network Preset:</label>
+      <select id="preset-select" class="preset-select">
+        <option value="poly_slut_17">Polycule + 1 Slut Connector (17 Partners)</option>
+        <option value="closed_polycule">Closed Polycule of 4 (High Ingrouping)</option>
+        <option value="monogamous_cheat">Monogamous Pair (with 20% Cheating Risk)</option>
+        <option value="high_sluttiness">High Sluttiness / Open Network (80% Outgroup)</option>
+        <option value="party_scene">Festival / Party Scene (High Degree & Low Condoms)</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="app-container">
+    <!-- Left Sidebar: Parameters Panel -->
+    <aside class="sidebar-panel">
+      <!-- 1. Direct Relationship Topology -->
+      <div class="panel-section">
+        <div class="section-header">
+          <span class="section-title">⚡ Direct Partners & Types</span>
+        </div>
+        
+        <div class="control-group">
+          <div class="control-label">
+            <span>Direct Partners (Ego)</span>
+            <span id="val-egoPartners" class="val-badge">3</span>
+          </div>
+          <input type="range" id="input-egoPartners" min="1" max="15" value="3">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>% Monogamous Partners</span>
+            <span id="val-monogamousPct" class="val-badge">25%</span>
+          </div>
+          <input type="range" id="input-monogamousPct" min="0" max="100" value="25">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>% Polycule Ingroup</span>
+            <span id="val-polyculePct" class="val-badge">50%</span>
+          </div>
+          <input type="range" id="input-polyculePct" min="0" max="100" value="50">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>% High-Degree Slut / Open</span>
+            <span id="val-slutPct" class="val-badge">25%</span>
+          </div>
+          <input type="range" id="input-slutPct" min="0" max="100" value="25">
+        </div>
+      </div>
+
+      <!-- 2. Extended Network & Sluttiness Index -->
+      <div class="panel-section">
+        <div class="section-header">
+          <span class="section-title">🔥 Extended Network Parameters</span>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Polycule Size (Ingroup)</span>
+            <span id="val-polyculeSize" class="val-badge">4</span>
+          </div>
+          <input type="range" id="input-polyculeSize" min="2" max="12" value="4">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Slut Avg Partners Count</span>
+            <span id="val-slutAvgPartners" class="val-badge">17</span>
+          </div>
+          <input type="range" id="input-slutAvgPartners" min="2" max="50" value="17">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Sluttiness / Outgroup Index</span>
+            <span id="val-sluttinessIndex" class="val-badge">60%</span>
+          </div>
+          <input type="range" id="input-sluttinessIndex" min="0" max="100" value="60">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Monogamous Cheating Risk</span>
+            <span id="val-cheatingLikelihood" class="val-badge">20%</span>
+          </div>
+          <input type="range" id="input-cheatingLikelihood" min="0" max="100" value="20">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Network Depth (N Degrees)</span>
+            <span id="val-nDegrees" class="val-badge">3 Steps</span>
+          </div>
+          <input type="range" id="input-nDegrees" min="1" max="5" value="3">
+        </div>
+      </div>
+
+      <!-- 3. Condom Ratios & Prophylactics -->
+      <div class="panel-section">
+        <div class="section-header">
+          <span class="section-title">🛡️ Condom & Biomedical Protection</span>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Internal Poly Condom Rate</span>
+            <span id="val-condomInternal" class="val-badge">80%</span>
+          </div>
+          <input type="range" id="input-condomInternal" min="0" max="100" value="80">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>External Slut/Hookup Condom Rate</span>
+            <span id="val-condomExternal" class="val-badge">30%</span>
+          </div>
+          <input type="range" id="input-condomExternal" min="0" max="100" value="30">
+        </div>
+
+        <div class="control-group" style="gap: 10px; margin-top: 6px;">
+          <label class="checkbox-group">
+            <span>PrEP / U=U (HIV Risk -> 0%)</span>
+            <input type="checkbox" id="chk-prep">
+          </label>
+          <label class="checkbox-group">
+            <span>Doxy-PEP (Bacterial STI Reduction)</span>
+            <input type="checkbox" id="chk-doxypep">
+          </label>
+          <label class="checkbox-group">
+            <span>Gardasil-9 (HPV Vaccinated)</span>
+            <input type="checkbox" id="chk-hpv">
+          </label>
+          <label class="checkbox-group">
+            <span>JYNNEOS (Mpox Vaccinated)</span>
+            <input type="checkbox" id="chk-mpox">
+          </label>
+          <label class="checkbox-group">
+            <span>Hepatitis B Vaccinated</span>
+            <input type="checkbox" id="chk-hepb">
+          </label>
+        </div>
+      </div>
+
+      <!-- 4. Longitudinal Time Parameters -->
+      <div class="panel-section">
+        <div class="section-header">
+          <span class="section-title">⏳ Time Projection (Stretch Goal)</span>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>New Partners / Month</span>
+            <span id="val-newPartners" class="val-badge">0.5</span>
+          </div>
+          <input type="range" id="input-newPartners" min="0" max="5" step="0.1" value="0.5">
+        </div>
+      </div>
+    </aside>
+
+    <!-- Center Canvas Area -->
+    <main class="canvas-area">
+      <div id="sigma-container"></div>
+
+      <!-- Canvas Floating Overlay Controls -->
+      <div class="canvas-overlay">
+        <button id="btn-toggle-preview" class="btn-preview">
+          <span>👁️ Preview Extended Network (N Degrees)</span>
+        </button>
+
+        <div class="network-badge">
+          <div class="badge-item">
+            <span class="badge-dot" style="background: var(--accent-pink);"></span>
+            <span>Rendered Nodes: <strong id="stat-renderedNodes" style="color:#fff;">0</strong></span>
+          </div>
+          <div class="badge-item">
+            <span class="badge-dot" style="background: var(--accent-cyan);"></span>
+            <span>Theoretical Network (N-Deg): <strong id="stat-theoreticalTotal" style="color:var(--accent-cyan);">0</strong></span>
+          </div>
+          <div class="badge-item">
+            <span class="badge-dot" style="background: var(--accent-green);"></span>
+            <span>Branch Factor: <strong id="stat-branching" style="color:var(--accent-green);">0</strong></span>
+          </div>
+        </div>
+
+        <button id="btn-recenter" class="preset-select" style="background: var(--bg-card);">
+          🎯 Recenter Graph
+        </button>
+      </div>
+
+      <!-- Hover Tooltip -->
+      <div id="graph-tooltip" class="graph-tooltip"></div>
+    </main>
+
+    <!-- Bottom Analytics Area -->
+    <section class="analytics-area">
+      <div class="analytics-tabs">
+        <button class="tab-btn active" data-tab="tab-growth">📊 Extended Network Growth (Log Scale)</button>
+        <button class="tab-btn" data-tab="tab-sti">🦠 STI Exposure Risk Profile</button>
+        <button class="tab-btn" data-tab="tab-timeline">⏳ Longitudinal Projection (10-Yr Curve)</button>
+        <button class="tab-btn" data-tab="tab-csv">📁 Raw CSV Pathogens & Upload</button>
+      </div>
+
+      <div class="tab-content">
+        <!-- Tab 1: Growth Chart -->
+        <div id="tab-growth" class="tab-pane">
+          <div id="chart-growth" class="chart-container"></div>
+        </div>
+
+        <!-- Tab 2: STI Risk Profile -->
+        <div id="tab-sti" class="tab-pane" style="display: none;">
+          <div id="chart-sti" class="chart-container"></div>
+        </div>
+
+        <!-- Tab 3: Timeline Chart -->
+        <div id="tab-timeline" class="tab-pane" style="display: none;">
+          <div id="chart-timeline" class="chart-container"></div>
+        </div>
+
+        <!-- Tab 4: CSV Data Table & Upload -->
+        <div id="tab-csv" class="tab-pane" style="display: none;">
+          <div style="display: flex; gap: 16px; align-items: flex-start;">
+            <div style="flex: 1;">
+              <div class="sti-table-wrapper">
+                <table class="sti-table">
+                  <thead>
+                    <tr>
+                      <th>Pathogen</th>
+                      <th>Category</th>
+                      <th>Curable Status</th>
+                      <th>Receptive Vaginal/Anal Risk %</th>
+                      <th>Condom Typical Efficacy %</th>
+                    </tr>
+                  </thead>
+                  <tbody id="sti-table-body">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div style="width: 240px;">
+              <label for="csv-file-input" class="csv-upload-box">
+                📂 <strong>Upload Custom CSV</strong><br/>
+                <span style="font-size: 11px;">Drop or select a custom STI epidemiology dataset</span>
+                <input type="file" id="csv-file-input" accept=".csv" style="display: none;">
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Dashboard Panel -->
+    <aside class="dashboard-panel">
+      <div class="panel-section">
+        <div class="section-header">
+          <span class="section-title">🌐 Topology & Sluttiness Radar</span>
+        </div>
+        <div id="chart-radar" style="width: 100%; height: 220px;"></div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-header">
+          <span class="section-title">📌 Key Risk Metrics</span>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div style="background: rgba(15,23,42,0.8); padding: 12px; border-radius: 8px; border-left: 3px solid var(--accent-pink);">
+            <div style="font-size: 11px; color: var(--text-muted);">Theoretical Exposure</div>
+            <div id="metric-exposure-count" style="font-size: 18px; font-weight: 800; color: #fff;">1 Partner -> 0</div>
+          </div>
+          <div style="background: rgba(15,23,42,0.8); padding: 12px; border-radius: 8px; border-left: 3px solid var(--accent-cyan);">
+            <div style="font-size: 11px; color: var(--text-muted);">Sluttiness Ratio</div>
+            <div id="metric-sluttiness" style="font-size: 18px; font-weight: 800; color: var(--accent-cyan);">60% Outgroup</div>
+          </div>
+        </div>
+
+        <div style="background: rgba(15,23,42,0.8); padding: 12px; border-radius: 8px; border-left: 3px solid var(--accent-amber); margin-top: 10px;">
+          <div style="font-size: 11px; color: var(--text-muted);">Highest Exposure STI Risk (1 Mo)</div>
+          <div id="metric-top-sti" style="font-size: 14px; font-weight: 700; color: var(--accent-amber); margin-top: 4px;">
+            Analyzing...
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+</body>
+</html>
