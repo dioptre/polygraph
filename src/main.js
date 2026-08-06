@@ -11,17 +11,15 @@ class AppController {
     this.riskCalc = new STIRiskCalculator();
     this.chartsManager = new ChartsManager();
     this.visualizer = null;
+    this.currentQStep = 1;
 
     // Default parameters matching user's baseline setup
     this.defaultParams = {
       demographicProfile: 'hetero_mixed',
-      
-      // Session Duration & Ejaculation Parameters
       sessionDurationMin: 45,
       ejaculationPct: 47,
       exposureCurveModel: 'linear',
 
-      // Dual-Engine Partner Activity Model
       fluidActsPerMonth: 50,
       casualActsInitial: 1,
       coolidgeDecayRate: 0.2,
@@ -40,12 +38,12 @@ class AppController {
       slutAvgPartners: 6,
       sluttinessIndex: 0.86,
       cheatingLikelihood: 10,
-      nDegrees: 3,
+      nDegrees: 4,
       condomUsageInternal: 0.0,
       condomUsageExternal: 0.90,
       condomUsageCheating: 0.1,
       newPartnersPerMonth: 0.5,
-      previewExtended: false
+      previewExtended: true
     };
 
     this.defaultProphylactics = {
@@ -278,8 +276,14 @@ class AppController {
 
     // 4. Attach Event Listeners
     this.bindEvents();
+    this.bindQuestionnaireEvents();
 
-    // 5. Sync UI & Render
+    // 5. Check if user is visiting for the first time -> open questionnaire overlay
+    if (!localStorage.getItem('polygraph_onboarded')) {
+      this.openQuestionnaire();
+    }
+
+    // 6. Sync UI & Render
     this.syncUIWithParams();
     this.updateAll();
   }
@@ -292,7 +296,6 @@ class AppController {
         if (parsed.params) Object.assign(this.params, parsed.params);
         if (parsed.prophylactics) Object.assign(this.prophylactics, parsed.prophylactics);
         
-        // Sync "me" preset with loaded user profile
         this.presetConfigs.me = {
           ...this.params,
           ...this.prophylactics
@@ -306,7 +309,6 @@ class AppController {
 
   saveToLocalStorage() {
     try {
-      // Keep "me" preset in sync with user's live changes
       this.presetConfigs.me = {
         ...this.params,
         ...this.prophylactics
@@ -317,7 +319,8 @@ class AppController {
         prophylactics: this.prophylactics
       }));
 
-      // Switch preset select to "me" if custom changes are made
+      localStorage.setItem('polygraph_onboarded', 'true');
+
       const presetSelect = document.getElementById('preset-select');
       if (presetSelect && presetSelect.value !== 'me') {
         presetSelect.value = 'me';
@@ -327,11 +330,197 @@ class AppController {
     }
   }
 
+  openQuestionnaire() {
+    const overlay = document.getElementById('questionnaire-overlay');
+    if (!overlay) return;
+
+    this.syncQuestionnaireWithParams();
+    this.setQStep(1);
+    overlay.classList.add('active');
+  }
+
+  closeQuestionnaire() {
+    const overlay = document.getElementById('questionnaire-overlay');
+    if (overlay) overlay.classList.remove('active');
+  }
+
+  setQStep(step) {
+    this.currentQStep = Math.max(1, Math.min(5, step));
+
+    document.querySelectorAll('.q-step-pane').forEach(pane => {
+      pane.style.display = parseInt(pane.getAttribute('data-step')) === this.currentQStep ? 'block' : 'none';
+    });
+
+    document.querySelectorAll('.q-step-dot').forEach(dot => {
+      const dotStep = parseInt(dot.getAttribute('data-step'));
+      dot.classList.remove('active', 'completed');
+      if (dotStep === this.currentQStep) {
+        dot.classList.add('active');
+      } else if (dotStep < this.currentQStep) {
+        dot.classList.add('completed');
+      }
+    });
+
+    const btnBack = document.getElementById('btn-q-back');
+    const btnNext = document.getElementById('btn-q-next');
+
+    if (btnBack) btnBack.style.visibility = this.currentQStep > 1 ? 'visible' : 'hidden';
+    if (btnNext) {
+      btnNext.textContent = this.currentQStep === 5 ? '✨ Generate My Sexual Network' : 'Next Chapter →';
+    }
+  }
+
+  syncQuestionnaireWithParams() {
+    const p = this.params;
+    const pro = this.prophylactics;
+
+    const setQ = (id, valId, val, suffix = '') => {
+      const inp = document.getElementById(id);
+      const txt = document.getElementById(valId);
+      if (inp) inp.value = val;
+      if (txt) txt.textContent = `${val}${suffix}`;
+    };
+
+    const selDemo = document.getElementById('q-select-demographic');
+    if (selDemo) selDemo.value = p.demographicProfile;
+
+    setQ('q-input-vaginal', 'q-val-vaginal', p.pctVaginalSex, '%');
+    setQ('q-input-anal', 'q-val-anal', p.pctAnalSex, '%');
+    setQ('q-input-oral', 'q-val-oral', p.pctOralSex, '%');
+    setQ('q-input-skin', 'q-val-skin', p.pctSkinContact, '%');
+
+    setQ('q-input-duration', 'q-val-duration', p.sessionDurationMin, ' min');
+    setQ('q-input-ejaculation', 'q-val-ejaculation', p.ejaculationPct, '%');
+
+    setQ('q-input-direct', 'q-val-direct', p.egoPartners);
+    setQ('q-input-fluidActs', 'q-val-fluidActs', p.fluidActsPerMonth, ' Acts');
+    setQ('q-input-casualActs', 'q-val-casualActs', p.casualActsInitial, ' Acts');
+
+    setQ('q-input-mono', 'q-val-mono', p.monogamousPct, '%');
+    setQ('q-input-poly', 'q-val-poly', p.polyculePct, '%');
+    setQ('q-input-slut', 'q-val-slut', p.slutPct, '%');
+    setQ('q-input-sluttiness', 'q-val-sluttiness', Math.round(p.sluttinessIndex * 100), '%');
+
+    setQ('q-input-condomInternal', 'q-val-condomInternal', Math.round(p.condomUsageInternal * 100), '%');
+    setQ('q-input-condomExternal', 'q-val-condomExternal', Math.round(p.condomUsageExternal * 100), '%');
+
+    const setChk = (id, val) => {
+      const chk = document.getElementById(id);
+      if (chk) chk.checked = !!val;
+    };
+
+    setChk('q-chk-prep', pro.prepActive);
+    setChk('q-chk-doxypep', pro.doxyPepActive);
+    setChk('q-chk-hpv', pro.hpvVaccinated);
+    setChk('q-chk-hepb', pro.hepBVaccinated);
+    setChk('q-chk-mpox', pro.mpoxVaccinated);
+  }
+
+  saveQuestionnaireToParams() {
+    const p = this.params;
+    const pro = this.prophylactics;
+
+    const selDemo = document.getElementById('q-select-demographic');
+    if (selDemo) p.demographicProfile = selDemo.value;
+
+    const getVal = (id, scale = 1) => {
+      const elem = document.getElementById(id);
+      return elem ? parseFloat(elem.value) / scale : 0;
+    };
+
+    p.pctVaginalSex = getVal('q-input-vaginal');
+    p.pctAnalSex = getVal('q-input-anal');
+    p.pctOralSex = getVal('q-input-oral');
+    p.pctSkinContact = getVal('q-input-skin');
+
+    p.sessionDurationMin = getVal('q-input-duration');
+    p.ejaculationPct = getVal('q-input-ejaculation');
+
+    p.egoPartners = getVal('q-input-direct');
+    p.fluidActsPerMonth = getVal('q-input-fluidActs');
+    p.casualActsInitial = getVal('q-input-casualActs');
+
+    p.monogamousPct = getVal('q-input-mono');
+    p.polyculePct = getVal('q-input-poly');
+    p.slutPct = getVal('q-input-slut');
+    p.sluttinessIndex = getVal('q-input-sluttiness', 100);
+
+    p.condomUsageInternal = getVal('q-input-condomInternal', 100);
+    p.condomUsageExternal = getVal('q-input-condomExternal', 100);
+
+    const getChk = (id) => {
+      const elem = document.getElementById(id);
+      return elem ? elem.checked : false;
+    };
+
+    pro.prepActive = getChk('q-chk-prep');
+    pro.doxyPepActive = getChk('q-chk-doxypep');
+    pro.hpvVaccinated = getChk('q-chk-hpv');
+    pro.hepBVaccinated = getChk('q-chk-hepb');
+    pro.mpoxVaccinated = getChk('q-chk-mpox');
+
+    this.saveToLocalStorage();
+    this.syncUIWithParams();
+    this.updateAll();
+  }
+
+  bindQuestionnaireEvents() {
+    document.getElementById('btn-open-questionnaire')?.addEventListener('click', () => {
+      this.openQuestionnaire();
+    });
+
+    document.getElementById('btn-q-skip')?.addEventListener('click', () => {
+      this.closeQuestionnaire();
+      localStorage.setItem('polygraph_onboarded', 'true');
+    });
+
+    document.getElementById('btn-q-back')?.addEventListener('click', () => {
+      this.setQStep(this.currentQStep - 1);
+    });
+
+    document.getElementById('btn-q-next')?.addEventListener('click', () => {
+      if (this.currentQStep < 5) {
+        this.setQStep(this.currentQStep + 1);
+      } else {
+        this.saveQuestionnaireToParams();
+        this.closeQuestionnaire();
+      }
+    });
+
+    // Live update questionnaire badges
+    const qSliders = [
+      { id: 'q-input-vaginal', valId: 'q-val-vaginal', suffix: '%' },
+      { id: 'q-input-anal', valId: 'q-val-anal', suffix: '%' },
+      { id: 'q-input-oral', valId: 'q-val-oral', suffix: '%' },
+      { id: 'q-input-skin', valId: 'q-val-skin', suffix: '%' },
+      { id: 'q-input-duration', valId: 'q-val-duration', suffix: ' min' },
+      { id: 'q-input-ejaculation', valId: 'q-val-ejaculation', suffix: '%' },
+      { id: 'q-input-direct', valId: 'q-val-direct', suffix: '' },
+      { id: 'q-input-fluidActs', valId: 'q-val-fluidActs', suffix: ' Acts' },
+      { id: 'q-input-casualActs', valId: 'q-val-casualActs', suffix: ' Acts' },
+      { id: 'q-input-mono', valId: 'q-val-mono', suffix: '%' },
+      { id: 'q-input-poly', valId: 'q-val-poly', suffix: '%' },
+      { id: 'q-input-slut', valId: 'q-val-slut', suffix: '%' },
+      { id: 'q-input-sluttiness', valId: 'q-val-sluttiness', suffix: '%' },
+      { id: 'q-input-condomInternal', valId: 'q-val-condomInternal', suffix: '%' },
+      { id: 'q-input-condomExternal', valId: 'q-val-condomExternal', suffix: '%' }
+    ];
+
+    qSliders.forEach(item => {
+      const elem = document.getElementById(item.id);
+      if (elem) {
+        elem.addEventListener('input', (e) => {
+          const valElem = document.getElementById(item.valId);
+          if (valElem) valElem.textContent = `${e.target.value}${item.suffix}`;
+        });
+      }
+    });
+  }
+
   applyPreset(presetKey) {
     const config = this.presetConfigs[presetKey];
     if (!config) return;
 
-    // Extract prophylactics fields if present
     const proKeys = ['prepActive', 'doxyPepActive', 'hpvVaccinated', 'hepBVaccinated', 'mpoxVaccinated'];
     proKeys.forEach(k => {
       if (config[k] !== undefined) {
@@ -339,7 +528,6 @@ class AppController {
       }
     });
 
-    // Assign remaining params
     Object.keys(config).forEach(k => {
       if (!proKeys.includes(k)) {
         this.params[k] = config[k];
@@ -347,7 +535,6 @@ class AppController {
     });
 
     if (presetKey !== 'me') {
-      // Save current selection to 'me' profile
       this.saveToLocalStorage();
     }
 
@@ -356,26 +543,22 @@ class AppController {
   }
 
   bindEvents() {
-    // Preset dropdown selector
     document.getElementById('preset-select')?.addEventListener('change', (e) => {
       this.applyPreset(e.target.value);
     });
 
-    // Demographic dropdown
     document.getElementById('select-demographic')?.addEventListener('change', (e) => {
       this.params.demographicProfile = e.target.value;
       this.saveToLocalStorage();
       this.updateAll();
     });
 
-    // Exposure Curve Model dropdown
     document.getElementById('select-exposureCurve')?.addEventListener('change', (e) => {
       this.params.exposureCurveModel = e.target.value;
       this.saveToLocalStorage();
       this.updateAll();
     });
 
-    // Sliders input events
     const sliderIds = [
       { id: 'input-sessionDuration', param: 'sessionDurationMin', valId: 'val-sessionDuration', suffix: ' min' },
       { id: 'input-ejaculationPct', param: 'ejaculationPct', valId: 'val-ejaculationPct', suffix: '%' },
@@ -424,7 +607,6 @@ class AppController {
       });
     });
 
-    // Checkboxes
     const chkMap = [
       { id: 'chk-prep', key: 'prepActive' },
       { id: 'chk-doxypep', key: 'doxyPepActive' },
@@ -444,7 +626,6 @@ class AppController {
       }
     });
 
-    // Toggle Preview extended network button
     const btnPreview = document.getElementById('btn-toggle-preview');
     if (btnPreview) {
       btnPreview.addEventListener('click', () => {
@@ -461,12 +642,10 @@ class AppController {
       });
     }
 
-    // Recenter graph button
     document.getElementById('btn-recenter')?.addEventListener('click', () => {
       this.visualizer?.recenter();
     });
 
-    // Tab switching
     const tabBtns = document.querySelectorAll('.tab-btn');
     tabBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -482,7 +661,6 @@ class AppController {
       });
     });
 
-    // Custom CSV file input
     document.getElementById('csv-file-input')?.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (file) {
@@ -553,28 +731,35 @@ class AppController {
     setChk('chk-hpv', pro.hpvVaccinated);
     setChk('chk-hepb', pro.hepBVaccinated);
     setChk('chk-mpox', pro.mpoxVaccinated);
+
+    const btnPreview = document.getElementById('btn-toggle-preview');
+    if (btnPreview) {
+      if (p.previewExtended) {
+        btnPreview.classList.add('active');
+        btnPreview.innerHTML = '<span>✨ Extended N-Degree Preview Active</span>';
+      } else {
+        btnPreview.classList.remove('active');
+        btnPreview.innerHTML = '<span>👁️ Preview Extended Network (N Degrees)</span>';
+      }
+    }
   }
 
   updateAll() {
-    // 1. Generate network graph based on parameters
     this.networkGen.updateParams(this.params);
     const graph = this.networkGen.generateGraph();
     const metrics = this.networkGen.calculateNetworkMetrics(graph);
 
-    // 2. Render graph with Sigma.js
     this.visualizer.render(graph);
 
-    // 3. Calculate STI Transmission Risks & Longitudinal Curves
     const riskResults = this.riskCalc.calculateNetworkRisk(metrics, this.params, this.prophylactics);
     const longitudinalData = this.riskCalc.calculateLongitudinalRisk(riskResults, this.params, this.prophylactics);
 
-    // 4. Update ECharts Dashboard
     this.chartsManager.updateNetworkGrowth(metrics);
     this.chartsManager.updateSTIRiskProfile(riskResults);
     this.chartsManager.updateLongitudinalRisk(longitudinalData);
     this.chartsManager.updateTopologyRadar(metrics, this.params);
+    this.chartsManager.resizeAll();
 
-    // 5. Update Stat Badges & Cards
     document.getElementById('stat-renderedNodes').textContent = metrics.renderedNodes;
     document.getElementById('stat-theoreticalTotal').textContent = metrics.theoreticalTotalNodes.toLocaleString();
     document.getElementById('stat-branching').textContent = metrics.avgBranchingFactor;
@@ -604,7 +789,6 @@ class AppController {
   }
 }
 
-// Bootstrap on DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
   const app = new AppController();
   app.init();
