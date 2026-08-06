@@ -22,6 +22,7 @@
     "sigma": "^3.0.3"
   },
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "vite": "^8.2.1"
   }
 }
