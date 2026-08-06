@@ -1,6 +1,11 @@
 /**
- * Mathematical STI Risk & Epidemiology Engine
- * Calculates transmission probabilities across network depth and longitudinal timelines
+ * Enhanced Mathematical STI Risk & Demographics Epidemiology Engine
+ * Features:
+ * 1. Empirical Pathogen Population Prevalence (P_prev) across demographic groups.
+ * 2. Dual-Engine Partner Activity Model (Fluid-bonded static vs Casual Rat Satiation decay).
+ * 3. Session Duration & Exposure Curves (Logarithmic Saturation vs Linear Scaling).
+ * 4. Ejaculation / Internal Fluid Release Probability Modifiers.
+ * 5. Full Biomedical Prophylaxis Integration (PrEP/U=U, Doxy-PEP, Vaccines) across both 1-Mo and Longitudinal Timelines.
  */
 export class STIRiskCalculator {
   constructor(pathogens = []) {
@@ -12,20 +17,37 @@ export class STIRiskCalculator {
   }
 
   /**
-   * Calculates network exposure risk per STI pathogen
+   * Returns empirical baseline pathogen prevalence in the population (P_prev)
+   * based on demographic profile (MSM/TGNC, Hetero/Mixed, WSW, Kink, SF High-Risk).
    */
-  calculateNetworkRisk(networkMetrics, params, prophylactics = {}) {
-    if (!this.pathogens || this.pathogens.length === 0) return [];
+  getPrevalence(pathogen, demographicProfile) {
+    const name = pathogen.name.toLowerCase();
+    const isMSM = demographicProfile === 'msm_tgnc' || demographicProfile === 'sf_high_risk' || demographicProfile === 'kink_bdsm';
 
-    const {
-      condomUsageInternal = 0.8,
-      condomUsageExternal = 0.3,
-      condomUsageCheating = 0.1,
-      actsPerPartnerMonth = 8,
-      nDegrees = 3,
-      sluttinessIndex = 0.6
-    } = params;
+    if (name.includes('hiv')) {
+      return isMSM ? 0.12 : 0.0025; // 12% in MSM vs 0.25% in general heterosexual pop
+    }
+    if (name.includes('hsv-1')) return 0.50; // 50% adult prevalence
+    if (name.includes('hsv-2')) return isMSM ? 0.20 : 0.12; // 12-20% prevalence
+    if (name.includes('hpv')) return 0.40; // ~40% sexually active pop
+    if (name.includes('chlamydia')) return isMSM ? 0.08 : 0.035; // 3.5-8% prevalence
+    if (name.includes('gonorrhoeae')) return isMSM ? 0.05 : 0.015; // 1.5-5% prevalence
+    if (name.includes('syphilis')) return isMSM ? 0.03 : 0.003; // 0.3-3% prevalence
+    if (name.includes('hepatitis b')) return 0.004; // 0.4%
+    if (name.includes('hepatitis c')) return isMSM ? 0.02 : 0.008; // 0.8-2%
+    if (name.includes('trichomonas')) return 0.03; // 3%
+    if (name.includes('mpox')) return isMSM ? 0.005 : 0.0005; // 0.05-0.5%
+    if (name.includes('mycoplasma') || name.includes('mgen')) return 0.025; // 2.5%
+    if (name.includes('bacterial vaginosis') || name.includes('bv')) return 0.25; // 25%
+    if (name.includes('candidiasis')) return 0.20; // 20%
+    
+    return 0.01; // 1% default baseline for rare pathogens
+  }
 
+  /**
+   * Helper to get biomedical intervention risk multiplier
+   */
+  getBiomedicalMultiplier(pathogen, prophylactics = {}) {
     const {
       prepActive = false,
       doxyPepActive = false,
@@ -34,83 +56,159 @@ export class STIRiskCalculator {
       mpoxVaccinated = false
     } = prophylactics;
 
-    // Weighted average condom protection across internal & external connections
-    const avgCondomUsage = (condomUsageInternal * (1 - sluttinessIndex)) + (condomUsageExternal * sluttinessIndex);
+    const name = pathogen.name.toLowerCase();
+    const category = (pathogen.category || '').toLowerCase();
 
-    const degreeCounts = networkMetrics.theoreticalCountByDegree || [1, 3, 9, 27];
+    if (name.includes('hiv') && prepActive) {
+      return 0.001; // ~99.9% reduction with PrEP or U=U
+    }
+    if (category.includes('bacteria') && doxyPepActive) {
+      if (name.includes('chlamydia') || name.includes('syphilis')) {
+        return 0.13; // ~87% reduction
+      } else if (name.includes('gonorrhoeae')) {
+        return 0.45; // ~55% reduction
+      }
+      return 0.30;
+    }
+    if (name.includes('hpv') && hpvVaccinated) {
+      return 0.05; // Gardasil-9 protection
+    }
+    if (name.includes('hepatitis b') && hepBVaccinated) {
+      return 0.01;
+    }
+    if (name.includes('mpox') && mpoxVaccinated) {
+      return 0.15;
+    }
+
+    return 1.0;
+  }
+
+  /**
+   * Calculates network exposure risk per STI pathogen incorporating demographic profiles,
+   * act modalities, session duration, ejaculation %, pathogen prevalence, and network depth.
+   */
+  calculateNetworkRisk(networkMetrics, params, prophylactics = {}) {
+    if (!this.pathogens || this.pathogens.length === 0) return [];
+
+    const {
+      demographicProfile = 'hetero_mixed',
+      pctAnalSex = 0,
+      pctVaginalSex = 100,
+      pctOralSex = 100,
+      pctSkinContact = 100,
+
+      sessionDurationMin = 45,
+      ejaculationPct = 47,
+      exposureCurveModel = 'linear',
+      
+      fluidActsPerMonth = 50,
+      casualActsInitial = 1,
+      condomUsageInternal = 0.0,
+      condomUsageExternal = 0.90,
+      nDegrees = 3,
+      polyculePct = 100,
+      slutPct = 50,
+      monogamousPct = 32
+    } = params;
+
+    const degreeCounts = networkMetrics.theoreticalCountByDegree || [1, 2, 6, 20];
+
+    // Normalize sex act weights
+    const weightSum = (pctAnalSex + pctVaginalSex + pctOralSex + pctSkinContact) || 100;
+    const wAnal = pctAnalSex / weightSum;
+    const wVag = pctVaginalSex / weightSum;
+    const wOral = pctOralSex / weightSum;
+    const wSkin = pctSkinContact / weightSum;
+
+    // Relative weights of fluid-bonded vs casual partners
+    const partnerSum = (polyculePct + monogamousPct + slutPct) || 100;
+    const fluidRatio = (polyculePct + monogamousPct) / partnerSum;
+    const casualRatio = slutPct / partnerSum;
+
+    // Duration Multiplier (Baseline session = 20 min)
+    let mDuration = 1.0;
+    if (exposureCurveModel === 'logarithmic') {
+      mDuration = 1.0 + (0.5 * Math.log(1 + (sessionDurationMin / 20)));
+    } else {
+      mDuration = 0.5 + (0.5 * (sessionDurationMin / 20));
+    }
 
     return this.pathogens.map(pathogen => {
-      // 1. Determine baseline per-act transmission rate (%)
-      let baselineActRiskPct = Math.max(
-        pathogen.receptiveVaginal || 0,
-        pathogen.insertiveVaginal || 0,
-        pathogen.receptiveAnal || 0,
-        pathogen.insertiveAnal || 0,
-        pathogen.skinContact || 0
-      );
+      const prevalence = this.getPrevalence(pathogen, demographicProfile);
 
-      if (baselineActRiskPct <= 0) baselineActRiskPct = 2.0;
+      let pAnal = (pathogen.receptiveAnal + pathogen.insertiveAnal) / 2;
+      let pVag = (pathogen.receptiveVaginal + pathogen.insertiveVaginal) / 2;
+      let pOral = pathogen.oral || 0.5;
+      let pSkin = pathogen.skinContact || 0.5;
 
-      // 2. Apply Prophylactic Efficacies
-      let effectiveActRiskUnprotected = baselineActRiskPct / 100;
-      let effectiveActRiskProtected = (pathogen.riskCondomTypical || (baselineActRiskPct * 0.2)) / 100;
-
-      // Check Biomedical Interventions
-      let biomedicalMultiplier = 1.0;
-
-      if (pathogen.name.includes('HIV') && prepActive) {
-        biomedicalMultiplier = 0.001; // ~99.9% reduction
-      } else if (pathogen.category.includes('Bacteria') && doxyPepActive) {
-        if (pathogen.name.includes('Chlamydia') || pathogen.name.includes('Syphilis')) {
-          biomedicalMultiplier = 0.13; // ~87% reduction
-        } else if (pathogen.name.includes('gonorrhoeae')) {
-          biomedicalMultiplier = 0.45; // ~55% reduction
-        } else {
-          biomedicalMultiplier = 0.30;
+      if (demographicProfile === 'wsw_female') {
+        pAnal = 0;
+        pVag = pathogen.receptiveVaginal * 0.08;
+        if (pathogen.name.toLowerCase().includes('hiv')) {
+          pAnal = 0;
+          pVag = 0.0001;
+          pOral = 0.0001;
+          pSkin = 0;
         }
-      } else if (pathogen.name.includes('HPV') && hpvVaccinated) {
-        biomedicalMultiplier = 0.05; // vaccine protected
-      } else if (pathogen.name.includes('Hepatitis B') && hepBVaccinated) {
-        biomedicalMultiplier = 0.01;
-      } else if (pathogen.name.includes('Mpox') && mpoxVaccinated) {
-        biomedicalMultiplier = 0.15;
+      } else if (demographicProfile === 'msm_tgnc') {
+        pAnal *= 1.35;
+        pOral *= 1.2;
+      } else if (demographicProfile === 'kink_bdsm') {
+        if (pathogen.category.includes('Retrovirus') || pathogen.category.includes('Flavivirus') || pathogen.name.includes('Syphilis') || pathogen.name.includes('Mpox')) {
+          pSkin *= 1.7;
+          pAnal *= 1.4;
+        }
       }
 
+      const isFluidPathogen = pathogen.category.includes('Retrovirus') ||
+                              pathogen.category.includes('Bacteria') ||
+                              pathogen.category.includes('Diplococcus') ||
+                              pathogen.category.includes('Hepadnavirus') ||
+                              pathogen.category.includes('Protozoan');
+
+      let mFluid = 1.0;
+      if (isFluidPathogen) {
+        mFluid = ((ejaculationPct / 100) * 1.0) + (((100 - ejaculationPct) / 100) * 0.30);
+      }
+
+      const baselineWeightedActRiskPct = ((wAnal * pAnal) + (wVag * pVag) + (wOral * pOral) + (wSkin * pSkin)) * mDuration * mFluid;
+
+      let effectiveActRiskUnprotected = Math.max(0.00001, baselineWeightedActRiskPct) / 100;
+      const condomEfficacy = (pathogen.condomTypicalEfficacy || 85) / 100;
+      let effectiveActRiskProtected = effectiveActRiskUnprotected * (1 - condomEfficacy);
+
+      // Apply Biomedical Multipliers (PrEP, Doxy-PEP, Vaccines)
+      const biomedicalMultiplier = this.getBiomedicalMultiplier(pathogen, prophylactics);
       effectiveActRiskUnprotected *= biomedicalMultiplier;
       effectiveActRiskProtected *= biomedicalMultiplier;
 
-      // 3. Weighted per-act risk given condom usage
-      const weightedActRisk = (effectiveActRiskProtected * avgCondomUsage) + 
-                             (effectiveActRiskUnprotected * (1 - avgCondomUsage));
+      const pActFluid = (effectiveActRiskProtected * condomUsageInternal) + (effectiveActRiskUnprotected * (1 - condomUsageInternal));
+      const pActCasual = (effectiveActRiskProtected * condomUsageExternal) + (effectiveActRiskUnprotected * (1 - condomUsageExternal));
 
-      // 4. Calculate Risk Hops across N degrees
-      // Transmission probability for a direct partner over 1 month of sexual activity
-      const directPartner1MoRisk = 1 - Math.pow(1 - weightedActRisk, actsPerPartnerMonth);
+      const rFluidPartnerIfInfected = 1 - Math.pow(1 - pActFluid, fluidActsPerMonth);
+      const rCasualPartnerIfInfected = 1 - Math.pow(1 - pActCasual, casualActsInitial);
 
-      // Total non-transmission across network degrees
+      const directFluidTransmissionProb = rFluidPartnerIfInfected * prevalence;
+      const directCasualTransmissionProb = rCasualPartnerIfInfected * prevalence;
+
+      const compositeDirectRisk = (fluidRatio * directFluidTransmissionProb) + (casualRatio * directCasualTransmissionProb);
+      const unprotectedDirectTransmissionProb = (1 - Math.pow(1 - effectiveActRiskUnprotected, (fluidRatio * fluidActsPerMonth) + (casualRatio * casualActsInitial))) * prevalence;
+
       let overallSafetyProduct = 1.0;
-
-      for (let d = 1; d <= Math.min(nDegrees, degreeCounts.length - 1); d++) {
-        const countAtDegree = degreeCounts[d] || 0;
-        // Network attenuation per hop (distance decay)
-        const attenuation = Math.pow(0.5, d - 1);
-        const hopInfectionProb = directPartner1MoRisk * attenuation;
-
-        // Safety product for degree d nodes
-        const degreeSafety = Math.pow(1 - hopInfectionProb, countAtDegree * 0.4);
-        overallSafetyProduct *= degreeSafety;
-      }
-
-      const total1MonthRiskPct = Math.min(99.9, (1 - overallSafetyProduct) * 100);
-
-      // Unprotected baseline (without condoms or biomedical prep) for comparison
-      const unprotectedDirect1MoRisk = 1 - Math.pow(1 - (baselineActRiskPct / 100), actsPerPartnerMonth);
       let unprotectedSafetyProduct = 1.0;
+
       for (let d = 1; d <= Math.min(nDegrees, degreeCounts.length - 1); d++) {
         const countAtDegree = degreeCounts[d] || 0;
-        const hopProb = unprotectedDirect1MoRisk * Math.pow(0.5, d - 1);
-        unprotectedSafetyProduct *= Math.pow(1 - hopProb, countAtDegree * 0.4);
+        const attenuation = Math.pow(0.5, d - 1);
+
+        const protectedHopProb = compositeDirectRisk * attenuation;
+        const unprotectedHopProb = unprotectedDirectTransmissionProb * attenuation;
+
+        overallSafetyProduct *= Math.pow(1 - protectedHopProb, countAtDegree);
+        unprotectedSafetyProduct *= Math.pow(1 - unprotectedHopProb, countAtDegree);
       }
+
+      const totalProtectedRiskPct = Math.min(99.9, (1 - overallSafetyProduct) * 100);
       const totalUnprotectedRiskPct = Math.min(99.9, (1 - unprotectedSafetyProduct) * 100);
 
       return {
@@ -118,8 +216,10 @@ export class STIRiskCalculator {
         name: pathogen.name,
         category: pathogen.category,
         curable: pathogen.curable,
-        baselineActRiskPct,
-        monthlyRiskProtectedPct: parseFloat(total1MonthRiskPct.toFixed(2)),
+        sfHighRiskGroup: pathogen.sfHighRiskGroup,
+        prevalencePct: parseFloat((prevalence * 100).toFixed(2)),
+        baselineActRiskPct: parseFloat(baselineWeightedActRiskPct.toFixed(4)),
+        monthlyRiskProtectedPct: parseFloat(totalProtectedRiskPct.toFixed(2)),
         monthlyRiskUnprotectedPct: parseFloat(totalUnprotectedRiskPct.toFixed(2)),
         primaryTreatment: pathogen.primaryTreatment
       };
@@ -127,10 +227,25 @@ export class STIRiskCalculator {
   }
 
   /**
-   * Calculates longitudinal risk projections over time (1 mo, 1 yr, 5 yr, 10 yr)
-   * incorporating new partner acquisition rates and compounding network exposure
+   * Calculates longitudinal risk projections over time (1 mo to 10 yrs)
+   * incorporating biomedical prophylaxis (PrEP, Doxy-PEP, Vaccines)
    */
-  calculateLongitudinalRisk(riskResults, newPartnersPerMonth = 0.5, sluttinessIndex = 0.6) {
+  calculateLongitudinalRisk(riskResults, params = {}, prophylactics = {}) {
+    const {
+      newPartnersPerMonth = 0.5,
+      sluttinessIndex = 0.86,
+      fluidActsPerMonth = 50,
+      casualActsInitial = 1,
+      casualActsFloor = 10,
+      coolidgeDecayRate = 0.2,
+      condomUsageInternal = 0.0,
+      condomUsageExternal = 0.90,
+      sessionDurationMin = 45,
+      ejaculationPct = 47,
+      exposureCurveModel = 'linear',
+      demographicProfile = 'hetero_mixed'
+    } = params;
+
     const timepoints = [
       { label: '1 Month', months: 1 },
       { label: '6 Months', months: 6 },
@@ -140,17 +255,59 @@ export class STIRiskCalculator {
       { label: '10 Years', months: 120 }
     ];
 
-    // Select key benchmark STIs for visual timeline comparison
     const keyPathogens = riskResults.slice(0, 8);
+    const lambda = Math.max(0.01, coolidgeDecayRate);
+
+    let mDuration = 1.0;
+    if (exposureCurveModel === 'logarithmic') {
+      mDuration = 1.0 + (0.5 * Math.log(1 + (sessionDurationMin / 20)));
+    } else {
+      mDuration = 0.5 + (0.5 * (sessionDurationMin / 20));
+    }
 
     const seriesData = keyPathogens.map(pathogen => {
-      const p1Mo = pathogen.monthlyRiskProtectedPct / 100;
+      const pResult = riskResults.find(r => r.id === pathogen.id) || pathogen;
+      const prevalence = (pResult.prevalencePct || 1.0) / 100;
+      const biomedicalMultiplier = this.getBiomedicalMultiplier(pathogen, prophylactics);
+
+      let mFluid = 1.0;
+      const isFluidPathogen = pathogen.category.includes('Retrovirus') ||
+                              pathogen.category.includes('Bacteria') ||
+                              pathogen.category.includes('Diplococcus') ||
+                              pathogen.category.includes('Hepadnavirus') ||
+                              pathogen.category.includes('Protozoan');
+      if (isFluidPathogen) {
+        mFluid = ((ejaculationPct / 100) * 1.0) + (((100 - ejaculationPct) / 100) * 0.30);
+      }
+
+      const rawActRisk = ((pathogen.baselineActRiskPct || 0.05) / 100) * mDuration * mFluid * biomedicalMultiplier;
+      const condomEfficacy = (pathogen.condomTypicalEfficacy || 85) / 100;
+      
+      const pActUnprotected = rawActRisk;
+      const pActProtected = rawActRisk * (1 - condomEfficacy);
+
+      const pActFluid = (pActProtected * condomUsageInternal) + (pActUnprotected * (1 - condomUsageInternal));
+      const pActCasual = (pActProtected * condomUsageExternal) + (pActUnprotected * (1 - condomUsageExternal));
 
       const timelineValues = timepoints.map(tp => {
-        // Growth factor: compounding partner turnover
-        const partnerGrowth = 1 + (newPartnersPerMonth * tp.months * (1 + sluttinessIndex));
-        const cumulativeProb = 1 - Math.pow(1 - p1Mo, partnerGrowth);
-        return parseFloat((cumulativeProb * 100).toFixed(1));
+        const T = tp.months;
+
+        // 1. Fluid-bonded cumulative acts over T months
+        const totalFluidActs = fluidActsPerMonth * T;
+        const pFluidInfected = (1 - Math.pow(1 - pActFluid, totalFluidActs)) * prevalence;
+        const safetyFluid = 1 - pFluidInfected;
+
+        // 2. Casual cumulative acts over T months with Coolidge Satiation Decay
+        const X = newPartnersPerMonth * (1 + sluttinessIndex);
+        const totalCasualActs = (X * casualActsFloor * T) + 
+                                ((X * (casualActsInitial - casualActsFloor) / lambda) * (1 - Math.exp(-lambda * T)));
+        const pCasualInfected = (1 - Math.pow(1 - pActCasual, totalCasualActs)) * prevalence;
+        const safetyCasual = 1 - pCasualInfected;
+
+        const combinedSafety = safetyFluid * safetyCasual;
+        const cumulativeProb = 1 - combinedSafety;
+
+        return parseFloat((Math.min(0.999, cumulativeProb) * 100).toFixed(2));
       });
 
       return {

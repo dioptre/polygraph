@@ -44,9 +44,11 @@ export class ChartsManager {
       backgroundColor: 'transparent',
       tooltip: {
         trigger: 'axis',
+        confine: true,
+        extraCssText: 'z-index: 99999 !important; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);',
         formatter: '{b}: <strong>{c} Theoretical Partners</strong>'
       },
-      grid: { left: '12%', right: '8%', bottom: '15%', top: '15%' },
+      grid: { left: '8%', right: '8%', bottom: '15%', top: '20%', containLabel: true },
       xAxis: {
         type: 'category',
         data: degrees,
@@ -100,6 +102,8 @@ export class ChartsManager {
       backgroundColor: 'transparent',
       tooltip: {
         trigger: 'axis',
+        confine: true,
+        extraCssText: 'z-index: 99999 !important; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);',
         axisPointer: { type: 'shadow' },
         formatter: (params) => {
           const name = params[0].name;
@@ -115,7 +119,7 @@ export class ChartsManager {
         textStyle: { color: '#cbd5e1' },
         top: 0
       },
-      grid: { left: '28%', right: '10%', bottom: '10%', top: '15%' },
+      grid: { left: '5%', right: '8%', bottom: '10%', top: '18%', containLabel: true },
       xAxis: {
         type: 'value',
         name: 'Exposure Risk %',
@@ -165,8 +169,10 @@ export class ChartsManager {
       backgroundColor: 'transparent',
       tooltip: {
         trigger: 'axis',
+        confine: true,
+        extraCssText: 'z-index: 99999 !important; max-height: 240px; overflow-y: auto; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); padding: 12px;',
         formatter: (params) => {
-          let html = `<strong>Longitudinal Exposure Risk (${params[0].name})</strong><br/>`;
+          let html = `<strong>Longitudinal Risk (${params[0].name})</strong><br/>`;
           params.forEach(p => {
             html += `<span style="color:${p.color}">● ${p.seriesName}:</span> <strong>${p.value}%</strong><br/>`;
           });
@@ -179,7 +185,7 @@ export class ChartsManager {
         type: 'scroll',
         top: 0
       },
-      grid: { left: '10%', right: '8%', bottom: '15%', top: '22%' },
+      grid: { left: '5%', right: '8%', bottom: '15%', top: '28%', containLabel: true },
       xAxis: {
         type: 'category',
         data: longitudinalData.labels,
@@ -187,7 +193,7 @@ export class ChartsManager {
       },
       yAxis: {
         type: 'value',
-        name: 'Cumulative Transmission Risk %',
+        name: 'Cumulative Risk %',
         max: 100,
         splitLine: { lineStyle: { color: '#33415544' } }
       },
@@ -202,7 +208,10 @@ export class ChartsManager {
 
     const option = {
       backgroundColor: 'transparent',
-      tooltip: {},
+      tooltip: {
+        confine: true,
+        extraCssText: 'z-index: 99999 !important; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(255, 42, 133, 0.3); border-radius: 8px;'
+      },
       radar: {
         indicator: [
           { name: 'Sluttiness Index', max: 100 },

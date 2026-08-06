@@ -18,11 +18,13 @@
     <div class="preset-controls">
       <label for="preset-select" style="font-size: 13px; color: var(--text-muted);">Network Preset:</label>
       <select id="preset-select" class="preset-select">
+        <option value="me" selected>👤 Me (My Saved Profile)</option>
         <option value="poly_slut_17">Polycule + 1 Slut Connector (17 Partners)</option>
+        <option value="wsw_polycule">WSW Polycule (Female-to-Female Low HIV)</option>
         <option value="closed_polycule">Closed Polycule of 4 (High Ingrouping)</option>
         <option value="monogamous_cheat">Monogamous Pair (with 20% Cheating Risk)</option>
         <option value="high_sluttiness">High Sluttiness / Open Network (80% Outgroup)</option>
-        <option value="party_scene">Festival / Party Scene (High Degree & Low Condoms)</option>
+        <option value="party_scene">Festival / Kink Party Scene (High Degree & Trauma Risk)</option>
       </select>
     </div>
   </header>
@@ -31,7 +33,139 @@
   <div class="app-container">
     <!-- Left Sidebar: Parameters Panel -->
     <aside class="sidebar-panel">
-      <!-- 1. Direct Relationship Topology -->
+      <!-- 1. Demographic Profile & Sex Act Modalities -->
+      <div class="panel-section">
+        <div class="section-header">
+          <span class="section-title">👥 Demographics & Sex Acts</span>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Demographic Profile</span>
+          </div>
+          <select id="select-demographic" class="preset-select" style="width: 100%;">
+            <option value="msm_tgnc">MSM / Gay & Bisexual Men / TGNC (SF Subculture)</option>
+            <option value="wsw_female">WSW / Cisgender Women (Female-to-Female)</option>
+            <option value="hetero_mixed" selected>Heterosexual / Mixed Poly Network</option>
+            <option value="kink_bdsm">Kink / BDSM / Play Party (Trauma Multiplier)</option>
+            <option value="sf_high_risk">San Francisco High-Risk / ENM</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Anal Sex Composition %</span>
+            <span id="val-pctAnalSex" class="val-badge">0%</span>
+          </div>
+          <input type="range" id="input-pctAnalSex" min="0" max="100" value="0">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Vaginal Sex Composition %</span>
+            <span id="val-pctVaginalSex" class="val-badge">100%</span>
+          </div>
+          <input type="range" id="input-pctVaginalSex" min="0" max="100" value="100">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Oral Sex Composition %</span>
+            <span id="val-pctOralSex" class="val-badge">100%</span>
+          </div>
+          <input type="range" id="input-pctOralSex" min="0" max="100" value="100">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Skin Contact / Manual %</span>
+            <span id="val-pctSkinContact" class="val-badge">100%</span>
+          </div>
+          <input type="range" id="input-pctSkinContact" min="0" max="100" value="100">
+        </div>
+      </div>
+
+      <!-- 2. Session Duration & Ejaculation -->
+      <div class="panel-section">
+        <div class="section-header">
+          <span class="section-title">⏱️ Session Duration & Ejaculation</span>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Exposure Model Curve</span>
+          </div>
+          <select id="select-exposureCurve" class="preset-select" style="width: 100%;">
+            <option value="logarithmic">Logarithmic Saturation (Diminishing Risk)</option>
+            <option value="linear" selected>Linear Duration Scaling (Proportional)</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Session Duration (Minutes)</span>
+            <span id="val-sessionDuration" class="val-badge">45 min</span>
+          </div>
+          <input type="range" id="input-sessionDuration" min="0" max="180" step="5" value="45">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Ejaculation / Internal Fluid %</span>
+            <span id="val-ejaculationPct" class="val-badge">47%</span>
+          </div>
+          <input type="range" id="input-ejaculationPct" min="0" max="100" value="47">
+        </div>
+      </div>
+
+      <!-- 3. Dual-Engine Activity: Fluid-Bonded vs Casual Satiation -->
+      <div class="panel-section">
+        <div class="section-header">
+          <span class="section-title">🐀 Dual-Engine Partner Activity</span>
+        </div>
+
+        <!-- Fluid-Bonded Static Model -->
+        <div style="font-size: 12px; font-weight: 700; color: var(--accent-cyan); margin-bottom: 2px;">
+          1. Fluid-Bonded / Primary (Static Acts)
+        </div>
+        <div class="control-group">
+          <div class="control-label">
+            <span>Fluid Partner Sex Acts / Month</span>
+            <span id="val-fluidActsPerMonth" class="val-badge">50 Acts</span>
+          </div>
+          <input type="range" id="input-fluidActsPerMonth" min="0" max="200" value="50">
+        </div>
+
+        <!-- Casual / Slutty Rat Satiation Decay Model -->
+        <div style="font-size: 12px; font-weight: 700; color: var(--accent-pink); margin-top: 10px; margin-bottom: 2px;">
+          2. Casual / Slutty (Coolidge Satiation Model)
+        </div>
+        <div class="control-group">
+          <div class="control-label">
+            <span>Initial Novelty Acts / Month</span>
+            <span id="val-casualActsInitial" class="val-badge">1 Acts</span>
+          </div>
+          <input type="range" id="input-casualActsInitial" min="0" max="50" value="1">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Satiation Decay Rate (λ)</span>
+            <span id="val-coolidgeDecayRate" class="val-badge">0.2</span>
+          </div>
+          <input type="range" id="input-coolidgeDecayRate" min="0" max="1.0" step="0.05" value="0.2">
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Habituation Floor Acts / Month</span>
+            <span id="val-casualActsFloor" class="val-badge">10 Acts</span>
+          </div>
+          <input type="range" id="input-casualActsFloor" min="0" max="10" value="10">
+        </div>
+      </div>
+
+      <!-- 4. Direct Relationship Topology -->
       <div class="panel-section">
         <div class="section-header">
           <span class="section-title">⚡ Direct Partners & Types</span>
@@ -39,38 +173,38 @@
         
         <div class="control-group">
           <div class="control-label">
-            <span>Direct Partners (Ego)</span>
-            <span id="val-egoPartners" class="val-badge">3</span>
+            <span>Direct Partners (Degree 1)</span>
+            <span id="val-egoPartners" class="val-badge">2</span>
           </div>
-          <input type="range" id="input-egoPartners" min="1" max="15" value="3">
+          <input type="range" id="input-egoPartners" min="0" max="50" value="2">
         </div>
 
         <div class="control-group">
           <div class="control-label">
             <span>% Monogamous Partners</span>
-            <span id="val-monogamousPct" class="val-badge">25%</span>
+            <span id="val-monogamousPct" class="val-badge">32%</span>
           </div>
-          <input type="range" id="input-monogamousPct" min="0" max="100" value="25">
+          <input type="range" id="input-monogamousPct" min="0" max="100" value="32">
         </div>
 
         <div class="control-group">
           <div class="control-label">
             <span>% Polycule Ingroup</span>
-            <span id="val-polyculePct" class="val-badge">50%</span>
+            <span id="val-polyculePct" class="val-badge">100%</span>
           </div>
-          <input type="range" id="input-polyculePct" min="0" max="100" value="50">
+          <input type="range" id="input-polyculePct" min="0" max="100" value="100">
         </div>
 
         <div class="control-group">
           <div class="control-label">
-            <span>% High-Degree Slut / Open</span>
-            <span id="val-slutPct" class="val-badge">25%</span>
+            <span style="color: var(--accent-red); font-weight: 600;">❤️ % High-Degree Slut / Open</span>
+            <span id="val-slutPct" class="val-badge">50%</span>
           </div>
-          <input type="range" id="input-slutPct" min="0" max="100" value="25">
+          <input type="range" id="input-slutPct" min="0" max="100" value="50">
         </div>
       </div>
 
-      <!-- 2. Extended Network & Sluttiness Index -->
+      <!-- 5. Extended Network & Sluttiness Index -->
       <div class="panel-section">
         <div class="section-header">
           <span class="section-title">🔥 Extended Network Parameters</span>
@@ -79,33 +213,33 @@
         <div class="control-group">
           <div class="control-label">
             <span>Polycule Size (Ingroup)</span>
-            <span id="val-polyculeSize" class="val-badge">4</span>
+            <span id="val-polyculeSize" class="val-badge">7</span>
           </div>
-          <input type="range" id="input-polyculeSize" min="2" max="12" value="4">
+          <input type="range" id="input-polyculeSize" min="0" max="12" value="7">
         </div>
 
         <div class="control-group">
           <div class="control-label">
             <span>Slut Avg Partners Count</span>
-            <span id="val-slutAvgPartners" class="val-badge">17</span>
+            <span id="val-slutAvgPartners" class="val-badge">6</span>
           </div>
-          <input type="range" id="input-slutAvgPartners" min="2" max="50" value="17">
+          <input type="range" id="input-slutAvgPartners" min="0" max="50" value="6">
         </div>
 
         <div class="control-group">
           <div class="control-label">
             <span>Sluttiness / Outgroup Index</span>
-            <span id="val-sluttinessIndex" class="val-badge">60%</span>
+            <span id="val-sluttinessIndex" class="val-badge">86%</span>
           </div>
-          <input type="range" id="input-sluttinessIndex" min="0" max="100" value="60">
+          <input type="range" id="input-sluttinessIndex" min="0" max="100" value="86">
         </div>
 
         <div class="control-group">
           <div class="control-label">
             <span>Monogamous Cheating Risk</span>
-            <span id="val-cheatingLikelihood" class="val-badge">20%</span>
+            <span id="val-cheatingLikelihood" class="val-badge">10%</span>
           </div>
-          <input type="range" id="input-cheatingLikelihood" min="0" max="100" value="20">
+          <input type="range" id="input-cheatingLikelihood" min="0" max="100" value="10">
         </div>
 
         <div class="control-group">
@@ -113,11 +247,11 @@
             <span>Network Depth (N Degrees)</span>
             <span id="val-nDegrees" class="val-badge">3 Steps</span>
           </div>
-          <input type="range" id="input-nDegrees" min="1" max="5" value="3">
+          <input type="range" id="input-nDegrees" min="0" max="5" value="3">
         </div>
       </div>
 
-      <!-- 3. Condom Ratios & Prophylactics -->
+      <!-- 6. Condom Ratios & Prophylactics -->
       <div class="panel-section">
         <div class="section-header">
           <span class="section-title">🛡️ Condom & Biomedical Protection</span>
@@ -126,17 +260,17 @@
         <div class="control-group">
           <div class="control-label">
             <span>Internal Poly Condom Rate</span>
-            <span id="val-condomInternal" class="val-badge">80%</span>
+            <span id="val-condomInternal" class="val-badge">0%</span>
           </div>
-          <input type="range" id="input-condomInternal" min="0" max="100" value="80">
+          <input type="range" id="input-condomInternal" min="0" max="100" value="0">
         </div>
 
         <div class="control-group">
           <div class="control-label">
             <span>External Slut/Hookup Condom Rate</span>
-            <span id="val-condomExternal" class="val-badge">30%</span>
+            <span id="val-condomExternal" class="val-badge">90%</span>
           </div>
-          <input type="range" id="input-condomExternal" min="0" max="100" value="30">
+          <input type="range" id="input-condomExternal" min="0" max="100" value="90">
         </div>
 
         <div class="control-group" style="gap: 10px; margin-top: 6px;">
@@ -150,7 +284,7 @@
           </label>
           <label class="checkbox-group">
             <span>Gardasil-9 (HPV Vaccinated)</span>
-            <input type="checkbox" id="chk-hpv">
+            <input type="checkbox" id="chk-hpv" checked>
           </label>
           <label class="checkbox-group">
             <span>JYNNEOS (Mpox Vaccinated)</span>
@@ -158,15 +292,15 @@
           </label>
           <label class="checkbox-group">
             <span>Hepatitis B Vaccinated</span>
-            <input type="checkbox" id="chk-hepb">
+            <input type="checkbox" id="chk-hepb" checked>
           </label>
         </div>
       </div>
 
-      <!-- 4. Longitudinal Time Parameters -->
+      <!-- 7. Longitudinal Time Parameters -->
       <div class="panel-section">
         <div class="section-header">
-          <span class="section-title">⏳ Time Projection (Stretch Goal)</span>
+          <span class="section-title">⏳ Time Projection</span>
         </div>
 
         <div class="control-group">
@@ -174,7 +308,7 @@
             <span>New Partners / Month</span>
             <span id="val-newPartners" class="val-badge">0.5</span>
           </div>
-          <input type="range" id="input-newPartners" min="0" max="5" step="0.1" value="0.5">
+          <input type="range" id="input-newPartners" min="0" max="50" step="0.5" value="0.5">
         </div>
       </div>
     </aside>
@@ -249,7 +383,7 @@
                       <th>Pathogen</th>
                       <th>Category</th>
                       <th>Curable Status</th>
-                      <th>Receptive Vaginal/Anal Risk %</th>
+                      <th>SF High Risk Group</th>
                       <th>Condom Typical Efficacy %</th>
                     </tr>
                   </thead>
@@ -293,7 +427,7 @@
           </div>
           <div style="background: rgba(15,23,42,0.8); padding: 12px; border-radius: 8px; border-left: 3px solid var(--accent-cyan);">
             <div style="font-size: 11px; color: var(--text-muted);">Sluttiness Ratio</div>
-            <div id="metric-sluttiness" style="font-size: 18px; font-weight: 800; color: var(--accent-cyan);">60% Outgroup</div>
+            <div id="metric-sluttiness" style="font-size: 18px; font-weight: 800; color: var(--accent-cyan);">86% Outgroup</div>
           </div>
         </div>
 

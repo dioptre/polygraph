@@ -102,9 +102,10 @@ export class NetworkGenerator {
     const egoId = createNode('ego', 'Ego (You)', 0);
 
     // 2. Determine Direct Partner Allocations (Degree 1)
-    const totalPartners = Math.max(1, p.egoPartners);
-    const numMono = Math.round((p.monogamousPct / 100) * totalPartners);
-    const numSlut = Math.round((p.slutPct / 100) * totalPartners);
+    const totalPartners = Math.max(0, p.egoPartners);
+    const partnerSum = (p.polyculePct + p.monogamousPct + p.slutPct) || 100;
+    const numMono = Math.round((p.monogamousPct / partnerSum) * totalPartners);
+    const numSlut = Math.round((p.slutPct / partnerSum) * totalPartners);
     const numPoly = Math.max(0, totalPartners - numMono - numSlut);
 
     const directPartnerNodes = [];

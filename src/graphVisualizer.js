@@ -113,7 +113,7 @@ export class GraphVisualizer {
     if (attrs.nodeType === 'ego') typeName = 'Ego (Central You)';
     else if (attrs.nodeType === 'polycule') typeName = 'Polycule Ingroup Member';
     else if (attrs.nodeType === 'monogamous') typeName = 'Monogamous Partner';
-    else if (attrs.nodeType === 'slut') typeName = 'High-Degree Slut / Open Connector';
+    else if (attrs.nodeType === 'slut') typeName = '❤️ High-Degree Slut / Open Connector';
     else if (attrs.nodeType === 'cheater_secret') typeName = 'Secret / Cheating Hookup';
     else if (attrs.nodeType === 'extended') typeName = `Theoretical Extended Partner (Degree ${attrs.degree})`;
 
