@@ -1,4 +1,4 @@
-name: Deploy PolyGraph to GitHub Pages
+name: Build and Deploy PolyGraph to GitHub Pages
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -36,6 +36,12 @@ jobs:
       - name: Build Web Application
         run: npm run build
 
+      - name: Deploy to gh-pages Branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v4
 
@@ -44,6 +50,6 @@ jobs:
         with:
           path: './dist'
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages (Actions Native)
         id: deployment
         uses: actions/deploy-pages@v4
