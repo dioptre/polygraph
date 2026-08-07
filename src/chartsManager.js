@@ -6,21 +6,30 @@ export class ChartsManager {
     this.stiRiskChart = null;
     this.longitudinalChart = null;
     this.topologyRadarChart = null;
+    this.resizeObservers = [];
   }
 
   init(containers) {
-    if (containers.growth) {
-      this.networkGrowthChart = echarts.init(containers.growth, 'dark');
-    }
-    if (containers.risk) {
-      this.stiRiskChart = echarts.init(containers.risk, 'dark');
-    }
-    if (containers.longitudinal) {
-      this.longitudinalChart = echarts.init(containers.longitudinal, 'dark');
-    }
-    if (containers.radar) {
-      this.topologyRadarChart = echarts.init(containers.radar, 'dark');
-    }
+    const initChartWithObserver = (container) => {
+      if (!container) return null;
+      const chart = echarts.init(container, 'dark');
+
+      if (typeof ResizeObserver !== 'undefined') {
+        const ro = new ResizeObserver(() => {
+          if (container.clientWidth > 0 && container.clientHeight > 0) {
+            chart.resize();
+          }
+        });
+        ro.observe(container);
+        this.resizeObservers.push(ro);
+      }
+      return chart;
+    };
+
+    if (containers.growth) this.networkGrowthChart = initChartWithObserver(containers.growth);
+    if (containers.risk) this.stiRiskChart = initChartWithObserver(containers.risk);
+    if (containers.longitudinal) this.longitudinalChart = initChartWithObserver(containers.longitudinal);
+    if (containers.radar) this.topologyRadarChart = initChartWithObserver(containers.radar);
 
     window.addEventListener('resize', () => {
       this.resizeAll();
@@ -85,7 +94,8 @@ export class ChartsManager {
       ]
     };
 
-    this.networkGrowthChart.setOption(option);
+    this.networkGrowthChart.setOption(option, true);
+    this.networkGrowthChart.resize();
   }
 
   updateSTIRiskProfile(riskResults) {
@@ -102,67 +112,72 @@ export class ChartsManager {
       backgroundColor: 'transparent',
       tooltip: {
         trigger: 'axis',
-        confine: true,
-        extraCssText: 'z-index: 99999 !important; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);',
         axisPointer: { type: 'shadow' },
+        confine: true,
+        extraCssText: 'z-index: 99999 !important; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px;',
         formatter: (params) => {
-          const name = params[0].name;
-          const prot = params.find(p => p.seriesName === 'With Condoms / Protection')?.value || 0;
-          const unprot = params.find(p => p.seriesName === 'Unprotected Baseline')?.value || 0;
-          return `<strong>${name}</strong><br/>
-                  <span style="color:#00f0ff">Protected 1-Mo Exposure:</span> <strong>${prot}%</strong><br/>
-                  <span style="color:#ff4757">Unprotected Baseline:</span> <strong>${unprot}%</strong>`;
+          let html = `<strong>${params[0].name}</strong><br/>`;
+          params.forEach(p => {
+            html += `${p.marker} ${p.seriesName}: <strong>${p.value.toFixed(2)}%</strong><br/>`;
+          });
+          return html;
         }
       },
       legend: {
-        data: ['With Condoms / Protection', 'Unprotected Baseline'],
+        data: ['Protected Risk (With Condoms)', 'Unprotected Baseline Risk'],
         textStyle: { color: '#cbd5e1' },
         top: 0
       },
-      grid: { left: '5%', right: '8%', bottom: '10%', top: '18%', containLabel: true },
+      grid: { left: '3%', right: '8%', bottom: '5%', top: '15%', containLabel: true },
       xAxis: {
         type: 'value',
-        name: 'Exposure Risk %',
+        name: '1-Mo Exposure Risk (%)',
         max: 100,
         axisLine: { lineStyle: { color: '#64748b' } },
-        splitLine: { lineStyle: { color: '#33415544' } }
+        splitLine: { lineStyle: { color: '#33415544' } },
+        axisLabel: { color: '#cbd5e1' }
       },
       yAxis: {
         type: 'category',
         data: names,
-        axisLabel: { color: '#e2e8f0', fontSize: 11 }
+        axisLine: { lineStyle: { color: '#64748b' } },
+        axisLabel: { color: '#cbd5e1', fontSize: 11 }
       },
       series: [
         {
-          name: 'With Condoms / Protection',
+          name: 'Protected Risk (With Condoms)',
           type: 'bar',
           data: protectedRisk,
-          itemStyle: { color: '#00f0ff', borderRadius: [0, 4, 4, 0] }
+          itemStyle: { color: '#00f0ff', borderRadius: [0, 4, 4, 0] },
+          label: {
+            show: true,
+            position: 'right',
+            color: '#00f0ff',
+            formatter: '{c}%'
+          }
         },
         {
-          name: 'Unprotected Baseline',
+          name: 'Unprotected Baseline Risk',
           type: 'bar',
           data: unprotectedRisk,
-          itemStyle: { color: '#ff475755', borderRadius: [0, 4, 4, 0] }
+          itemStyle: { color: '#ff2a8566', borderRadius: [0, 4, 4, 0] }
         }
       ]
     };
 
-    this.stiRiskChart.setOption(option);
+    this.stiRiskChart.setOption(option, true);
+    this.stiRiskChart.resize();
   }
 
-  updateLongitudinalRisk(longitudinalData) {
+  updateLongitudinalProjection(longitudinalData) {
     if (!this.longitudinalChart) return;
 
-    const colors = ['#ff2a85', '#00f0ff', '#00ff87', '#ffa500', '#9d4edd', '#eccc68', '#70a1ff', '#ff6b81'];
-
-    const series = longitudinalData.series.map((item, idx) => ({
-      name: item.name,
+    const series = longitudinalData.series.map(s => ({
+      name: s.name,
       type: 'line',
       smooth: true,
-      data: item.data,
-      lineStyle: { width: 3, color: colors[idx % colors.length] },
-      symbolSize: 6
+      data: s.data,
+      lineStyle: { width: s.name.includes('HIV') ? 3 : 2 }
     }));
 
     const option = {
@@ -170,11 +185,11 @@ export class ChartsManager {
       tooltip: {
         trigger: 'axis',
         confine: true,
-        extraCssText: 'z-index: 99999 !important; max-height: 240px; overflow-y: auto; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); padding: 12px;',
+        extraCssText: 'z-index: 99999 !important; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px;',
         formatter: (params) => {
-          let html = `<strong>Longitudinal Risk (${params[0].name})</strong><br/>`;
+          let html = `<strong>${params[0].name}</strong><br/>`;
           params.forEach(p => {
-            html += `<span style="color:${p.color}">● ${p.seriesName}:</span> <strong>${p.value}%</strong><br/>`;
+            html += `${p.marker} ${p.seriesName}: <strong>${p.value.toFixed(2)}%</strong><br/>`;
           });
           return html;
         }
@@ -200,7 +215,8 @@ export class ChartsManager {
       series: series
     };
 
-    this.longitudinalChart.setOption(option);
+    this.longitudinalChart.setOption(option, true);
+    this.longitudinalChart.resize();
   }
 
   updateTopologyRadar(metrics, params) {
@@ -250,6 +266,7 @@ export class ChartsManager {
       ]
     };
 
-    this.topologyRadarChart.setOption(option);
+    this.topologyRadarChart.setOption(option, true);
+    this.topologyRadarChart.resize();
   }
 }

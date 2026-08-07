@@ -287,6 +287,12 @@ class AppController {
     // 6. Sync UI & Render
     this.syncUIWithParams();
     this.updateAll();
+
+    requestAnimationFrame(() => {
+      this.chartsManager.resizeAll();
+    });
+    setTimeout(() => this.chartsManager.resizeAll(), 100);
+    setTimeout(() => this.chartsManager.resizeAll(), 400);
   }
 
   loadFromLocalStorage() {
