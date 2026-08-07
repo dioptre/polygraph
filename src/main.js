@@ -940,6 +940,16 @@ class AppController {
 
         if (progressContainer) progressContainer.style.display = 'none';
         if (resultsSection) resultsSection.style.display = 'block';
+
+        setTimeout(() => {
+          const qBody = document.querySelector('#optimizer-overlay .q-body');
+          if (qBody) {
+            qBody.scrollTo({
+              top: qBody.scrollHeight,
+              behavior: 'smooth'
+            });
+          }
+        }, 50);
       }
     }, 80);
   }
