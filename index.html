@@ -6,7 +6,7 @@
   <title>Your PolyGraph StarChart — Extended Sexual Network & STI Epidemiology Visualizer</title>
   <meta name="description" content="Interactive network visualization and epidemiological STI transmission risk calculator for polyamorous, open, and slutty sexual networks.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
-  <script type="module" crossorigin src="./assets/index-NoMDRP9s.js"></script>
+  <script type="module" crossorigin src="./assets/index-BX2cP9Ql.js"></script>
   <link rel="stylesheet" crossorigin href="./assets/index-C5VFWmKm.css">
 </head>
 <body>
@@ -52,90 +52,93 @@
       </div>
 
       <div class="q-body" style="padding: 20px 30px; overflow-y: auto; max-height: 70vh;">
-        <!-- Section 1: Partner Risk Budget Constraints -->
-        <div style="font-size: 14px; font-weight: 700; color: #10b981; margin-bottom: 8px;">
-          1. Your Primary Partner's Risk Budget Constraints
-        </div>
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; background: rgba(15,23,42,0.6); padding: 14px; border-radius: 10px; border: 1px solid var(--border-glass);">
-          <div class="control-group">
-            <label class="control-label">Max Antibiotic Course Frequency:</label>
-            <select id="opt-select-antibioticFreq" class="preset-select" style="width: 100%;">
-              <option value="0.5">At most 1 course per 6 Months (~16.6% risk budget)</option>
-              <option value="1.0" selected>At most 1 course per 1 Year (~8.3% risk budget)</option>
-              <option value="2.0">At most 1 course per 2 Years (~4.1% risk budget)</option>
-              <option value="5.0">At most 1 course per 5 Years (~1.6% risk budget)</option>
-            </select>
-          </div>
-
-          <div class="control-group">
-            <label class="control-label">HIV / Incurable STI Policy:</label>
-            <select id="opt-select-hivPolicy" class="preset-select" style="width: 100%;">
-              <option value="strict_zero" selected>Strict Zero HIV (PrEP / U=U Mandatory)</option>
-              <option value="low_risk">Ultra-Low Risk (&lt; 0.05% monthly)</option>
-            </select>
-          </div>
-
-          <div class="control-group">
-            <div class="control-label"><span>Target Polycule Size (Ingroup):</span><span id="opt-val-polySize" class="val-badge">7</span></div>
-            <input type="range" id="opt-input-polySize" min="2" max="25" value="7" oninput="document.getElementById('opt-val-polySize').textContent = this.value">
-          </div>
-
-          <div class="control-group">
-            <div class="control-label"><span>Your Polycule Loyalty % (Ingroup Intimacy):</span><span id="opt-val-minPoly" class="val-badge">40%</span></div>
-            <input type="range" id="opt-input-minPoly" min="0" max="100" value="40" oninput="document.getElementById('opt-val-minPoly').textContent = this.value + '%'">
-            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Minimum share of your bedroom sessions reserved for your trusted inner polycule.</div>
-          </div>
-
-          <div class="control-group" style="grid-column: span 2;">
-            <label class="checkbox-group">
-              <span>Allow Bareback / Condomless Intimacy in Internal Polycule</span>
-              <input type="checkbox" id="opt-chk-barebackPoly" checked>
-            </label>
-          </div>
-        </div>
-
-        <!-- Section 2: Your Hedonic Intimacy Preferences -->
-        <div style="font-size: 14px; font-weight: 700; color: var(--accent-pink); margin-top: 18px; margin-bottom: 8px;">
-          2. Your Hedonic Fulfillment Preferences (Weights)
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; background: rgba(15,23,42,0.6); padding: 14px; border-radius: 10px; border: 1px solid var(--border-glass);">
-          <div class="control-group">
-            <div class="control-label"><span>Polycule Intimacy Weight</span><span id="opt-val-wPoly" class="val-badge">10</span></div>
-            <input type="range" id="opt-input-wPoly" min="1" max="20" value="10" oninput="document.getElementById('opt-val-wPoly').textContent = this.value">
-          </div>
-          <div class="control-group">
-            <div class="control-label"><span>Sex Party / Subculture Weight</span><span id="opt-val-wParty" class="val-badge">7</span></div>
-            <input type="range" id="opt-input-wParty" min="1" max="20" value="7" oninput="document.getElementById('opt-val-wParty').textContent = this.value">
-          </div>
-          <div class="control-group">
-            <div class="control-label"><span>New Flame Orbit Weight</span><span id="opt-val-wNew" class="val-badge">5</span></div>
-            <input type="range" id="opt-input-wNew" min="1" max="20" value="5" oninput="document.getElementById('opt-val-wNew').textContent = this.value">
-          </div>
-          <div class="control-group">
-            <div class="control-label"><span>Total Encounter Volume Weight</span><span id="opt-val-wTotal" class="val-badge">3</span></div>
-            <input type="range" id="opt-input-wTotal" min="1" max="20" value="3" oninput="document.getElementById('opt-val-wTotal').textContent = this.value">
-          </div>
-        </div>
-
-        <!-- Run Optimization CTA -->
-        <div style="margin-top: 20px; text-align: center;">
-          <button id="btn-run-optimization" class="btn-preview" style="background: linear-gradient(135deg, #10b981, var(--accent-pink)); width: 100%; padding: 14px; font-size: 15px; font-weight: 800;">
-            🚀 Run Monte Carlo Risk-Frontier Optimizer (5,000 Runs)
+        <div id="opt-inputs-summary" style="display: none; margin-bottom: 14px; background: rgba(15,23,42,0.8); padding: 10px 16px; border-radius: 8px; border: 1px solid rgba(16,185,129,0.4); justify-content: space-between; align-items: center;">
+          <span style="font-size: 12px; color: #10b981; font-weight: 700;">✓ Evaluated 5,000 Sexual Network Configurations</span>
+          <button type="button" style="background: rgba(255,255,255,0.1); border: 1px solid var(--border-glass); color: #fff; padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer;" onclick="const c = document.getElementById('opt-inputs-container'); c.style.display = c.style.display === 'none' ? 'block' : 'none';">
+            ⚙ Edit Inputs & Rerun
           </button>
+        </div>
+
+        <div id="opt-inputs-container">
+          <!-- Section 1: Partner Risk Budget Constraints -->
+          <div style="font-size: 14px; font-weight: 700; color: #10b981; margin-bottom: 8px;">
+            1. Your Primary Partner's Risk Budget Constraints
+          </div>
           
-          <div id="opt-progress-container" style="display: none; margin-top: 12px;">
-            <div style="font-size: 12px; color: var(--accent-cyan); margin-bottom: 4px;">Evaluating 5,000 Sexual Network Configurations...</div>
-            <div style="width: 100%; height: 8px; background: #1e293b; border-radius: 4px; overflow: hidden;">
-              <div id="opt-progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #10b981, var(--accent-cyan)); transition: width 0.1s;"></div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; background: rgba(15,23,42,0.6); padding: 14px; border-radius: 10px; border: 1px solid var(--border-glass);">
+            <div class="control-group">
+              <label class="control-label">Max Antibiotic Course Frequency:</label>
+              <select id="opt-select-antibioticFreq" class="preset-select" style="width: 100%;">
+                <option value="0.5">At most 1 course per 6 Months (~16.6% risk budget)</option>
+                <option value="1.0" selected>At most 1 course per 1 Year (~8.3% risk budget)</option>
+                <option value="2.0">At most 1 course per 2 Years (~4.1% risk budget)</option>
+                <option value="5.0">At most 1 course per 5 Years (~1.6% risk budget)</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">HIV / Incurable STI Policy:</label>
+              <select id="opt-select-hivPolicy" class="preset-select" style="width: 100%;">
+                <option value="strict_zero" selected>Strict Zero HIV (PrEP / U=U Mandatory)</option>
+                <option value="low_risk">Ultra-Low Risk (&lt; 0.05% monthly)</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <div class="control-label"><span>Target Polycule Size (Ingroup):</span><span id="opt-val-polySize" class="val-badge">7</span></div>
+              <input type="range" id="opt-input-polySize" min="2" max="25" value="7" oninput="document.getElementById('opt-val-polySize').textContent = this.value">
+            </div>
+
+            <div class="control-group">
+              <div class="control-label"><span>Your Polycule Loyalty % (Ingroup Intimacy):</span><span id="opt-val-minPoly" class="val-badge">40%</span></div>
+              <input type="range" id="opt-input-minPoly" min="0" max="100" value="40" oninput="document.getElementById('opt-val-minPoly').textContent = this.value + '%'">
+              <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Minimum share of your bedroom sessions reserved for your trusted inner polycule.</div>
+            </div>
+
+            <div class="control-group" style="grid-column: span 2;">
+              <label class="checkbox-group">
+                <span>Allow Bareback / Condomless Intimacy in Internal Polycule</span>
+                <input type="checkbox" id="opt-chk-barebackPoly" checked>
+              </label>
             </div>
           </div>
 
-          <div id="opt-scroll-jump" style="display: none; margin-top: 10px; text-align: center;">
-            <button class="btn-preset" style="background: rgba(16,185,129,0.2); border: 1px solid #10b981; color: #10b981; padding: 6px 14px; font-size: 12px; font-weight: 700; border-radius: 6px; cursor: pointer;" onclick="const r = document.getElementById('opt-results-section'); if(r) r.scrollIntoView({ behavior: 'smooth', block: 'start' });">
-              👇 View Tier 1, 2, 3 Optimization Results
+          <!-- Section 2: Your Hedonic Intimacy Preferences -->
+          <div style="font-size: 14px; font-weight: 700; color: var(--accent-pink); margin-top: 18px; margin-bottom: 8px;">
+            2. Your Hedonic Fulfillment Preferences (Weights)
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; background: rgba(15,23,42,0.6); padding: 14px; border-radius: 10px; border: 1px solid var(--border-glass);">
+            <div class="control-group">
+              <div class="control-label"><span>Polycule Intimacy Weight</span><span id="opt-val-wPoly" class="val-badge">10</span></div>
+              <input type="range" id="opt-input-wPoly" min="1" max="20" value="10" oninput="document.getElementById('opt-val-wPoly').textContent = this.value">
+            </div>
+            <div class="control-group">
+              <div class="control-label"><span>Sex Party / Subculture Weight</span><span id="opt-val-wParty" class="val-badge">7</span></div>
+              <input type="range" id="opt-input-wParty" min="1" max="20" value="7" oninput="document.getElementById('opt-val-wParty').textContent = this.value">
+            </div>
+            <div class="control-group">
+              <div class="control-label"><span>New Flame Orbit Weight</span><span id="opt-val-wNew" class="val-badge">5</span></div>
+              <input type="range" id="opt-input-wNew" min="1" max="20" value="5" oninput="document.getElementById('opt-val-wNew').textContent = this.value">
+            </div>
+            <div class="control-group">
+              <div class="control-label"><span>Total Encounter Volume Weight</span><span id="opt-val-wTotal" class="val-badge">3</span></div>
+              <input type="range" id="opt-input-wTotal" min="1" max="20" value="3" oninput="document.getElementById('opt-val-wTotal').textContent = this.value">
+            </div>
+          </div>
+
+          <!-- Run Optimization CTA -->
+          <div style="margin-top: 20px; text-align: center;">
+            <button id="btn-run-optimization" class="btn-preview" style="background: linear-gradient(135deg, #10b981, var(--accent-pink)); width: 100%; padding: 14px; font-size: 15px; font-weight: 800;">
+              🚀 Run Monte Carlo Risk-Frontier Optimizer (5,000 Runs)
             </button>
+            
+            <div id="opt-progress-container" style="display: none; margin-top: 12px;">
+              <div style="font-size: 12px; color: var(--accent-cyan); margin-bottom: 4px;">Evaluating 5,000 Sexual Network Configurations...</div>
+              <div style="width: 100%; height: 8px; background: #1e293b; border-radius: 4px; overflow: hidden;">
+                <div id="opt-progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #10b981, var(--accent-cyan)); transition: width 0.1s;"></div>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -965,14 +965,19 @@ class AppController {
         this.displayOptimizationResults(results);
 
         if (progressContainer) progressContainer.style.display = 'none';
+        
+        // Collapse inputs container into summary header so results sit at top of modal
+        const inputsContainer = document.getElementById('opt-inputs-container');
+        const inputsSummary = document.getElementById('opt-inputs-summary');
+        if (inputsContainer) inputsContainer.style.display = 'none';
+        if (inputsSummary) inputsSummary.style.display = 'flex';
+
         if (resultsSection) resultsSection.style.display = 'block';
 
-        // Scroll directly to top of results section
-        this.scrollOptimizerToBottom();
-        requestAnimationFrame(() => this.scrollOptimizerToBottom());
-        setTimeout(() => this.scrollOptimizerToBottom(), 50);
-        setTimeout(() => this.scrollOptimizerToBottom(), 150);
-        setTimeout(() => this.scrollOptimizerToBottom(), 300);
+        const qBody = document.querySelector('#optimizer-overlay .q-body');
+        if (qBody) {
+          qBody.scrollTop = 0;
+        }
       }
     }, 80);
   }
