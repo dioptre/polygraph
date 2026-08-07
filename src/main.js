@@ -373,7 +373,7 @@ class AppController {
 
     if (btnBack) btnBack.style.visibility = this.currentQStep > 1 ? 'visible' : 'hidden';
     if (btnNext) {
-      btnNext.textContent = this.currentQStep === 5 ? '✨ Generate My Sexual Network' : 'Next Chapter →';
+      btnNext.textContent = this.currentQStep === 5 ? '✨ Generate Your Sexual Network' : 'Next Chapter →';
     }
   }
 
@@ -664,10 +664,10 @@ class AppController {
         this.params.previewExtended = !this.params.previewExtended;
         if (this.params.previewExtended) {
           btnPreview.classList.add('active');
-          btnPreview.innerHTML = '<span>✨ Extended N-Degree Preview Active</span>';
+          btnPreview.innerHTML = '<span>✨ Your Extended N-Degree Preview Active</span>';
         } else {
           btnPreview.classList.remove('active');
-          btnPreview.innerHTML = '<span>👁️ Preview Extended Network (N Degrees)</span>';
+          btnPreview.innerHTML = '<span>👁️ Preview Your Extended Network (N Degrees)</span>';
         }
         this.saveToLocalStorage();
         this.updateAll();

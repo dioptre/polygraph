@@ -55,7 +55,7 @@ export class ChartsManager {
         trigger: 'axis',
         confine: true,
         extraCssText: 'z-index: 99999 !important; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);',
-        formatter: '{b}: <strong>{c} Theoretical Partners</strong>'
+        formatter: '{b}: <strong>{c} Theoretical Partners in Your Network</strong>'
       },
       grid: { left: '8%', right: '8%', bottom: '15%', top: '20%', containLabel: true },
       xAxis: {
@@ -124,14 +124,14 @@ export class ChartsManager {
         }
       },
       legend: {
-        data: ['Protected Risk (With Condoms)', 'Unprotected Baseline Risk'],
+        data: ['Your Protected Risk (With Condoms)', 'Your Unprotected Baseline Risk'],
         textStyle: { color: '#cbd5e1' },
         top: 0
       },
       grid: { left: '3%', right: '8%', bottom: '5%', top: '15%', containLabel: true },
       xAxis: {
         type: 'value',
-        name: '1-Mo Exposure Risk (%)',
+        name: 'Your 1-Mo Exposure Risk (%)',
         max: 100,
         axisLine: { lineStyle: { color: '#64748b' } },
         splitLine: { lineStyle: { color: '#33415544' } },
@@ -145,7 +145,7 @@ export class ChartsManager {
       },
       series: [
         {
-          name: 'Protected Risk (With Condoms)',
+          name: 'Your Protected Risk (With Condoms)',
           type: 'bar',
           data: protectedRisk,
           itemStyle: { color: '#00f0ff', borderRadius: [0, 4, 4, 0] },
@@ -157,7 +157,7 @@ export class ChartsManager {
           }
         },
         {
-          name: 'Unprotected Baseline Risk',
+          name: 'Your Unprotected Baseline Risk',
           type: 'bar',
           data: unprotectedRisk,
           itemStyle: { color: '#ff2a8566', borderRadius: [0, 4, 4, 0] }
@@ -208,7 +208,7 @@ export class ChartsManager {
       },
       yAxis: {
         type: 'value',
-        name: 'Cumulative Risk %',
+        name: 'Your Cumulative Exposure Risk %',
         max: 100,
         splitLine: { lineStyle: { color: '#33415544' } }
       },
@@ -234,11 +234,11 @@ export class ChartsManager {
       },
       radar: {
         indicator: [
-          { name: 'Sluttiness Index', max: 100 },
-          { name: 'Ingroup Density', max: 100 },
-          { name: 'External Condom Barrier %', max: 100 },
+          { name: 'Your Sluttiness Index', max: 100 },
+          { name: 'Your Ingroup Density', max: 100 },
+          { name: 'Your Condom Barrier %', max: 100 },
           { name: 'Cheating Risk Vulnerability', max: 100 },
-          { name: 'Network Reach Depth', max: 100 }
+          { name: 'Your Network Reach Depth', max: 100 }
         ],
         splitArea: {
           areaStyle: {
@@ -250,7 +250,7 @@ export class ChartsManager {
       },
       series: [
         {
-          name: 'Network Topology Profile',
+          name: 'Your Network Topology Profile',
           type: 'radar',
           data: [
             {
@@ -261,7 +261,7 @@ export class ChartsManager {
                 Math.round(params.cheatingLikelihood),
                 Math.min(100, params.nDegrees * 20)
               ],
-              name: 'Current Network State',
+              name: 'Your Current Network State',
               itemStyle: { color: '#ff2a85' },
               areaStyle: { color: '#ff2a8533' }
             }
