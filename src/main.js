@@ -905,21 +905,15 @@ class AppController {
   }
 
   scrollOptimizerToBottom() {
-    const overlay = document.getElementById('optimizer-overlay');
     const qBody = document.querySelector('#optimizer-overlay .q-body');
     const resultsSec = document.getElementById('opt-results-section');
-    const applyBtn = document.getElementById('btn-opt-apply-top');
 
-    if (qBody) {
-      qBody.scrollTop = 99999;
-    }
-    if (overlay) {
-      overlay.scrollTop = 99999;
-    }
-    if (applyBtn) {
-      applyBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    } else if (resultsSec) {
-      resultsSec.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    if (qBody && resultsSec) {
+      // Scroll qBody directly to the top of the results section
+      const targetTop = Math.max(0, resultsSec.offsetTop - 10);
+      qBody.scrollTop = targetTop;
+      qBody.scrollTo({ top: targetTop, behavior: 'auto' });
+      resultsSec.scrollIntoView({ behavior: 'auto', block: 'start' });
     }
   }
 
@@ -930,9 +924,6 @@ class AppController {
 
     if (progressContainer) progressContainer.style.display = 'block';
     if (progressBar) progressBar.style.width = '0%';
-
-    // Scroll immediately on start
-    this.scrollOptimizerToBottom();
 
     const constraints = {
       maxAntibioticFreqYears: parseFloat(document.getElementById('opt-select-antibioticFreq').value),
@@ -970,13 +961,12 @@ class AppController {
         if (progressContainer) progressContainer.style.display = 'none';
         if (resultsSection) resultsSection.style.display = 'block';
 
-        // Repeatedly force scroll to bottom as cards unhide and reflow
+        // Scroll directly to top of results section
         this.scrollOptimizerToBottom();
         requestAnimationFrame(() => this.scrollOptimizerToBottom());
         setTimeout(() => this.scrollOptimizerToBottom(), 50);
         setTimeout(() => this.scrollOptimizerToBottom(), 150);
         setTimeout(() => this.scrollOptimizerToBottom(), 300);
-        setTimeout(() => this.scrollOptimizerToBottom(), 600);
       }
     }, 80);
   }
