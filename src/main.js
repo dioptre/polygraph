@@ -853,13 +853,13 @@ class AppController {
       });
     }
 
-    // Weight slider live display sync
-    ['wPoly', 'wParty', 'wNew', 'wTotal'].forEach(id => {
+    // Weight & constraint slider live display sync
+    ['wPoly', 'wParty', 'wNew', 'wTotal', 'polySize', 'minPoly'].forEach(id => {
       const input = document.getElementById(`opt-input-${id}`);
       const val = document.getElementById(`opt-val-${id}`);
       if (input && val) {
         input.addEventListener('input', (e) => {
-          val.textContent = e.target.value;
+          val.textContent = id === 'minPoly' ? `${e.target.value}%` : e.target.value;
         });
       }
     });
@@ -906,7 +906,9 @@ class AppController {
     const constraints = {
       maxAntibioticFreqYears: parseFloat(document.getElementById('opt-select-antibioticFreq').value),
       strictZeroHIV: document.getElementById('opt-select-hivPolicy').value === 'strict_zero',
-      allowBarebackPolycule: document.getElementById('opt-chk-barebackPoly').checked
+      allowBarebackPolycule: document.getElementById('opt-chk-barebackPoly').checked,
+      targetPolyculeSize: parseInt(document.getElementById('opt-input-polySize').value),
+      minPolyculePct: parseInt(document.getElementById('opt-input-minPoly').value)
     };
 
     const preferences = {

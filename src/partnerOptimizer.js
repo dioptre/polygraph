@@ -46,6 +46,8 @@ export class PartnerOptimizer {
       maxAntibioticFreqYears = 1.0, // Max 1 antibiotic course per N years
       strictZeroHIV = true,
       allowBarebackPolycule = true,
+      targetPolyculeSize = 7,
+      minPolyculePct = 40,
       maxMonthlyBacterialRiskPct = (1 / (maxAntibioticFreqYears * 12)) * 100 // e.g. 1/12 = 8.3%/mo
     } = constraints;
 
@@ -53,14 +55,17 @@ export class PartnerOptimizer {
     const numSamples = 5000;
 
     for (let i = 0; i < numSamples; i++) {
+      const sampledPolyPct = Math.max(minPolyculePct, Math.floor(minPolyculePct + Math.random() * (100 - minPolyculePct)));
+      const sampledPolySize = Math.max(2, Math.min(30, targetPolyculeSize + Math.floor((Math.random() - 0.5) * 4)));
+
       // Sample candidate parameters
       const candidateParams = {
         ...currentParams,
         egoPartners: Math.floor(1 + Math.random() * 8), // 1-8 direct lovers
-        polyculePct: allowBarebackPolycule ? Math.floor(30 + Math.random() * 70) : Math.floor(Math.random() * 50),
-        slutPct: Math.floor(Math.random() * 80),
-        monogamousPct: Math.floor(Math.random() * 30),
-        polyculeSize: Math.floor(3 + Math.random() * 12),
+        polyculePct: sampledPolyPct,
+        polyculeSize: sampledPolySize,
+        slutPct: Math.floor(Math.random() * Math.max(10, 100 - sampledPolyPct)),
+        monogamousPct: Math.floor(Math.random() * 20),
         slutAvgPartners: Math.floor(2 + Math.random() * 15),
         sluttinessIndex: Math.random(),
         partyLoopbackPct: Math.floor(Math.random() * 90),
