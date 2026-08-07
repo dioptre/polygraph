@@ -901,15 +901,27 @@ class AppController {
     const progressContainer = document.getElementById('opt-progress-container');
     const progressBar = document.getElementById('opt-progress-bar');
     const resultsSection = document.getElementById('opt-results-section');
+    const overlay = document.getElementById('optimizer-overlay');
     const qBody = document.querySelector('#optimizer-overlay .q-body');
 
     if (progressContainer) progressContainer.style.display = 'block';
     if (progressBar) progressBar.style.width = '0%';
 
-    // Scroll down to progress bar immediately
-    setTimeout(() => {
-      if (progressContainer) progressContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 20);
+    const scrollToResults = () => {
+      const target = document.getElementById('opt-results-section') || document.getElementById('card-stage2') || progressContainer;
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      if (qBody) {
+        qBody.scrollTop = qBody.scrollHeight;
+      }
+      if (overlay) {
+        overlay.scrollTop = overlay.scrollHeight;
+      }
+    };
+
+    // Scroll immediately on click
+    setTimeout(scrollToResults, 50);
 
     const constraints = {
       maxAntibioticFreqYears: parseFloat(document.getElementById('opt-select-antibioticFreq').value),
@@ -948,15 +960,8 @@ class AppController {
         if (resultsSection) resultsSection.style.display = 'block';
 
         // Auto-scroll results into view
-        setTimeout(() => {
-          if (resultsSection) {
-            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'end' });
-          }
-          if (qBody) {
-            qBody.scrollTo({ top: qBody.scrollHeight, behavior: 'smooth' });
-            qBody.scrollTop = qBody.scrollHeight;
-          }
-        }, 60);
+        setTimeout(scrollToResults, 50);
+        setTimeout(scrollToResults, 200);
       }
     }, 80);
   }
