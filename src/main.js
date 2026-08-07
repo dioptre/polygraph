@@ -907,22 +907,22 @@ class AppController {
   scrollOptimizerToBottom() {
     const qBody = document.querySelector('#optimizer-overlay .q-body');
     const resultsSec = document.getElementById('opt-results-section');
+    const applyBtn = document.getElementById('btn-opt-apply-top');
     const jumpBtn = document.getElementById('opt-scroll-jump');
 
     if (jumpBtn) jumpBtn.style.display = 'block';
 
-    if (qBody && resultsSec) {
-      const qRect = qBody.getBoundingClientRect();
-      const rRect = resultsSec.getBoundingClientRect();
-      const targetScroll = (rRect.top - qRect.top) + qBody.scrollTop - 10;
-
-      qBody.scrollTop = targetScroll;
-      qBody.scrollTo({ top: targetScroll, behavior: 'auto' });
-      qBody.scrollTo({ top: targetScroll, behavior: 'smooth' });
+    if (qBody) {
+      // Force synchronous DOM layout reflow
+      void qBody.offsetHeight;
+      qBody.scrollTop = qBody.scrollHeight;
+      qBody.scrollTo({ top: qBody.scrollHeight, behavior: 'smooth' });
     }
 
-    if (resultsSec) {
-      resultsSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (applyBtn) {
+      applyBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    } else if (resultsSec) {
+      resultsSec.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
   }
 
