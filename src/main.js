@@ -785,6 +785,8 @@ class AppController {
     setVal('input-condomInternal', 'val-condomInternal', Math.round(p.condomUsageInternal * 100), '%');
     setVal('input-condomExternal', 'val-condomExternal', Math.round(p.condomUsageExternal * 100), '%');
     setVal('input-newPartners', 'val-newPartners', p.newPartnersPerMonth);
+    setVal('opt-input-polySize', 'opt-val-polySize', p.polyculeSize);
+    setVal('opt-input-minPoly', 'opt-val-minPoly', p.polyculePct !== undefined ? p.polyculePct : 40, '%');
 
     setChk('chk-prep', pro.prepActive);
     setChk('chk-doxypep', pro.doxyPepActive);
