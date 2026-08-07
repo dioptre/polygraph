@@ -78,10 +78,14 @@ export class ChartsManager {
           type: 'bar',
           barWidth: '40%',
           itemStyle: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: '#ff2a85' },
-              { offset: 1, color: '#8a2be2' }
-            ]),
+            color: {
+              type: 'linear',
+              x: 0, y: 0, x2: 0, y2: 1,
+              colorStops: [
+                { offset: 0, color: '#ff2a85' },
+                { offset: 1, color: '#8a2be2' }
+              ]
+            },
             borderRadius: [6, 6, 0, 0]
           },
           label: {
