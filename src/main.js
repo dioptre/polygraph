@@ -907,13 +907,22 @@ class AppController {
   scrollOptimizerToBottom() {
     const qBody = document.querySelector('#optimizer-overlay .q-body');
     const resultsSec = document.getElementById('opt-results-section');
+    const jumpBtn = document.getElementById('opt-scroll-jump');
+
+    if (jumpBtn) jumpBtn.style.display = 'block';
 
     if (qBody && resultsSec) {
-      // Scroll qBody directly to the top of the results section
-      const targetTop = Math.max(0, resultsSec.offsetTop - 10);
-      qBody.scrollTop = targetTop;
-      qBody.scrollTo({ top: targetTop, behavior: 'auto' });
-      resultsSec.scrollIntoView({ behavior: 'auto', block: 'start' });
+      const qRect = qBody.getBoundingClientRect();
+      const rRect = resultsSec.getBoundingClientRect();
+      const targetScroll = (rRect.top - qRect.top) + qBody.scrollTop - 10;
+
+      qBody.scrollTop = targetScroll;
+      qBody.scrollTo({ top: targetScroll, behavior: 'auto' });
+      qBody.scrollTo({ top: targetScroll, behavior: 'smooth' });
+    }
+
+    if (resultsSec) {
+      resultsSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 
