@@ -219,6 +219,10 @@ export class ChartsManager {
     this.longitudinalChart.resize();
   }
 
+  updateLongitudinalRisk(longitudinalData) {
+    this.updateLongitudinalProjection(longitudinalData);
+  }
+
   updateTopologyRadar(metrics, params) {
     if (!this.topologyRadarChart) return;
 

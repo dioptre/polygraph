@@ -803,7 +803,7 @@ class AppController {
 
     this.chartsManager.updateNetworkGrowth(metrics);
     this.chartsManager.updateSTIRiskProfile(riskResults);
-    this.chartsManager.updateLongitudinalRisk(longitudinalData);
+    this.chartsManager.updateLongitudinalProjection(longitudinalData);
     this.chartsManager.updateTopologyRadar(metrics, this.params);
     this.chartsManager.resizeAll();
 
