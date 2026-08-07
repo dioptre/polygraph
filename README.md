@@ -1,6 +1,22 @@
-# PolyGraph: Sexual Network Topology & STI Transmission Engine
+# Your PolyGraph StarChart — Extended Sexual Network & STI Epidemiology Visualizer
 
-**PolyGraph** is an interactive, browser-based mathematical visualization and epidemiological modeling platform. It simulates complex sexual networks—ranging from closed monogamous pairs to open polyamorous polycules and high-degree party networks—and computes longitudinal transmission risks across 32 sexually transmitted infections (STIs) under varying prophylactic scenarios (Condoms, PrEP/U=U, Doxy-PEP, and Vaccines).
+![Your PolyGraph StarChart Screenshot](app_screenshot.png)
+
+👉 **Live Web Application**: [https://dioptre.github.io/polygraph/](https://dioptre.github.io/polygraph/)
+
+**Your PolyGraph StarChart** is an interactive, browser-based mathematical visualization and epidemiological modeling platform. It simulates complex sexual networks—ranging from closed monogamous pairs to open polyamorous polycules, high-degree party subcultures, and slutty connector orbits—and computes longitudinal transmission risks across sexually transmitted infections (STIs) under varying prophylactic scenarios (Condoms, PrEP/U=U, Doxy-PEP, and Vaccines).
+
+---
+
+## ✨ Primary Features & Capabilities
+
+- **💖 Primary Partner Risk & Hedonic Optimizer**: Runs Monte Carlo simulations (5,000 runs per second) to calculate maximum sexual fulfillment ("Max Sex") within your primary partner's exact risk budget (antibiotic treatment frequency, HIV policy, target polycule size, and polycule loyalty).
+- **🎯 Hedonic Risk Frontier Chart**: Renders an interactive Pareto frontier scatter plot comparing Monthly Bacterial Risk % vs Hedonic Intimacy Score across Tier 1 (Bareback Polycule), Tier 2 (Sex Party Loopback), and Tier 3 (Max Slut Orbit) stages.
+- **⚡ Sex Party & Subculture Loopback (%)**: Models triadic closure in sex parties and festival scenes, reflecting hookup networks where partners frequently share mutual friends.
+- **🐀 Dual-Engine Partner Activity Model**: Combines static primary partner encounter frequency with an exponential Coolidge Effect satiation decay model for casual lovers:
+  $$A_{\text{casual}}(m) = A_{\text{floor}} + (A_{\text{initial}} - A_{\text{floor}}) \cdot e^{-\lambda \cdot m}$$
+- **🛡️ Comprehensive Biomedical Armor**: Models condom efficacy alongside PrEP/U=U ($0.001\times$ HIV multiplier), Doxy-PEP (~87% bacterial STI reduction), Gardasil-9 (HPV), JYNNEOS (Mpox), and Hepatitis B vaccination.
+- **📝 Rolling Stone / Penthouse Style Questionnaire Overlay**: Human-centric 5-chapter story interview allowing users to configure intimacy parameters with floating glassmorphism tooltips.
 
 ---
 
@@ -42,25 +58,6 @@ The **San Francisco High-Risk** profile is grounded in **San Francisco Departmen
 
 ---
 
-### 🐀 Dual-Engine Partner Activity Model (Coolidge Effect & Rat Satiation Dynamics)
-
-PolyGraph separates partner sexual encounter frequency into two distinct biological engines:
-
-1. **Fluid-Bonded / Primary Ingroup Partners (Static Activity)**:
-   * Sexual encounter frequency remains **static over time** ($A_{\text{fluid}}$, configurable from **0 to 200 acts/month**, default 50 acts/month), representing long-term established intimacy and stable commitment without novel sensory decay.
-2. **Casual / Slutty / New Partners (Rat Copulatory Satiation / Coolidge Effect Decay)**:
-   * Sexual activity begins with a **novelty peak** ($A_{\text{casual, initial}}$, configurable from **0 to 50 acts/month**, default 1 act/month) and **degrades exponentially** over time due to sensory-specific satiety and habituation:
-     $$A_{\text{casual}}(m) = A_{\text{floor}} + (A_{\text{initial}} - A_{\text{floor}}) \cdot e^{-\lambda \cdot m}$$
-   * **Satiation Decay Rate ($\lambda$)**: Configurable habituation rate parameter (default $\lambda = 0.35$, half-life of novel sexual activity ~2 months).
-   * **Habituation Floor ($A_{\text{floor}}$)**: Asymptotic baseline encounter frequency after habituation (default 2 acts/month).
-
-#### Analytical Longitudinal Integration:
-For casual partners acquired at rate $X$ new partners/month over timeline $T$ months, cumulative casual acts are computed via exact definite integration:
-
-$$\text{Acts}_{\text{casual}}(T) = \int_0^T X \cdot \left[ A_{\text{floor}} + (A_{\text{initial}} - A_{\text{floor}}) e^{-\lambda (T - \tau)} \right] d\tau = X \cdot A_{\text{floor}} \cdot T + \frac{X \cdot (A_{\text{initial}} - A_{\text{floor}})}{\lambda} \left(1 - e^{-\lambda T}\right)$$
-
----
-
 ### ⏱️ Session Duration, Ejaculation Exposure & Mathematical Curves
 
 PolyGraph models how the physical characteristics of a sexual encounter impact transmission risk:
@@ -79,70 +76,18 @@ PolyGraph models how the physical characteristics of a sexual encounter impact t
 
 ---
 
-### 🍆 Sex Act Modalities & Encounter Frequency
+### 🧮 Mathematical Engine & Methodology
 
-* **Sex Act Modality Composition**:
-  * **Anal Sex %**: Receptive and insertive anal sex acts (highest mucosal transmission per act).
-  * **Vaginal Sex %**: Receptive and insertive vaginal sex acts.
-  * **Oral Sex %**: Cunnilingus, fellatio, and rimming (high pharyngeal & enteric transmission).
-  * **Skin Contact / Manual Play %**: Non-fluid body contact, outercourse, and manual play.
-* **New Partners per Month (Acquisition Rate)**: Slider configuring partner turnover ($0 \to 50$ new partners per month). PolyGraph models compounding longitudinal STI exposure across 1 month to 10 years.
-* **Sex Acts per Partner (Encounter Count)**: Slider setting the number of sex acts per partner per month ($1 \to 50$). PolyGraph computes cumulative binomial exposure per partner:
-  $$P_{\text{partner}} = 1 - (1 - P_{\text{weighted-act}})^{\text{actsPerPartner}}$$
+PolyGraph's engine (`src/riskCalculator.js`, `src/networkGenerator.js`, and `src/partnerOptimizer.js`) translates relational graph topology into probabilistic transmission metrics:
 
----
-
-### 🕸️ Network Topology & Relational Terminology
-
-* **Sluttiness / Outgrouping Index ($S \in [0, 1]$)**: The ratio of external sex acts (casual hookups, open connectors) to total sex acts.
-* **Ingrouping Density ($1 - S$)**: The degree to which polycule members restrict sexual activity to within their closed social circle/friends.
-* **High-Degree Slut Connector**: A highly active network node with a high partner count (e.g. 17 partners) who connects distinct polycules or monogamous partners.
-* **Monogamous Cheating Likelihood ($P_{\text{cheat}}$)**: The probability that a partner intending/claiming monogamy maintains a hidden external connection.
-* **$N$-Degree Extended Preview**: Visual and mathematical expansion of indirect exposure hops ($1 \text{ direct partner} \to 10,000+$ theoretical extended partners across $N$ degrees).
-
----
-
-## 🚀 Live Demo & Deployment
-
-This repository is pre-configured for automated deployment to **GitHub Pages** via **GitHub Actions** and Vite.
-
-```bash
-# Deploy to GitHub Pages manually
-npm run deploy
-```
-
----
-
-## 🔬 Research & Literature References
-
-Derived directly from the empirical research report included in this repository:
-📄 [**STI Epidemiology, Prophylactics, and Demographics Report**](STI_Epidemiology_Prophylactics_and_Demographics_Report.md)
-
-### Key Academic & Clinical Citations:
-1. **Doxy-PEP (Post-Exposure Prophylaxis)**:
-   * *Luetkemeyer AF, et al.* (2023). **Postexposure Doxycycline to Prevent Bacterial Sexually Transmitted Infections**. *N Engl J Med*, 388(14):1296-1306.
-   * *San Francisco Department of Public Health (SFDPH)* (2022). **Citywide Doxy-PEP Implementation Guidance**.
-2. **HIV Pre-Exposure Prophylaxis (PrEP) & U=U**:
-   * *PURPOSE 1 & 2 Trials* (2024). **Twice-Yearly Injectable Lenacapavir for PrEP**. *N Engl J Med*.
-   * *Rodger AJ, et al. (PARTNER2 Study Group)* (2019). **Risk of HIV transmission through condomless sex in MSM couples on suppressive ART**. *Lancet*, 393(10189):2428-2438.
-3. **Condom Failure & Mechanical Efficacy**:
-   * *CDC & WHO Technical Reports* (2021). **Condom Efficacy, Breakage (1.5-4.0%), and Slippage Rates (1.0-3.5%) in Typical vs. Perfect Use**.
-
----
-
-## 🧮 Mathematical Engine & Methodology
-
-PolyGraph's engine (`src/riskCalculator.js` and `src/networkGenerator.js`) translates relational graph topology into probabilistic transmission metrics using a multi-layer stochastic model:
-
-### 1. Network Topology Generation
-* **Ingroup Polycules**: Modeled as densely connected clusters with high internal edge density.
+#### 1. Network Topology Generation
+* **Ingroup Polycules**: Modeled as densely connected clusters with high internal edge density and configurable group size ($N$).
+* **Sex Party Triadic Closure (Loopback %)**: Connects extended hookup partners back to mutual friends within the party scene.
 * **Bridge Nodes ("Outgrouping" / "Sluttiness Index")**: Nodes configured with high degree centrality that connect distinct polycule clusters or external partners.
 * **Monogamous Cheating Hops**: Secret edges added probabilistically ($\text{CheatingLikelihood}$).
 
-### 2. Weighted Per-Act Transmission Rate ($p_{\text{act}}$)
+#### 2. Weighted Per-Act Transmission Rate ($p_{\text{act}}$)
 $$\text{Weighted Risk} = (w_{\text{anal}} \cdot p_{\text{anal}}) + (w_{\text{vag}} \cdot p_{\text{vag}}) + (w_{\text{oral}} \cdot p_{\text{oral}}) + (w_{\text{skin}} \cdot p_{\text{skin}})$$
-
-Where $p_{\text{mode}}$ is adjusted by the demographic profile (e.g. $0.001\times$ HIV for WSW, $1.7\times$ trauma multiplier for kink play).
 
 ---
 
@@ -166,12 +111,14 @@ npm run build
 ```
 polygraph/
 ├── public/
+│   ├── app_screenshot.png                           # Application interface screenshot
 │   └── sexual_health_sti_model_data.csv             # 32 Pathogen STI dataset
 ├── src/
-│   ├── chartsManager.js                             # ECharts STI probability rendering
+│   ├── chartsManager.js                             # ECharts STI & Hedonic Frontier chart rendering
 │   ├── graphVisualizer.js                           # Sigma.js / Graphology network canvas
 │   ├── main.js                                      # Application controller & event handling
-│   ├── networkGenerator.js                          # Graph generator (Ingroups, Sluts, Cheaters)
+│   ├── networkGenerator.js                          # Graph generator (Ingroups, Sluts, Loopback)
+│   ├── partnerOptimizer.js                          # Monte Carlo Risk-Frontier Optimizer Engine
 │   ├── riskCalculator.js                            # Probabilistic epidemiological engine
 │   ├── stiData.js                                   # PapaParse CSV loader & parser
 │   └── style.css                                    # Dark mode CSS theme & styles
