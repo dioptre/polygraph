@@ -6,7 +6,7 @@
   <title>Your PolyGraph StarChart — Extended Sexual Network & STI Epidemiology Visualizer</title>
   <meta name="description" content="Interactive network visualization and epidemiological STI transmission risk calculator for polyamorous, open, and slutty sexual networks.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
-  <script type="module" crossorigin src="./assets/index-DlFk8C0g.js"></script>
+  <script type="module" crossorigin src="./assets/index-CIjRsTPt.js"></script>
   <link rel="stylesheet" crossorigin href="./assets/index-C5VFWmKm.css">
 </head>
 <body>
@@ -78,12 +78,12 @@
 
           <div class="control-group">
             <div class="control-label"><span>Target Polycule Size (Ingroup):</span><span id="opt-val-polySize" class="val-badge">7</span></div>
-            <input type="range" id="opt-input-polySize" min="2" max="25" value="7">
+            <input type="range" id="opt-input-polySize" min="2" max="25" value="7" oninput="document.getElementById('opt-val-polySize').textContent = this.value">
           </div>
 
           <div class="control-group">
             <div class="control-label"><span>Your Polycule Loyalty % (Ingroup Intimacy):</span><span id="opt-val-minPoly" class="val-badge">40%</span></div>
-            <input type="range" id="opt-input-minPoly" min="0" max="100" value="40">
+            <input type="range" id="opt-input-minPoly" min="0" max="100" value="40" oninput="document.getElementById('opt-val-minPoly').textContent = this.value + '%'">
             <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Minimum share of your bedroom sessions reserved for your trusted inner polycule.</div>
           </div>
 
@@ -103,19 +103,19 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; background: rgba(15,23,42,0.6); padding: 14px; border-radius: 10px; border: 1px solid var(--border-glass);">
           <div class="control-group">
             <div class="control-label"><span>Polycule Intimacy Weight</span><span id="opt-val-wPoly" class="val-badge">10</span></div>
-            <input type="range" id="opt-input-wPoly" min="1" max="20" value="10">
+            <input type="range" id="opt-input-wPoly" min="1" max="20" value="10" oninput="document.getElementById('opt-val-wPoly').textContent = this.value">
           </div>
           <div class="control-group">
             <div class="control-label"><span>Sex Party / Subculture Weight</span><span id="opt-val-wParty" class="val-badge">7</span></div>
-            <input type="range" id="opt-input-wParty" min="1" max="20" value="7">
+            <input type="range" id="opt-input-wParty" min="1" max="20" value="7" oninput="document.getElementById('opt-val-wParty').textContent = this.value">
           </div>
           <div class="control-group">
             <div class="control-label"><span>New Flame Orbit Weight</span><span id="opt-val-wNew" class="val-badge">5</span></div>
-            <input type="range" id="opt-input-wNew" min="1" max="20" value="5">
+            <input type="range" id="opt-input-wNew" min="1" max="20" value="5" oninput="document.getElementById('opt-val-wNew').textContent = this.value">
           </div>
           <div class="control-group">
             <div class="control-label"><span>Total Encounter Volume Weight</span><span id="opt-val-wTotal" class="val-badge">3</span></div>
-            <input type="range" id="opt-input-wTotal" min="1" max="20" value="3">
+            <input type="range" id="opt-input-wTotal" min="1" max="20" value="3" oninput="document.getElementById('opt-val-wTotal').textContent = this.value">
           </div>
         </div>
 
