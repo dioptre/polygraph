@@ -901,27 +901,30 @@ class AppController {
     const progressContainer = document.getElementById('opt-progress-container');
     const progressBar = document.getElementById('opt-progress-bar');
     const resultsSection = document.getElementById('opt-results-section');
-    const overlay = document.getElementById('optimizer-overlay');
-    const qBody = document.querySelector('#optimizer-overlay .q-body');
 
     if (progressContainer) progressContainer.style.display = 'block';
     if (progressBar) progressBar.style.width = '0%';
 
-    const scrollToResults = () => {
-      const target = document.getElementById('opt-results-section') || document.getElementById('card-stage2') || progressContainer;
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const scrollToBottom = () => {
+      const qBody = document.querySelector('#optimizer-overlay .q-body');
+      const resSec = document.getElementById('opt-results-section');
+      const applyBtn = document.getElementById('btn-opt-apply-top');
+
+      if (applyBtn) {
+        applyBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      } else if (resSec) {
+        resSec.scrollIntoView({ behavior: 'smooth', block: 'end' });
       }
+
       if (qBody) {
-        qBody.scrollTop = qBody.scrollHeight;
-      }
-      if (overlay) {
-        overlay.scrollTop = overlay.scrollHeight;
+        qBody.scrollTop = qBody.scrollHeight + 10000;
+        qBody.scrollTo({ top: qBody.scrollHeight + 10000, behavior: 'smooth' });
       }
     };
 
     // Scroll immediately on click
-    setTimeout(scrollToResults, 50);
+    requestAnimationFrame(scrollToBottom);
+    setTimeout(scrollToBottom, 100);
 
     const constraints = {
       maxAntibioticFreqYears: parseFloat(document.getElementById('opt-select-antibioticFreq').value),
@@ -959,9 +962,11 @@ class AppController {
         if (progressContainer) progressContainer.style.display = 'none';
         if (resultsSection) resultsSection.style.display = 'block';
 
-        // Auto-scroll results into view
-        setTimeout(scrollToResults, 50);
-        setTimeout(scrollToResults, 200);
+        // Scroll all the way to bottom after results unhide and reflow
+        requestAnimationFrame(scrollToBottom);
+        setTimeout(scrollToBottom, 60);
+        setTimeout(scrollToBottom, 200);
+        setTimeout(scrollToBottom, 400);
       }
     }, 80);
   }
