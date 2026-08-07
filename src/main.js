@@ -3,6 +3,7 @@ import { NetworkGenerator } from './networkGenerator.js';
 import { GraphVisualizer } from './graphVisualizer.js';
 import { STIRiskCalculator } from './riskCalculator.js';
 import { ChartsManager } from './chartsManager.js';
+import { PartnerOptimizer } from './partnerOptimizer.js';
 
 class AppController {
   constructor() {
@@ -10,8 +11,10 @@ class AppController {
     this.networkGen = new NetworkGenerator();
     this.riskCalc = new STIRiskCalculator();
     this.chartsManager = new ChartsManager();
+    this.optimizer = new PartnerOptimizer(this.riskCalc);
     this.visualizer = null;
     this.currentQStep = 1;
+    this.lastOptimizationResults = null;
 
     // Default parameters matching user's baseline setup
     this.defaultParams = {
@@ -276,12 +279,14 @@ class AppController {
       growth: document.getElementById('chart-growth'),
       risk: document.getElementById('chart-sti'),
       longitudinal: document.getElementById('chart-timeline'),
-      radar: document.getElementById('chart-radar')
+      radar: document.getElementById('chart-radar'),
+      optimizer: document.getElementById('chart-optimizer')
     });
 
     // 4. Attach Event Listeners
     this.bindEvents();
     this.bindQuestionnaireEvents();
+    this.bindOptimizerEvents();
 
     // 5. Check if user is visiting for the first time -> open questionnaire overlay
     if (!localStorage.getItem('polygraph_onboarded')) {
@@ -826,6 +831,140 @@ class AppController {
       const topSTI = [...riskResults].sort((a, b) => b.monthlyRiskProtectedPct - a.monthlyRiskProtectedPct)[0];
       document.getElementById('metric-top-sti').textContent = `${topSTI.name}: ~${topSTI.monthlyRiskProtectedPct}% (1 Mo)`;
     }
+  }
+
+  bindOptimizerEvents() {
+    const btnOpenOpt = document.getElementById('btn-open-optimizer');
+    const btnCloseOpt = document.getElementById('btn-opt-close');
+    const overlay = document.getElementById('optimizer-overlay');
+    const btnRunOpt = document.getElementById('btn-run-optimization');
+    const btnApplyTop = document.getElementById('btn-opt-apply-top');
+
+    if (btnOpenOpt) {
+      btnOpenOpt.addEventListener('click', () => {
+        if (overlay) overlay.classList.add('active');
+      });
+    }
+
+    if (btnCloseOpt) {
+      btnCloseOpt.addEventListener('click', () => {
+        if (overlay) overlay.classList.remove('active');
+        setTimeout(() => this.chartsManager.resizeAll(), 100);
+      });
+    }
+
+    // Weight slider live display sync
+    ['wPoly', 'wParty', 'wNew', 'wTotal'].forEach(id => {
+      const input = document.getElementById(`opt-input-${id}`);
+      const val = document.getElementById(`opt-val-${id}`);
+      if (input && val) {
+        input.addEventListener('input', (e) => {
+          val.textContent = e.target.value;
+        });
+      }
+    });
+
+    if (btnRunOpt) {
+      btnRunOpt.addEventListener('click', () => {
+        this.executeMonteCarloOptimization();
+      });
+    }
+
+    if (btnApplyTop) {
+      btnApplyTop.addEventListener('click', () => {
+        if (this.lastOptimizationResults && this.lastOptimizationResults.topSolution) {
+          this.applyOptimizationSolution(this.lastOptimizationResults.topSolution);
+          if (overlay) overlay.classList.remove('active');
+        }
+      });
+    }
+
+    // Stage cards apply buttons
+    document.querySelectorAll('.btn-apply-stage').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const stageNum = e.target.getAttribute('data-stage');
+        if (this.lastOptimizationResults && this.lastOptimizationResults.stages) {
+          const stageKey = stageNum === '1' ? 'tier1Polycule' : stageNum === '2' ? 'tier2PartyScene' : 'tier3MaxOrbit';
+          const solution = this.lastOptimizationResults.stages[stageKey];
+          if (solution) {
+            this.applyOptimizationSolution(solution);
+            if (overlay) overlay.classList.remove('active');
+          }
+        }
+      });
+    });
+  }
+
+  executeMonteCarloOptimization() {
+    const progressContainer = document.getElementById('opt-progress-container');
+    const progressBar = document.getElementById('opt-progress-bar');
+    const resultsSection = document.getElementById('opt-results-section');
+
+    if (progressContainer) progressContainer.style.display = 'block';
+    if (progressBar) progressBar.style.width = '0%';
+
+    const constraints = {
+      maxAntibioticFreqYears: parseFloat(document.getElementById('opt-select-antibioticFreq').value),
+      strictZeroHIV: document.getElementById('opt-select-hivPolicy').value === 'strict_zero',
+      allowBarebackPolycule: document.getElementById('opt-chk-barebackPoly').checked
+    };
+
+    const preferences = {
+      weightPolyculeIntimacy: parseInt(document.getElementById('opt-input-wPoly').value),
+      weightPartyScene: parseInt(document.getElementById('opt-input-wParty').value),
+      weightNewFlames: parseInt(document.getElementById('opt-input-wNew').value),
+      weightTotalActs: parseInt(document.getElementById('opt-input-wTotal').value)
+    };
+
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += 25;
+      if (progressBar) progressBar.style.width = `${progress}%`;
+
+      if (progress >= 100) {
+        clearInterval(interval);
+        
+        // Run Optimizer Solver
+        const results = this.optimizer.optimize(constraints, preferences, this.params, this.prophylactics);
+        this.lastOptimizationResults = results;
+
+        // Render Hedonic Risk Frontier Tab Chart
+        this.chartsManager.updateHedonicFrontier(results);
+
+        // Populate Stage Cards
+        this.displayOptimizationResults(results);
+
+        if (progressContainer) progressContainer.style.display = 'none';
+        if (resultsSection) resultsSection.style.display = 'block';
+      }
+    }, 80);
+  }
+
+  displayOptimizationResults(results) {
+    const { stages } = results;
+
+    const renderStage = (solution, prefix) => {
+      if (!solution) return;
+      document.getElementById(`opt-${prefix}-score`).textContent = `Hedonic Score: ${solution.hedonicScore}`;
+      document.getElementById(`opt-${prefix}-details`).innerHTML = 
+        `• Direct Lovers: <strong>${solution.params.egoPartners}</strong><br/>` +
+        `• Polycule Ingroup: <strong>${solution.params.polyculePct}%</strong> (Bareback: ${Math.round((1-solution.params.condomUsageInternal)*100)}%)<br/>` +
+        `• Party Loopback: <strong>${solution.params.partyLoopbackPct}%</strong><br/>` +
+        `• New Flames/Mo: <strong>${solution.params.newPartnersPerMonth}</strong><br/>` +
+        `• Monthly Bacterial Risk: <strong style="color: #10b981;">${solution.maxBacterialRiskPct.toFixed(1)}%</strong>`;
+    };
+
+    renderStage(stages.tier1Polycule, 's1');
+    renderStage(stages.tier2PartyScene, 's2');
+    renderStage(stages.tier3MaxOrbit, 's3');
+  }
+
+  applyOptimizationSolution(solution) {
+    Object.assign(this.params, solution.params);
+    Object.assign(this.prophylactics, solution.prophylactics);
+    this.syncUIWithParams();
+    this.saveToLocalStorage();
+    this.updateAll();
   }
 
   populateSTIRawTable(pathogens) {

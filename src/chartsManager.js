@@ -6,6 +6,7 @@ export class ChartsManager {
     this.stiRiskChart = null;
     this.longitudinalChart = null;
     this.topologyRadarChart = null;
+    this.optimizerChart = null;
     this.resizeObservers = [];
   }
 
@@ -30,6 +31,7 @@ export class ChartsManager {
     if (containers.risk) this.stiRiskChart = initChartWithObserver(containers.risk);
     if (containers.longitudinal) this.longitudinalChart = initChartWithObserver(containers.longitudinal);
     if (containers.radar) this.topologyRadarChart = initChartWithObserver(containers.radar);
+    if (containers.optimizer) this.optimizerChart = initChartWithObserver(containers.optimizer);
 
     window.addEventListener('resize', () => {
       this.resizeAll();
@@ -41,6 +43,7 @@ export class ChartsManager {
     this.stiRiskChart?.resize();
     this.longitudinalChart?.resize();
     this.topologyRadarChart?.resize();
+    this.optimizerChart?.resize();
   }
 
   updateNetworkGrowth(metrics) {
@@ -276,5 +279,65 @@ export class ChartsManager {
 
     this.topologyRadarChart.setOption(option, true);
     this.topologyRadarChart.resize();
+  }
+
+  updateHedonicFrontier(results) {
+    if (!this.optimizerChart || !results || !results.paretoFrontier) return;
+
+    const data = results.paretoFrontier.map(item => [
+      item.maxBacterialRiskPct,
+      item.hedonicScore,
+      item.totalMonthlyActs,
+      item.params.polyculePct
+    ]);
+
+    const option = {
+      backgroundColor: 'transparent',
+      tooltip: {
+        trigger: 'item',
+        extraCssText: 'z-index: 99999 !important; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px;',
+        formatter: (params) => {
+          const [risk, score, acts, poly] = params.value;
+          return `<strong>Hedonic Score: ${score}</strong><br/>` +
+                 `Monthly Bacterial Risk: <strong>${risk.toFixed(2)}%</strong><br/>` +
+                 `Total Monthly Acts: <strong>${acts}</strong><br/>` +
+                 `Polycule Ingroup: <strong>${poly}%</strong>`;
+        }
+      },
+      grid: { left: '8%', right: '8%', bottom: '15%', top: '15%', containLabel: true },
+      xAxis: {
+        type: 'value',
+        name: 'Max Monthly Bacterial Risk %',
+        axisLine: { lineStyle: { color: '#64748b' } },
+        splitLine: { lineStyle: { color: '#33415544' } }
+      },
+      yAxis: {
+        type: 'value',
+        name: 'Hedonic Intimacy Score',
+        axisLine: { lineStyle: { color: '#64748b' } },
+        splitLine: { lineStyle: { color: '#33415544' } }
+      },
+      series: [
+        {
+          type: 'scatter',
+          symbolSize: (val) => Math.max(8, Math.min(26, val[2] / 2)),
+          data: data,
+          itemStyle: {
+            color: {
+              type: 'linear',
+              x: 0, y: 0, x2: 1, y2: 0,
+              colorStops: [
+                { offset: 0, color: '#10b981' },
+                { offset: 1, color: '#06b6d4' }
+              ]
+            },
+            opacity: 0.85
+          }
+        }
+      ]
+    };
+
+    this.optimizerChart.setOption(option, true);
+    this.optimizerChart.resize();
   }
 }

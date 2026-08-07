@@ -687,3 +687,75 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .btn-q-skip:hover {
   color: var(--text-muted);
 }
+
+/* Optimizer Stage Cards */
+.opt-stage-card {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.opt-stage-card:hover {
+  border-color: #10b981;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.2);
+}
+
+.opt-stage-card.active {
+  border: 2px solid var(--accent-cyan);
+  background: rgba(0, 240, 255, 0.08);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
+}
+
+.opt-stage-tag {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #10b981;
+}
+
+.opt-stage-title {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.opt-stage-score {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent-pink);
+}
+
+.opt-stage-details {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  flex: 1;
+}
+
+.btn-apply-stage {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-glass);
+  color: #fff;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 6px;
+}
+
+.btn-apply-stage:hover {
+  background: #10b981;
+  color: #000;
+  border-color: #10b981;
+}
