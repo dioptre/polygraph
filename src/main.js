@@ -901,9 +901,15 @@ class AppController {
     const progressContainer = document.getElementById('opt-progress-container');
     const progressBar = document.getElementById('opt-progress-bar');
     const resultsSection = document.getElementById('opt-results-section');
+    const qBody = document.querySelector('#optimizer-overlay .q-body');
 
     if (progressContainer) progressContainer.style.display = 'block';
     if (progressBar) progressBar.style.width = '0%';
+
+    // Scroll down to progress bar immediately
+    setTimeout(() => {
+      if (progressContainer) progressContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 20);
 
     const constraints = {
       maxAntibioticFreqYears: parseFloat(document.getElementById('opt-select-antibioticFreq').value),
@@ -941,15 +947,16 @@ class AppController {
         if (progressContainer) progressContainer.style.display = 'none';
         if (resultsSection) resultsSection.style.display = 'block';
 
+        // Auto-scroll results into view
         setTimeout(() => {
-          const qBody = document.querySelector('#optimizer-overlay .q-body');
-          if (qBody) {
-            qBody.scrollTo({
-              top: qBody.scrollHeight,
-              behavior: 'smooth'
-            });
+          if (resultsSection) {
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'end' });
           }
-        }, 50);
+          if (qBody) {
+            qBody.scrollTo({ top: qBody.scrollHeight, behavior: 'smooth' });
+            qBody.scrollTop = qBody.scrollHeight;
+          }
+        }, 60);
       }
     }, 80);
   }
