@@ -353,6 +353,10 @@ class AppController {
   closeQuestionnaire() {
     const overlay = document.getElementById('questionnaire-overlay');
     if (overlay) overlay.classList.remove('active');
+    setTimeout(() => {
+      this.chartsManager?.resizeAll();
+      this.visualizer?.recenter();
+    }, 100);
   }
 
   setQStep(step) {
