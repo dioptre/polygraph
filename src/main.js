@@ -904,6 +904,25 @@ class AppController {
     });
   }
 
+  scrollOptimizerToBottom() {
+    const overlay = document.getElementById('optimizer-overlay');
+    const qBody = document.querySelector('#optimizer-overlay .q-body');
+    const resultsSec = document.getElementById('opt-results-section');
+    const applyBtn = document.getElementById('btn-opt-apply-top');
+
+    if (qBody) {
+      qBody.scrollTop = 99999;
+    }
+    if (overlay) {
+      overlay.scrollTop = 99999;
+    }
+    if (applyBtn) {
+      applyBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    } else if (resultsSec) {
+      resultsSec.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }
+
   executeMonteCarloOptimization() {
     const progressContainer = document.getElementById('opt-progress-container');
     const progressBar = document.getElementById('opt-progress-bar');
@@ -912,26 +931,8 @@ class AppController {
     if (progressContainer) progressContainer.style.display = 'block';
     if (progressBar) progressBar.style.width = '0%';
 
-    const scrollToBottom = () => {
-      const qBody = document.querySelector('#optimizer-overlay .q-body');
-      const resSec = document.getElementById('opt-results-section');
-      const applyBtn = document.getElementById('btn-opt-apply-top');
-
-      if (applyBtn) {
-        applyBtn.scrollIntoView({ behavior: 'smooth', block: 'end' });
-      } else if (resSec) {
-        resSec.scrollIntoView({ behavior: 'smooth', block: 'end' });
-      }
-
-      if (qBody) {
-        qBody.scrollTop = qBody.scrollHeight + 10000;
-        qBody.scrollTo({ top: qBody.scrollHeight + 10000, behavior: 'smooth' });
-      }
-    };
-
-    // Scroll immediately on click
-    requestAnimationFrame(scrollToBottom);
-    setTimeout(scrollToBottom, 100);
+    // Scroll immediately on start
+    this.scrollOptimizerToBottom();
 
     const constraints = {
       maxAntibioticFreqYears: parseFloat(document.getElementById('opt-select-antibioticFreq').value),
@@ -969,11 +970,13 @@ class AppController {
         if (progressContainer) progressContainer.style.display = 'none';
         if (resultsSection) resultsSection.style.display = 'block';
 
-        // Scroll all the way to bottom after results unhide and reflow
-        requestAnimationFrame(scrollToBottom);
-        setTimeout(scrollToBottom, 60);
-        setTimeout(scrollToBottom, 200);
-        setTimeout(scrollToBottom, 400);
+        // Repeatedly force scroll to bottom as cards unhide and reflow
+        this.scrollOptimizerToBottom();
+        requestAnimationFrame(() => this.scrollOptimizerToBottom());
+        setTimeout(() => this.scrollOptimizerToBottom(), 50);
+        setTimeout(() => this.scrollOptimizerToBottom(), 150);
+        setTimeout(() => this.scrollOptimizerToBottom(), 300);
+        setTimeout(() => this.scrollOptimizerToBottom(), 600);
       }
     }, 80);
   }
