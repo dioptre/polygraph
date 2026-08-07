@@ -848,6 +848,13 @@ class AppController {
       });
     }
 
+    const btnTabRunOpt = document.getElementById('btn-tab-run-optimizer');
+    if (btnTabRunOpt) {
+      btnTabRunOpt.addEventListener('click', () => {
+        if (overlay) overlay.classList.add('active');
+      });
+    }
+
     if (btnCloseOpt) {
       btnCloseOpt.addEventListener('click', () => {
         if (overlay) overlay.classList.remove('active');

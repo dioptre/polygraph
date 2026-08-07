@@ -282,7 +282,19 @@ export class ChartsManager {
   }
 
   updateHedonicFrontier(results) {
-    if (!this.optimizerChart || !results || !results.paretoFrontier) return;
+    const emptyState = document.getElementById('optimizer-empty-state');
+    const chartContainer = document.getElementById('chart-optimizer');
+
+    if (!results || !results.paretoFrontier || results.paretoFrontier.length === 0) {
+      if (emptyState) emptyState.style.display = 'flex';
+      if (chartContainer) chartContainer.style.display = 'none';
+      return;
+    }
+
+    if (emptyState) emptyState.style.display = 'none';
+    if (chartContainer) chartContainer.style.display = 'block';
+
+    if (!this.optimizerChart) return;
 
     const data = results.paretoFrontier.map(item => [
       item.maxBacterialRiskPct,
