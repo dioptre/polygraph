@@ -259,7 +259,8 @@ class AppController {
     this.loadFromLocalStorage();
 
     // 2. Load STI dataset
-    const pathogens = await this.dataLoader.loadData('./sexual_health_sti_model_data.csv');
+    const csvPath = `${import.meta.env.BASE_URL}sexual_health_sti_model_data.csv`;
+    const pathogens = await this.dataLoader.loadData(csvPath);
     this.riskCalc.setPathogens(pathogens);
     this.populateSTIRawTable(pathogens);
 
