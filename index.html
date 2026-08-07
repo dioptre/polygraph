@@ -6,8 +6,8 @@
   <title>Your PolyGraph StarChart — Extended Sexual Network & STI Epidemiology Visualizer</title>
   <meta name="description" content="Interactive network visualization and epidemiological STI transmission risk calculator for polyamorous, open, and slutty sexual networks.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
-  <script type="module" crossorigin src="/polygraph/assets/index-mC9C3dmE.js"></script>
-  <link rel="stylesheet" crossorigin href="/polygraph/assets/index-CNIte6fA.css">
+  <script type="module" crossorigin src="./assets/index-D753WrUl.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-C5VFWmKm.css">
 </head>
 <body>
   <!-- Top Bar / Header -->
@@ -23,6 +23,10 @@
         📝 Edit Your Story (Questionnaire)
       </button>
 
+      <button id="btn-open-optimizer" class="btn-preview" style="background: linear-gradient(135deg, #10b981, #06b6d4); padding: 8px 16px; font-size: 13px;">
+        💖 Partner Risk Optimizer
+      </button>
+
       <label for="preset-select" style="font-size: 13px; color: var(--text-muted); margin-left: 10px;">Preset Profile:</label>
       <select id="preset-select" class="preset-select">
         <option value="me" selected>👤 You (Your Saved Profile)</option>
@@ -35,6 +39,134 @@
       </select>
     </div>
   </header>
+
+  <!-- Primary Partner Risk Budget & Hedonic Optimizer Modal Overlay -->
+  <div id="optimizer-overlay" class="questionnaire-overlay">
+    <div class="questionnaire-card" style="max-width: 760px;">
+      <div class="q-header" style="background: linear-gradient(180deg, rgba(16, 185, 129, 0.15) 0%, rgba(15, 23, 42, 0) 100%); border-bottom-color: rgba(16, 185, 129, 0.3);">
+        <div class="q-magazine-tag" style="color: #10b981;">Hedonic Risk-Frontier Solver</div>
+        <h2 class="q-title" style="background: linear-gradient(90deg, #ffffff, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+          Fulfill Your Primary Partner's Dreams
+        </h2>
+        <div class="q-subtitle">Max sexual fulfillment within your primary partner's exact risk bracket</div>
+      </div>
+
+      <div class="q-body" style="padding: 20px 30px; overflow-y: auto; max-height: 70vh;">
+        <!-- Section 1: Partner Risk Budget Constraints -->
+        <div style="font-size: 14px; font-weight: 700; color: #10b981; margin-bottom: 8px;">
+          1. Your Primary Partner's Risk Budget Constraints
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; background: rgba(15,23,42,0.6); padding: 14px; border-radius: 10px; border: 1px solid var(--border-glass);">
+          <div class="control-group">
+            <label class="control-label">Max Antibiotic Course Frequency:</label>
+            <select id="opt-select-antibioticFreq" class="preset-select" style="width: 100%;">
+              <option value="0.5">At most 1 course per 6 Months (~16.6% risk budget)</option>
+              <option value="1.0" selected>At most 1 course per 1 Year (~8.3% risk budget)</option>
+              <option value="2.0">At most 1 course per 2 Years (~4.1% risk budget)</option>
+              <option value="5.0">At most 1 course per 5 Years (~1.6% risk budget)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label">HIV / Incurable STI Policy:</label>
+            <select id="opt-select-hivPolicy" class="preset-select" style="width: 100%;">
+              <option value="strict_zero" selected>Strict Zero HIV (PrEP / U=U Mandatory)</option>
+              <option value="low_risk">Ultra-Low Risk (&lt; 0.05% monthly)</option>
+            </select>
+          </div>
+
+          <div class="control-group" style="grid-column: span 2;">
+            <label class="checkbox-group">
+              <span>Allow Bareback / Condomless Intimacy in Internal Polycule</span>
+              <input type="checkbox" id="opt-chk-barebackPoly" checked>
+            </label>
+          </div>
+        </div>
+
+        <!-- Section 2: Your Hedonic Intimacy Preferences -->
+        <div style="font-size: 14px; font-weight: 700; color: var(--accent-pink); margin-top: 18px; margin-bottom: 8px;">
+          2. Your Hedonic Fulfillment Preferences (Weights)
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; background: rgba(15,23,42,0.6); padding: 14px; border-radius: 10px; border: 1px solid var(--border-glass);">
+          <div class="control-group">
+            <div class="control-label"><span>Polycule Intimacy Weight</span><span id="opt-val-wPoly" class="val-badge">10</span></div>
+            <input type="range" id="opt-input-wPoly" min="1" max="20" value="10">
+          </div>
+          <div class="control-group">
+            <div class="control-label"><span>Sex Party / Subculture Weight</span><span id="opt-val-wParty" class="val-badge">7</span></div>
+            <input type="range" id="opt-input-wParty" min="1" max="20" value="7">
+          </div>
+          <div class="control-group">
+            <div class="control-label"><span>New Flame Orbit Weight</span><span id="opt-val-wNew" class="val-badge">5</span></div>
+            <input type="range" id="opt-input-wNew" min="1" max="20" value="5">
+          </div>
+          <div class="control-group">
+            <div class="control-label"><span>Total Encounter Volume Weight</span><span id="opt-val-wTotal" class="val-badge">3</span></div>
+            <input type="range" id="opt-input-wTotal" min="1" max="20" value="3">
+          </div>
+        </div>
+
+        <!-- Run Optimization CTA -->
+        <div style="margin-top: 20px; text-align: center;">
+          <button id="btn-run-optimization" class="btn-preview" style="background: linear-gradient(135deg, #10b981, var(--accent-pink)); width: 100%; padding: 14px; font-size: 15px; font-weight: 800;">
+            🚀 Run Monte Carlo Risk-Frontier Optimizer (5,000 Runs)
+          </button>
+          
+          <div id="opt-progress-container" style="display: none; margin-top: 12px;">
+            <div style="font-size: 12px; color: var(--accent-cyan); margin-bottom: 4px;">Evaluating 5,000 Sexual Network Configurations...</div>
+            <div style="width: 100%; height: 8px; background: #1e293b; border-radius: 4px; overflow: hidden;">
+              <div id="opt-progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #10b981, var(--accent-cyan)); transition: width 0.1s;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Optimization Results Matrix -->
+        <div id="opt-results-section" style="display: none; margin-top: 20px;">
+          <div style="font-size: 14px; font-weight: 700; color: var(--accent-cyan); margin-bottom: 10px;">
+            ✨ Optimal Pareto Stages & Network Configurations
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+            <!-- Stage 1 -->
+            <div id="card-stage1" class="opt-stage-card">
+              <div class="opt-stage-tag">Tier 1</div>
+              <div class="opt-stage-title">Bareback Polycule</div>
+              <div id="opt-s1-score" class="opt-stage-score">Score: 0</div>
+              <div id="opt-s1-details" class="opt-stage-details">...</div>
+              <button class="btn-apply-stage" data-stage="1">Apply Tier 1</button>
+            </div>
+
+            <!-- Stage 2 -->
+            <div id="card-stage2" class="opt-stage-card active">
+              <div class="opt-stage-tag" style="color: var(--accent-cyan);">Tier 2 (Recommended)</div>
+              <div class="opt-stage-title">Sex Party Loopback</div>
+              <div id="opt-s2-score" class="opt-stage-score" style="color: var(--accent-cyan);">Score: 0</div>
+              <div id="opt-s2-details" class="opt-stage-details">...</div>
+              <button class="btn-apply-stage" data-stage="2" style="background: var(--accent-cyan); color: #000;">Apply Tier 2</button>
+            </div>
+
+            <!-- Stage 3 -->
+            <div id="card-stage3" class="opt-stage-card">
+              <div class="opt-stage-tag">Tier 3</div>
+              <div class="opt-stage-title">Max Slut Orbit</div>
+              <div id="opt-s3-score" class="opt-stage-score">Score: 0</div>
+              <div id="opt-s3-details" class="opt-stage-details">...</div>
+              <button class="btn-apply-stage" data-stage="3">Apply Tier 3</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-footer">
+        <button id="btn-opt-close" class="btn-q-skip">Close Optimizer</button>
+        <button id="btn-opt-apply-top" class="btn-q-next" style="background: linear-gradient(135deg, #10b981, var(--accent-cyan));">
+          ✨ Apply Top Solution to Your PolyGraph
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Witty Penthouse / Rolling Stone Style Questionnaire Overlay Modal -->
   <div id="questionnaire-overlay" class="questionnaire-overlay">
@@ -615,6 +747,7 @@
         <button class="tab-btn active" data-tab="tab-growth">📊 Your Extended Network Growth (Log Scale)</button>
         <button class="tab-btn" data-tab="tab-sti">🦠 Your STI Exposure Risk Profile</button>
         <button class="tab-btn" data-tab="tab-timeline">⏳ Your 10-Year Exposure Projection</button>
+        <button class="tab-btn" data-tab="tab-optimizer">🎯 Hedonic Risk Frontier (Optimizer)</button>
         <button class="tab-btn" data-tab="tab-csv">📋 Pathogen Reference Dataset</button>
       </div>
 
@@ -634,7 +767,12 @@
           <div id="chart-timeline" class="chart-container"></div>
         </div>
 
-        <!-- Tab 4: CSV Data Table -->
+        <!-- Tab 4: Hedonic Risk Frontier Chart -->
+        <div id="tab-optimizer" class="tab-pane" style="display: none;">
+          <div id="chart-optimizer" class="chart-container"></div>
+        </div>
+
+        <!-- Tab 5: CSV Data Table -->
         <div id="tab-csv" class="tab-pane" style="display: none;">
           <div style="display: flex; gap: 16px; align-items: flex-start;">
             <div style="flex: 1;">
@@ -655,16 +793,6 @@
                 </table>
               </div>
             </div>
-
-            <!-- Upload Custom CSV column commented out as requested
-            <div style="width: 240px;">
-              <label for="csv-file-input" class="csv-upload-box">
-                📂 <strong>Upload Custom CSV</strong><br/>
-                <span style="font-size: 11px;">Drop or select a custom STI epidemiology dataset</span>
-                <input type="file" id="csv-file-input" accept=".csv" style="display: none;">
-              </label>
-            </div>
-            -->
           </div>
         </div>
       </div>
