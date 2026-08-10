@@ -47,7 +47,9 @@ class AppController {
       condomUsageExternal: 0.90,
       condomUsageCheating: 0.1,
       newPartnersPerMonth: 0.5,
-      previewExtended: true
+      previewExtended: true,
+      testingCadenceMonths: 3,
+      financialAccessIndex: 85
     };
 
     this.defaultProphylactics = {
@@ -638,6 +640,12 @@ class AppController {
       this.updateAll();
     });
 
+    document.getElementById('select-testingCadence')?.addEventListener('change', (e) => {
+      this.params.testingCadenceMonths = Number(e.target.value);
+      this.saveToLocalStorage();
+      this.updateAll();
+    });
+
     const sliderIds = [
       { id: 'input-sessionDuration', param: 'sessionDurationMin', valId: 'val-sessionDuration', suffix: ' min' },
       { id: 'input-ejaculationPct', param: 'ejaculationPct', valId: 'val-ejaculationPct', suffix: '%' },
@@ -663,7 +671,8 @@ class AppController {
       { id: 'input-partyLoopbackPct', param: 'partyLoopbackPct', valId: 'val-partyLoopbackPct', suffix: '%' },
       { id: 'input-condomInternal', param: 'condomUsageInternal', valId: 'val-condomInternal', suffix: '%', scale: 100 },
       { id: 'input-condomExternal', param: 'condomUsageExternal', valId: 'val-condomExternal', suffix: '%', scale: 100 },
-      { id: 'input-newPartners', param: 'newPartnersPerMonth', valId: 'val-newPartners', suffix: '' }
+      { id: 'input-newPartners', param: 'newPartnersPerMonth', valId: 'val-newPartners', suffix: '' },
+      { id: 'input-financialAccessIndex', param: 'financialAccessIndex', valId: 'val-financialAccessIndex', suffix: '%' }
     ];
 
     sliderIds.forEach(item => {
@@ -811,11 +820,15 @@ class AppController {
     const selCurve = document.getElementById('select-exposureCurve');
     if (selCurve) selCurve.value = p.exposureCurveModel;
 
+    const selCadence = document.getElementById('select-testingCadence');
+    if (selCadence) selCadence.value = p.testingCadenceMonths !== undefined ? String(p.testingCadenceMonths) : '3';
+
     const presetSelect = document.getElementById('preset-select');
     if (presetSelect) presetSelect.value = this.currentPresetKey || 'me';
 
     setVal('input-sessionDuration', 'val-sessionDuration', p.sessionDurationMin, ' min');
     setVal('input-ejaculationPct', 'val-ejaculationPct', p.ejaculationPct, '%');
+    setVal('input-financialAccessIndex', 'val-financialAccessIndex', p.financialAccessIndex !== undefined ? p.financialAccessIndex : 85, '%');
 
     setVal('input-fluidActsPerMonth', 'val-fluidActsPerMonth', p.fluidActsPerMonth, ' Acts');
     setVal('input-casualActsInitial', 'val-casualActsInitial', p.casualActsInitial, ' Acts');

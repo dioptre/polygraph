@@ -108,8 +108,24 @@ export class STIRiskCalculator {
       nDegrees = 3,
       polyculePct = 100,
       slutPct = 50,
-      monogamousPct = 32
+      monogamousPct = 32,
+      testingCadenceMonths = 3,
+      financialAccessIndex = 85
     } = params;
+
+    // Testing Cadence Modifier:
+    // Frequent screening interrupts transmission loops by diagnosing asymptomatic infections early
+    let mTesting = 1.0;
+    const cad = Number(testingCadenceMonths);
+    if (cad === 1) mTesting = 0.30;       // Monthly testing = 70% risk reduction
+    else if (cad === 3) mTesting = 0.55;  // Quarterly testing = 45% risk reduction
+    else if (cad === 6) mTesting = 0.75;  // 6-month testing = 25% risk reduction
+    else if (cad === 12) mTesting = 0.90; // Annual testing = 10% risk reduction
+    else mTesting = 1.0;                  // Symptom-only / Never
+
+    // Financial Access Modifier:
+    // High financial security enables frictionless access to care, immediate treatment, Doxy-PEP, PrEP & STI panels
+    const mFinancial = 1.0 - (0.25 * (financialAccessIndex / 100));
 
     const degreeCounts = networkMetrics.theoreticalCountByDegree || [1, 2, 6, 20];
 
@@ -179,8 +195,8 @@ export class STIRiskCalculator {
 
       // Apply Biomedical Multipliers (PrEP, Doxy-PEP, Vaccines)
       const biomedicalMultiplier = this.getBiomedicalMultiplier(pathogen, prophylactics);
-      effectiveActRiskUnprotected *= biomedicalMultiplier;
-      effectiveActRiskProtected *= biomedicalMultiplier;
+      effectiveActRiskUnprotected *= (biomedicalMultiplier * mTesting * mFinancial);
+      effectiveActRiskProtected *= (biomedicalMultiplier * mTesting * mFinancial);
 
       const pActFluid = (effectiveActRiskProtected * condomUsageInternal) + (effectiveActRiskUnprotected * (1 - condomUsageInternal));
       const pActCasual = (effectiveActRiskProtected * condomUsageExternal) + (effectiveActRiskUnprotected * (1 - condomUsageExternal));

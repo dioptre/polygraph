@@ -711,7 +711,35 @@
         </div>
       </div>
 
-      <!-- 7. Longitudinal Time Parameters -->
+      <!-- 7. STI Screening & Healthcare Access -->
+      <div class="panel-section">
+        <div class="section-header">
+          <span class="section-title">🩺 Screening & Healthcare Access</span>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>STI Testing Cadence / Frequency <span class="help-icon" data-tooltip="Routine STI screening interrupts transmission loops through early diagnosis & treatment.">ℹ️</span></span>
+          </div>
+          <select id="select-testingCadence" class="preset-select">
+            <option value="1">🧪 Monthly (Every 30 Days)</option>
+            <option value="3" selected>🔬 Quarterly (Every 3 Months) [Recommended]</option>
+            <option value="6">🩺 Bi-Annually (Every 6 Months)</option>
+            <option value="12">📅 Annually (Every 12 Months)</option>
+            <option value="0">⚠️ Symptom-Only / Never</option>
+          </select>
+        </div>
+
+        <div class="control-group" style="margin-top: 10px;">
+          <div class="control-label">
+            <span>Financial Security & Care Access <span class="help-icon" data-tooltip="Financial security enables frictionless access to Doxy-PEP, PrEP, full PCR STI panels & care.">ℹ️</span></span>
+            <span id="val-financialAccessIndex" class="val-badge">85%</span>
+          </div>
+          <input type="range" id="input-financialAccessIndex" min="0" max="100" step="5" value="85">
+        </div>
+      </div>
+
+      <!-- 8. Longitudinal Time Parameters -->
       <div class="panel-section">
         <div class="section-header">
           <span class="section-title">⏳ Your Time Projection</span>
