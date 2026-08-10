@@ -134,9 +134,9 @@ class AppController {
         ejaculationPct: 90,
         exposureCurveModel: 'logarithmic',
         fluidActsPerMonth: 14,
-        casualActsInitial: 10,
+        casualActsInitial: 0,
         coolidgeDecayRate: 0.3,
-        casualActsFloor: 1,
+        casualActsFloor: 0,
         pctAnalSex: 20,
         pctVaginalSex: 50,
         pctOralSex: 20,
@@ -145,10 +145,10 @@ class AppController {
         monogamousPct: 0,
         polyculePct: 100,
         slutPct: 0,
-        polyculeSize: 5,
-        slutAvgPartners: 5,
-        sluttinessIndex: 0.05,
-        cheatingLikelihood: 5,
+        polyculeSize: 4,
+        slutAvgPartners: 0,
+        sluttinessIndex: 0.0,
+        cheatingLikelihood: 0,
         condomUsageInternal: 0.9,
         condomUsageExternal: 0.5,
         newPartnersPerMonth: 0,
@@ -300,10 +300,17 @@ class AppController {
     this.updateAll();
 
     requestAnimationFrame(() => {
+      this.visualizer?.recenter();
       this.chartsManager.resizeAll();
     });
-    setTimeout(() => this.chartsManager.resizeAll(), 100);
-    setTimeout(() => this.chartsManager.resizeAll(), 400);
+    setTimeout(() => {
+      this.visualizer?.recenter();
+      this.chartsManager.resizeAll();
+    }, 100);
+    setTimeout(() => {
+      this.visualizer?.recenter();
+      this.chartsManager.resizeAll();
+    }, 400);
   }
 
   loadFromLocalStorage() {
@@ -567,6 +574,8 @@ class AppController {
     const config = this.presetConfigs[presetKey];
     if (!config) return;
 
+    this.currentPresetKey = presetKey;
+
     const proKeys = ['prepActive', 'doxyPepActive', 'hpvVaccinated', 'hepBVaccinated', 'mpoxVaccinated'];
     proKeys.forEach(k => {
       if (config[k] !== undefined) {
@@ -603,18 +612,22 @@ class AppController {
   }
 
   bindEvents() {
-    document.addEventListener('change', (e) => {
-      if (e.target && (e.target.id === 'sti-category-filter' || e.target.id === 'sti-view-mode')) {
-        this.handleSTIFilterChange();
-      }
-    });
-
     document.getElementById('preset-select')?.addEventListener('change', (e) => {
       this.applyPreset(e.target.value);
     });
 
     document.getElementById('select-demographic')?.addEventListener('change', (e) => {
       this.params.demographicProfile = e.target.value;
+      const qSelDemo = document.getElementById('q-select-demographic');
+      if (qSelDemo) qSelDemo.value = e.target.value;
+      this.saveToLocalStorage();
+      this.updateAll();
+    });
+
+    document.getElementById('q-select-demographic')?.addEventListener('change', (e) => {
+      this.params.demographicProfile = e.target.value;
+      const selDemo = document.getElementById('select-demographic');
+      if (selDemo) selDemo.value = e.target.value;
       this.saveToLocalStorage();
       this.updateAll();
     });
@@ -709,6 +722,10 @@ class AppController {
       });
     }
 
+    window.addEventListener('resize', () => {
+      this.visualizer?.recenter();
+    });
+
     document.getElementById('btn-recenter')?.addEventListener('click', () => {
       this.visualizer?.recenter();
     });
@@ -724,6 +741,9 @@ class AppController {
           if (pane.id === targetTab) {
             pane.classList.add('active');
             pane.style.display = 'block';
+            if (targetTab === 'tab-sti') {
+              this.handleSTIFilterChange();
+            }
           } else {
             pane.classList.remove('active');
             pane.style.display = 'none';
@@ -792,7 +812,7 @@ class AppController {
     if (selCurve) selCurve.value = p.exposureCurveModel;
 
     const presetSelect = document.getElementById('preset-select');
-    if (presetSelect) presetSelect.value = 'me';
+    if (presetSelect) presetSelect.value = this.currentPresetKey || 'me';
 
     setVal('input-sessionDuration', 'val-sessionDuration', p.sessionDurationMin, ' min');
     setVal('input-ejaculationPct', 'val-ejaculationPct', p.ejaculationPct, '%');
@@ -838,6 +858,22 @@ class AppController {
         btnPreview.innerHTML = '<span>👁️ Preview Extended Network (N Degrees)</span>';
       }
     }
+
+    this.syncTabPanes();
+  }
+
+  syncTabPanes() {
+    const activeBtn = document.querySelector('.tab-btn.active');
+    const targetTab = activeBtn ? activeBtn.getAttribute('data-tab') : 'tab-growth';
+    document.querySelectorAll('.tab-pane').forEach(pane => {
+      if (pane.id === targetTab) {
+        pane.classList.add('active');
+        pane.style.display = 'block';
+      } else {
+        pane.classList.remove('active');
+        pane.style.display = 'none';
+      }
+    });
   }
 
   updateAll() {
@@ -1065,7 +1101,14 @@ class AppController {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+const initApp = () => {
   const app = new AppController();
+  window.polygraphApp = app;
   app.init();
-});
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}

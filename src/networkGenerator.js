@@ -241,14 +241,17 @@ export class NetworkGenerator {
         cumulativeTheoretical += egoPartners;
       } else {
         const prevCount = theoreticalCountByDegree[d - 1];
-        const effectiveBranch = Math.max(0.2, avgDirectBranching * Math.pow(1 - (loopbackRatio * 0.25), d - 1));
+        const effectiveBranch = (avgDirectBranching < 0.05) ? 0 : Math.max(0.05, avgDirectBranching * Math.pow(1 - (loopbackRatio * 0.25), d - 1));
         const degreeCount = Math.round(prevCount * effectiveBranch);
         theoreticalCountByDegree.push(degreeCount);
         cumulativeTheoretical += degreeCount;
       }
     }
 
-    const ingroupRatio = 1 - p.sluttinessIndex;
+    const partnerSum = (p.polyculePct + p.monogamousPct + p.slutPct) || 100;
+    const casualRatio = p.slutPct / partnerSum;
+    const totalOutgroupRatio = Math.min(1.0, casualRatio + ((1 - casualRatio) * (p.sluttinessIndex || 0)));
+    const ingroupRatio = 1 - totalOutgroupRatio;
 
     return {
       renderedNodes: graph.order,
@@ -257,7 +260,7 @@ export class NetworkGenerator {
       theoreticalCountByDegree,
       avgBranchingFactor: avgDirectBranching.toFixed(2),
       ingroupRatio: (ingroupRatio * 100).toFixed(0),
-      outgroupRatio: (p.sluttinessIndex * 100).toFixed(0)
+      outgroupRatio: (totalOutgroupRatio * 100).toFixed(0)
     };
   }
 }

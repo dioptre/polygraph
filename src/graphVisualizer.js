@@ -95,6 +95,15 @@ export class GraphVisualizer {
     this.graph = null;
     this.hoveredNode = null;
     this.selectedNode = null;
+
+    if (typeof ResizeObserver !== 'undefined' && this.container) {
+      const ro = new ResizeObserver(() => {
+        if (this.renderer && this.container.clientWidth > 0 && this.container.clientHeight > 0) {
+          this.renderer.refresh();
+        }
+      });
+      ro.observe(this.container);
+    }
   }
 
   render(graph) {
@@ -158,6 +167,28 @@ export class GraphVisualizer {
     });
 
     this.bindInteractions();
+
+    // 5. Force camera to auto-fit network node bounding box immediately
+    requestAnimationFrame(() => {
+      if (this.renderer) {
+        this.renderer.refresh();
+        this.renderer.getCamera().animatedReset({ duration: 0 });
+      }
+    });
+
+    setTimeout(() => {
+      if (this.renderer) {
+        this.renderer.refresh();
+        this.renderer.getCamera().animatedReset({ duration: 0 });
+      }
+    }, 100);
+
+    setTimeout(() => {
+      if (this.renderer) {
+        this.renderer.refresh();
+        this.renderer.getCamera().animatedReset({ duration: 0 });
+      }
+    }, 300);
   }
 
   bindInteractions() {
@@ -243,7 +274,8 @@ export class GraphVisualizer {
 
   recenter() {
     if (this.renderer) {
-      this.renderer.getCamera().animatedReset();
+      this.renderer.refresh();
+      this.renderer.getCamera().animatedReset({ duration: 250 });
     }
   }
 }

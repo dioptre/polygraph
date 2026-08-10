@@ -106,7 +106,19 @@ export class ChartsManager {
   }
 
   updateSTIRiskProfile(riskResults, categoryFilter = 'top', viewMode = 'protected') {
-    if (!this.stiRiskChart || !riskResults) return;
+    const dom = document.getElementById('chart-sti');
+    if (!dom) return;
+
+    let chart = echarts.getInstanceByDom(dom);
+    if (!chart) {
+      chart = echarts.init(dom, 'dark');
+    } else if (chart.getWidth() === 0 && dom.clientWidth > 0) {
+      chart.dispose();
+      chart = echarts.init(dom, 'dark');
+    }
+    this.stiRiskChart = chart;
+
+    if (!this.stiRiskChart || !riskResults || riskResults.length === 0) return;
 
     let filtered = [...riskResults];
 
@@ -122,23 +134,21 @@ export class ChartsManager {
     // 2. Filter pathogens by category
     if (categoryFilter === 'bacterial') {
       filtered = filtered.filter(s => {
-        const cur = (s.curable || '').toLowerCase();
-        const cat = (s.category || '').toLowerCase();
+        const cName = (s.category || '').toLowerCase();
         const name = (s.name || '').toLowerCase();
-        return cur.includes('curable') || cat.includes('bacteri') || cat.includes('diplococcus') || cat.includes('spirochete') || cat.includes('protozo') || name.includes('chlamydia') || name.includes('syphilis') || name.includes('gonorrh') || name.includes('trich') || name.includes('mgen');
+        return cName.includes('bacteri') || cName.includes('diplococcus') || cName.includes('spirochete') || cName.includes('protozo') || cName.includes('dysbiosis') || name.includes('chlamydia') || name.includes('syphilis') || name.includes('gonorrh') || name.includes('trich') || name.includes('mgen') || name.includes('ureaplasma') || name.includes('bv') || name.includes('chancroid') || name.includes('donovanosis');
       });
     } else if (categoryFilter === 'skin') {
       filtered = filtered.filter(s => {
-        const cat = (s.category || '').toLowerCase();
+        const cName = (s.category || '').toLowerCase();
         const name = (s.name || '').toLowerCase();
-        return name.includes('hsv') || name.includes('hpv') || name.includes('mpox') || name.includes('bv') || name.includes('molluscum') || name.includes('scabies') || name.includes('lice') || cat.includes('herpes') || cat.includes('papilloma') || cat.includes('pox') || cat.includes('parasit');
+        return name.includes('hsv') || name.includes('hpv') || name.includes('mpox') || name.includes('bv') || name.includes('molluscum') || name.includes('scabies') || name.includes('lice') || name.includes('syphilis') || cName.includes('herpes') || cName.includes('papilloma') || cName.includes('pox') || cName.includes('parasit') || cName.includes('mite') || cName.includes('insect') || cName.includes('fungal');
       });
     } else if (categoryFilter === 'viral') {
       filtered = filtered.filter(s => {
-        const cur = (s.curable || '').toLowerCase();
-        const cat = (s.category || '').toLowerCase();
+        const cName = (s.category || '').toLowerCase();
         const name = (s.name || '').toLowerCase();
-        return cur.includes('treatable') || cur.includes('preventable') || cur.includes('supportive') || name.includes('hiv') || name.includes('hepatitis') || name.includes('hsv') || name.includes('hpv') || cat.includes('virus') || cat.includes('retrovirus');
+        return name.includes('hiv') || name.includes('hepatitis') || name.includes('hsv') || name.includes('hpv') || name.includes('mpox') || name.includes('ebv') || name.includes('cmv') || name.includes('htlv') || name.includes('zika') || name.includes('ebola') || cName.includes('virus') || cName.includes('retrovirus') || cName.includes('pox') || cName.includes('herpes');
       });
     }
 
@@ -187,6 +197,7 @@ export class ChartsManager {
         }
       }));
       series.push({
+        id: 'series-unprotected',
         name: 'Raw Baseline Risk (No Prophylaxis)',
         type: 'bar',
         data: data,
@@ -213,12 +224,14 @@ export class ChartsManager {
 
       series.push(
         {
+          id: 'series-protected-delta',
           name: 'Your Protected Risk (With Prophylaxis)',
           type: 'bar',
           stack: 'total',
           data: protectedData
         },
         {
+          id: 'series-blocked-delta',
           name: '🛡️ Prophylactic Barrier (Blocked by Condoms/Meds)',
           type: 'bar',
           stack: 'total',
@@ -245,6 +258,7 @@ export class ChartsManager {
       }));
 
       series.push({
+        id: 'series-protected',
         name: 'Your Protected Risk (With Prophylaxis)',
         type: 'bar',
         data: data,
@@ -257,16 +271,16 @@ export class ChartsManager {
       });
     }
 
-    const yAxisLabels = items.map((s, idx) => `#${items.length - idx} ${s.name}`);
-
     const option = {
       backgroundColor: 'transparent',
+      animation: false,
       tooltip: {
         trigger: 'axis',
         axisPointer: { type: 'shadow' },
         confine: true,
         extraCssText: 'z-index: 99999 !important; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 240, 255, 0.4); border-radius: 10px; padding: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);',
         formatter: (params) => {
+          if (!params || params.length === 0) return '';
           const rawName = names[params[0].dataIndex];
           const pathogen = itemMap[rawName];
           if (!pathogen) return '';
@@ -311,27 +325,27 @@ export class ChartsManager {
       },
       yAxis: {
         type: 'category',
-        data: yAxisLabels,
+        data: names,
         axisLine: { lineStyle: { color: '#64748b' } },
-        axisLabel: { color: '#cbd5e1', fontSize: 10, fontWeight: '600' }
+        axisLabel: {
+          color: '#cbd5e1',
+          fontSize: 10,
+          fontWeight: '600',
+          formatter: (value, index) => `#${names.length - index} ${value}`
+        }
       },
       series: series
     };
 
-    const dom = document.getElementById('chart-sti');
-    if (dom) {
-      const calculatedHeight = Math.max(260, items.length * 28);
-      dom.style.height = `${calculatedHeight}px`;
-    }
+    const calculatedHeight = Math.max(260, items.length * 28);
+    dom.style.height = `${calculatedHeight}px`;
 
-    if (this.stiRiskChart) {
-      this.stiRiskChart.resize();
-      this.stiRiskChart.setOption(option, true);
-      this.stiRiskChart.resize();
-      requestAnimationFrame(() => {
-        if (this.stiRiskChart) this.stiRiskChart.resize();
-      });
-    }
+    this.stiRiskChart.clear();
+    this.stiRiskChart.setOption(option, true);
+    this.stiRiskChart.resize();
+    requestAnimationFrame(() => {
+      if (this.stiRiskChart) this.stiRiskChart.resize();
+    });
   }
 
   updateLongitudinalProjection(longitudinalData) {

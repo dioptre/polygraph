@@ -188,8 +188,12 @@ export class STIRiskCalculator {
       const rFluidPartnerIfInfected = 1 - Math.pow(1 - pActFluid, fluidActsPerMonth);
       const rCasualPartnerIfInfected = 1 - Math.pow(1 - pActCasual, casualActsInitial);
 
-      const directFluidTransmissionProb = rFluidPartnerIfInfected * prevalence;
-      const directCasualTransmissionProb = rCasualPartnerIfInfected * prevalence;
+      const outgroupFactor = Math.min(1.0, Math.max(0.0, casualRatio + (fluidRatio * (params.sluttinessIndex !== undefined ? params.sluttinessIndex : 0.86)) + ((params.cheatingLikelihood || 0) / 100)));
+      const effectiveFluidPrevalence = prevalence * Math.max(0.05, outgroupFactor);
+      const effectiveCasualPrevalence = prevalence;
+
+      const directFluidTransmissionProb = rFluidPartnerIfInfected * effectiveFluidPrevalence;
+      const directCasualTransmissionProb = rCasualPartnerIfInfected * effectiveCasualPrevalence;
 
       const compositeDirectRisk = (fluidRatio * directFluidTransmissionProb) + (casualRatio * directCasualTransmissionProb);
       const unprotectedDirectTransmissionProb = (1 - Math.pow(1 - effectiveActRiskUnprotected, (fluidRatio * fluidActsPerMonth) + (casualRatio * casualActsInitial))) * prevalence;
