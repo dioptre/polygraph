@@ -402,7 +402,8 @@ input[type="range"]::-webkit-slider-thumb:hover {
   flex-direction: column;
   position: relative;
   z-index: 100;
-  overflow: visible;
+  overflow: hidden;
+  height: 100%;
 }
 
 .analytics-tabs {
@@ -411,6 +412,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   background: rgba(10, 14, 26, 0.6);
   position: relative;
   z-index: 101;
+  flex-shrink: 0;
 }
 
 .tab-btn {
@@ -438,10 +440,19 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 .tab-content {
   flex: 1;
+  min-height: 0;
   padding: 12px 16px;
   position: relative;
   z-index: 100;
-  overflow: visible;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.tab-pane {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .chart-container {
@@ -449,7 +460,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   height: 230px;
   position: relative;
   z-index: 100;
-  overflow: visible;
+  flex-shrink: 0;
 }
 
 /* Raw CSV Table */
