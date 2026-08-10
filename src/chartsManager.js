@@ -112,20 +112,25 @@ export class ChartsManager {
     let filtered = [...riskResults];
 
     if (categoryFilter === 'bacterial') {
-      filtered = filtered.filter(s => s.curable === 'Yes' || s.category === 'Bacterial' || s.category === 'Protozoal');
+      filtered = filtered.filter(s => {
+        const cur = (s.curable || '').toLowerCase();
+        const cat = (s.category || '').toLowerCase();
+        const name = (s.name || '').toLowerCase();
+        return cur.includes('curable') || cat.includes('bacteri') || cat.includes('diplococcus') || cat.includes('spirochete') || cat.includes('protozo') || name.includes('chlamydia') || name.includes('syphilis') || name.includes('gonorrh') || name.includes('trich') || name.includes('mgen');
+      });
     } else if (categoryFilter === 'skin') {
-      filtered = filtered.filter(s => s.category === 'Skin / Direct Contact' || s.category === 'Viral (Skin/Fluid)' || s.name.includes('HSV') || s.name.includes('HPV') || s.name.includes('Mpox') || s.name.includes('BV'));
+      filtered = filtered.filter(s => {
+        const cat = (s.category || '').toLowerCase();
+        const name = (s.name || '').toLowerCase();
+        return name.includes('hsv') || name.includes('hpv') || name.includes('mpox') || name.includes('bv') || name.includes('molluscum') || name.includes('scabies') || name.includes('lice') || cat.includes('herpes') || cat.includes('papilloma') || cat.includes('pox') || cat.includes('parasit');
+      });
     } else if (categoryFilter === 'viral') {
-      filtered = filtered.filter(s => s.curable === 'No' || s.name.includes('HIV') || s.name.includes('Hepatitis'));
-    }
-
-    // Sort descending by selected view mode risk metric
-    if (viewMode === 'unprotected') {
-      filtered.sort((a, b) => b.monthlyRiskUnprotectedPct - a.monthlyRiskUnprotectedPct);
-    } else if (viewMode === 'delta') {
-      filtered.sort((a, b) => (b.monthlyRiskUnprotectedPct - b.monthlyRiskProtectedPct) - (a.monthlyRiskUnprotectedPct - a.monthlyRiskProtectedPct));
-    } else {
-      filtered.sort((a, b) => b.monthlyRiskProtectedPct - a.monthlyRiskProtectedPct);
+      filtered = filtered.filter(s => {
+        const cur = (s.curable || '').toLowerCase();
+        const cat = (s.category || '').toLowerCase();
+        const name = (s.name || '').toLowerCase();
+        return cur.includes('treatable') || cur.includes('preventable') || cur.includes('supportive') || name.includes('hiv') || name.includes('hepatitis') || name.includes('hsv') || name.includes('hpv') || cat.includes('virus') || cat.includes('retrovirus');
+      });
     }
 
     if (categoryFilter === 'top') {
@@ -268,7 +273,7 @@ export class ChartsManager {
           `;
         }
       },
-      grid: { left: '3%', right: '14%', bottom: '18px', top: '4px', containLabel: true },
+      grid: { left: '3%', right: '14%', bottom: '30px', top: '4px', containLabel: true },
       xAxis: {
         type: 'value',
         name: '1-Mo Risk (%)',
