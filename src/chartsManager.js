@@ -164,6 +164,14 @@ export class ChartsManager {
       return '#00f0ff';
     };
 
+    // Update Toolbar Badge Text for instant user visual feedback
+    const badgeEl = document.getElementById('sti-profile-title-badge');
+    if (badgeEl) {
+      const catNames = { top: 'Top 8 Threats', bacterial: 'Curable Bacterial', skin: 'Skin-to-Skin', viral: 'Viral & HIV', all: 'All 32 STIs' };
+      const modeNames = { protected: 'Protected', delta: 'Armor Delta', unprotected: 'Raw Baseline' };
+      badgeEl.textContent = `📊 1-Mo Risk (${catNames[categoryFilter] || 'Top'} - ${modeNames[viewMode] || 'Protected'}):`;
+    }
+
     let series = [];
     const itemMap = {};
     items.forEach(it => { itemMap[it.name] = it; });
@@ -171,7 +179,10 @@ export class ChartsManager {
     if (viewMode === 'unprotected') {
       const data = items.map(s => ({
         value: Number(s.monthlyRiskUnprotectedPct.toFixed(2)),
-        itemStyle: { color: getItemColor(s.monthlyRiskUnprotectedPct), borderRadius: [0, 4, 4, 0] }
+        itemStyle: {
+          color: { type: 'linear', x: 0, y: 0, x2: 1, y2: 0, colorStops: [{ offset: 0, color: '#ff2a85' }, { offset: 1, color: '#e11d48' }] },
+          borderRadius: [0, 4, 4, 0]
+        }
       }));
       series.push({
         name: 'Raw Baseline Risk (No Prophylaxis)',
