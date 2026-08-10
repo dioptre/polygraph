@@ -353,6 +353,36 @@ input[type="range"]::-webkit-slider-thumb:hover {
   box-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
 }
 
+#btn-toggle-preview {
+  background: rgba(15, 23, 42, 0.85) !important;
+  backdrop-filter: blur(8px);
+  border: 1.5px solid transparent !important;
+  color: #94a3b8 !important;
+  font-family: var(--font-body);
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 6px 14px !important;
+  border-radius: 20px !important;
+  box-shadow: none !important;
+  transition: all 0.2s ease;
+}
+
+#btn-toggle-preview.active {
+  background: rgba(15, 23, 42, 0.85) !important;
+  border: 1.5px solid transparent !important;
+  color: #cbd5e1 !important;
+  box-shadow: none !important;
+}
+
+#btn-toggle-preview:hover,
+#btn-toggle-preview.active:hover {
+  background: rgba(30, 41, 59, 0.95) !important;
+  color: #00f0ff !important;
+  border: 1.5px solid #00f0ff !important;
+  transform: none !important;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.25) !important;
+}
+
 .network-badge {
   display: flex;
   gap: 12px;

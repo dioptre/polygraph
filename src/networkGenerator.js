@@ -234,15 +234,18 @@ export class NetworkGenerator {
 
     const theoreticalCountByDegree = [1];
     let cumulativeTheoretical = 1;
+    const maxSubculturePoolSize = p.demographicProfile === 'sf_high_risk' ? 50000 : 500000;
 
     for (let d = 1; d <= p.nDegrees; d++) {
       if (d === 1) {
-        theoreticalCountByDegree.push(egoPartners);
-        cumulativeTheoretical += egoPartners;
+        const d1Count = Math.min(maxSubculturePoolSize, egoPartners);
+        theoreticalCountByDegree.push(d1Count);
+        cumulativeTheoretical += d1Count;
       } else {
         const prevCount = theoreticalCountByDegree[d - 1];
         const effectiveBranch = (avgDirectBranching < 0.05) ? 0 : Math.max(0.05, avgDirectBranching * Math.pow(1 - (loopbackRatio * 0.25), d - 1));
-        const degreeCount = Math.round(prevCount * effectiveBranch);
+        const remainingCap = Math.max(0, maxSubculturePoolSize - cumulativeTheoretical);
+        const degreeCount = Math.min(remainingCap, Math.round(prevCount * effectiveBranch));
         theoreticalCountByDegree.push(degreeCount);
         cumulativeTheoretical += degreeCount;
       }

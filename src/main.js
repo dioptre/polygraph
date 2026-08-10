@@ -5,16 +5,21 @@ import { GraphVisualizer } from './graphVisualizer.js';
 import { STIRiskCalculator } from './riskCalculator.js';
 import { ChartsManager } from './chartsManager.js';
 import { PartnerOptimizer } from './partnerOptimizer.js';
+import { ProfileManager } from './profileManager.js';
 
 class AppController {
   constructor() {
+    window.polygraphApp = this;
     this.dataLoader = new STIDataLoader();
     this.networkGen = new NetworkGenerator();
     this.riskCalc = new STIRiskCalculator();
     this.chartsManager = new ChartsManager();
     this.optimizer = new PartnerOptimizer(this.riskCalc);
+    this.profileManager = new ProfileManager(this);
+    window.polygraphProfileManager = this.profileManager;
     this.visualizer = null;
     this.currentQStep = 1;
+    this.currentPresetKey = 'me';
     this.lastOptimizationResults = null;
 
     // Default parameters matching user's baseline setup
@@ -42,7 +47,7 @@ class AppController {
       slutAvgPartners: 6,
       sluttinessIndex: 0.86,
       cheatingLikelihood: 10,
-      nDegrees: 4,
+      nDegrees: 3,
       partyLoopbackPct: 40,
       condomUsageInternal: 0.0,
       condomUsageExternal: 0.90,
@@ -262,8 +267,13 @@ class AppController {
   async init() {
     console.log('Initializing PolyGraph Application...');
     
-    // 1. Load persisted user state from localStorage if available
-    this.loadFromLocalStorage();
+    // Check if URL has a shared profile parameter (#profile=...) first
+    const loadedFromURL = this.profileManager.loadFromURLIfPresent();
+
+    // 1. Restore local storage profile baseline if not loaded from URL
+    if (!loadedFromURL) {
+      this.loadFromLocalStorage();
+    }
 
     // 2. Load STI dataset
     const baseUrl = (typeof import.meta !== 'undefined' && import.meta && import.meta.env && import.meta.env.BASE_URL)
@@ -291,6 +301,7 @@ class AppController {
     this.bindEvents();
     this.bindQuestionnaireEvents();
     this.bindOptimizerEvents();
+    this.bindProfileShareEvents();
 
     // 5. Check if user is visiting for the first time -> open questionnaire overlay
     if (!localStorage.getItem('polygraph_onboarded')) {
@@ -318,6 +329,10 @@ class AppController {
 
   loadFromLocalStorage() {
     try {
+      const savedPreset = localStorage.getItem('polygraph_user_preset');
+      if (savedPreset) {
+        this.currentPresetKey = savedPreset;
+      }
       const savedState = localStorage.getItem('polygraph_user_profile');
       if (savedState) {
         const parsed = JSON.parse(savedState);
@@ -347,12 +362,8 @@ class AppController {
         prophylactics: this.prophylactics
       }));
 
+      localStorage.setItem('polygraph_user_preset', this.currentPresetKey || 'me');
       localStorage.setItem('polygraph_onboarded', 'true');
-
-      const presetSelect = document.getElementById('preset-select');
-      if (presetSelect && presetSelect.value !== 'me') {
-        presetSelect.value = 'me';
-      }
     } catch (err) {
       console.warn('Failed to save to localStorage:', err);
     }
@@ -631,6 +642,10 @@ class AppController {
   }
 
   bindEvents() {
+    window.addEventListener('hashchange', () => {
+      this.profileManager.loadFromURLIfPresent();
+    });
+
     document.getElementById('preset-select')?.addEventListener('change', (e) => {
       this.applyPreset(e.target.value);
     });
@@ -738,10 +753,10 @@ class AppController {
         this.params.previewExtended = !this.params.previewExtended;
         if (this.params.previewExtended) {
           btnPreview.classList.add('active');
-          btnPreview.innerHTML = '<span>✨ Your Extended N-Degree Preview Active</span>';
+          btnPreview.innerHTML = '<span>🌐 Extended Network Preview (Active)</span>';
         } else {
           btnPreview.classList.remove('active');
-          btnPreview.innerHTML = '<span>👁️ Preview Your Extended Network (N Degrees)</span>';
+          btnPreview.innerHTML = '<span>🌐 Extended Network Preview (Off)</span>';
         }
         this.saveToLocalStorage();
         this.updateAll();
@@ -884,10 +899,10 @@ class AppController {
     if (btnPreview) {
       if (p.previewExtended) {
         btnPreview.classList.add('active');
-        btnPreview.innerHTML = '<span>✨ Extended N-Degree Preview Active</span>';
+        btnPreview.innerHTML = '<span>🌐 Extended Network Preview (Active)</span>';
       } else {
         btnPreview.classList.remove('active');
-        btnPreview.innerHTML = '<span>👁️ Preview Extended Network (N Degrees)</span>';
+        btnPreview.innerHTML = '<span>🌐 Extended Network Preview (Off)</span>';
       }
     }
 
@@ -1138,6 +1153,60 @@ class AppController {
         <td>${p.condomTypicalEfficacy}%</td>
       </tr>
     `).join('');
+  }
+
+  openShareModal() {
+    const shareOverlay = document.getElementById('profile-share-overlay');
+    const inputShareUrl = document.getElementById('input-share-url');
+    const toastShareLink = document.getElementById('toast-share-link');
+    const importStatusMsg = document.getElementById('import-status-msg');
+
+    if (inputShareUrl && this.profileManager) {
+      inputShareUrl.value = this.profileManager.generateShareableURL();
+    }
+    if (toastShareLink) toastShareLink.style.display = 'none';
+    if (importStatusMsg) importStatusMsg.textContent = '';
+    if (shareOverlay) {
+      shareOverlay.classList.add('active');
+      shareOverlay.style.display = 'flex';
+      shareOverlay.style.opacity = '1';
+      shareOverlay.style.pointerEvents = 'auto';
+    }
+  }
+
+  closeShareModal() {
+    const shareOverlay = document.getElementById('profile-share-overlay');
+    if (shareOverlay) {
+      shareOverlay.classList.remove('active');
+      shareOverlay.style.display = 'none';
+      shareOverlay.style.opacity = '0';
+      shareOverlay.style.pointerEvents = 'none';
+    }
+  }
+
+  bindProfileShareEvents() {
+    const btnOpenShare = document.getElementById('btn-open-share-modal');
+    const btnShareClose = document.getElementById('btn-share-close');
+    const btnCopyShareUrl = document.getElementById('btn-copy-share-url');
+    const toastShareLink = document.getElementById('toast-share-link');
+
+    if (btnOpenShare) {
+      btnOpenShare.addEventListener('click', () => this.openShareModal());
+    }
+
+    if (btnShareClose) {
+      btnShareClose.addEventListener('click', () => this.closeShareModal());
+    }
+
+    if (btnCopyShareUrl) {
+      btnCopyShareUrl.addEventListener('click', async () => {
+        await this.profileManager.copyShareableURLToClipboard();
+        if (toastShareLink) {
+          toastShareLink.style.display = 'inline';
+          setTimeout(() => { toastShareLink.style.display = 'none'; }, 3000);
+        }
+      });
+    }
   }
 }
 

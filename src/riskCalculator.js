@@ -189,60 +189,69 @@ export class STIRiskCalculator {
       // 1. Raw per-act transmission risk (0% condoms, 0 biomedical armor, 0 screening modifier)
       const rawUnprotectedActRisk = Math.min(0.999, Math.max(0.000001, baselineWeightedActRiskPct) / 100);
 
-      // 2. Per-act risk with User's Biomedical Armor (PrEP, Doxy-PEP, Vaccines) & Screening Modifiers
-      const biomedicalMultiplier = this.getBiomedicalMultiplier(pathogen, prophylactics);
-      const actRiskWithBiomedical = Math.min(0.999, rawUnprotectedActRisk * (biomedicalMultiplier * mTesting * mFinancial));
-
-      // 3. Per-act risk with Condoms + Biomedical Armor
+      // 2. Condom protection per act based on pathogen condom efficacy
       const condomEfficacy = (pathogen.condomTypicalEfficacy || 85) / 100;
-      const actRiskWithCondomAndBiomedical = Math.min(0.999, actRiskWithBiomedical * (1 - condomEfficacy));
+      const actRiskWithCondom = Math.min(0.999, rawUnprotectedActRisk * (1 - condomEfficacy));
 
-      // 4. Weighted per-act risk incorporating User's Exact Condom Usage Sliders:
+      // 3. Weighted per-act risk incorporating User's Exact Condom Usage Sliders:
       // - condomUsageInternal: % condom usage with fluid-bonded polycule partners
       // - condomUsageExternal: % condom usage with casual / open partners
-      const pActFluid = (actRiskWithCondomAndBiomedical * condomUsageInternal) + (actRiskWithBiomedical * (1 - condomUsageInternal));
-      const pActCasual = (actRiskWithCondomAndBiomedical * condomUsageExternal) + (actRiskWithBiomedical * (1 - condomUsageExternal));
+      const pActFluidCondoms = (actRiskWithCondom * condomUsageInternal) + (rawUnprotectedActRisk * (1 - condomUsageInternal));
+      const pActCasualCondoms = (actRiskWithCondom * condomUsageExternal) + (rawUnprotectedActRisk * (1 - condomUsageExternal));
 
-      const rFluidPartnerIfInfected = 1 - Math.pow(1 - pActFluid, fluidActsPerMonth);
-      const rCasualPartnerIfInfected = 1 - Math.pow(1 - pActCasual, casualActsInitial);
+      const rFluidCondomsOnly = 1 - Math.pow(1 - pActFluidCondoms, fluidActsPerMonth);
+      const rCasualCondomsOnly = 1 - Math.pow(1 - pActCasualCondoms, casualActsInitial);
+
+      const rFluidUnprotected = 1 - Math.pow(1 - rawUnprotectedActRisk, fluidActsPerMonth);
+      const rCasualUnprotected = 1 - Math.pow(1 - rawUnprotectedActRisk, casualActsInitial);
 
       const outgroupFactor = Math.min(1.0, Math.max(0.0, casualRatio + (fluidRatio * (params.sluttinessIndex !== undefined ? params.sluttinessIndex : 0.86)) + ((params.cheatingLikelihood || 0) / 100)));
-      
+
       // Outgroup Network Prevalence Bridge:
       // Open multi-partner networks bridge into broader population subgroups (including bisexual/pansexual partners & MSM with 12% HIV prevalence)
       const msmBridgePrevalence = pathogen.name.toLowerCase().includes('hiv') ? 0.12 : prevalence;
       const effectiveCasualPrevalence = prevalence + ((msmBridgePrevalence - prevalence) * (outgroupFactor * 0.35));
       const effectiveFluidPrevalence = effectiveCasualPrevalence * Math.max(0.05, outgroupFactor);
 
-      const directFluidTransmissionProb = rFluidPartnerIfInfected * effectiveFluidPrevalence;
-      const directCasualTransmissionProb = rCasualPartnerIfInfected * effectiveCasualPrevalence;
-      const compositeDirectRisk = (fluidRatio * directFluidTransmissionProb) + (casualRatio * directCasualTransmissionProb);
-
-      // Unprotected baseline transmission risk (0% condoms, 0 biomedical interventions, 0 testing)
-      const rFluidUnprotected = 1 - Math.pow(1 - rawUnprotectedActRisk, fluidActsPerMonth);
-      const rCasualUnprotected = 1 - Math.pow(1 - rawUnprotectedActRisk, casualActsInitial);
-
-      const directFluidUnprotectedProb = rFluidUnprotected * effectiveFluidPrevalence;
-      const directCasualUnprotectedProb = rCasualUnprotected * effectiveCasualPrevalence;
-
-      const compositeUnprotectedDirectRisk = (fluidRatio * directFluidUnprotectedProb) + (casualRatio * directCasualUnprotectedProb);
-
-      let overallSafetyProduct = 1.0;
-      let unprotectedSafetyProduct = 1.0;
-
-      for (let d = 1; d <= Math.min(nDegrees, degreeCounts.length - 1); d++) {
+      // Upstream Extended Network Prevalence Scaling (Degree 2..N):
+      // Extended network partners (Degree 2..N) increase the probability that Degree 1 partners carry the pathogen
+      let extendedNetworkPrevalenceMultiplier = 1.0;
+      for (let d = 2; d <= Math.min(nDegrees, degreeCounts.length - 1); d++) {
         const countAtDegree = degreeCounts[d] || 0;
         const attenuation = Math.pow(0.5, d - 1);
-
-        const protectedHopProb = compositeDirectRisk * attenuation;
-        const unprotectedHopProb = compositeUnprotectedDirectRisk * attenuation;
-
-        overallSafetyProduct *= Math.pow(1 - protectedHopProb, countAtDegree);
-        unprotectedSafetyProduct *= Math.pow(1 - unprotectedHopProb, countAtDegree);
+        extendedNetworkPrevalenceMultiplier += (countAtDegree * attenuation * 0.005);
       }
+      extendedNetworkPrevalenceMultiplier = Math.min(4.0, extendedNetworkPrevalenceMultiplier);
 
-      let totalProtectedRiskPct = Math.min(99.9, (1 - overallSafetyProduct) * 100);
-      let totalUnprotectedRiskPct = Math.min(99.9, (1 - unprotectedSafetyProduct) * 100);
+      const pD1FluidInfected = Math.min(0.95, effectiveFluidPrevalence * extendedNetworkPrevalenceMultiplier);
+      const pD1CasualInfected = Math.min(0.95, effectiveCasualPrevalence * extendedNetworkPrevalenceMultiplier);
+
+      // Degree 1 Partner Counts
+      const totalPartners = Math.max(1, params.egoPartners || 1);
+      const kFluid = Math.max(0, Math.round(totalPartners * fluidRatio));
+      const kCasual = Math.max(0, totalPartners - kFluid);
+
+      // Direct transmission risk from Ego's Degree 1 partners
+      const pFluidInfectionRisk = rFluidCondomsOnly * pD1FluidInfected;
+      const pCasualInfectionRisk = rCasualCondomsOnly * pD1CasualInfected;
+
+      const pFluidUnprotectedRisk = rFluidUnprotected * pD1FluidInfected;
+      const pCasualUnprotectedRisk = rCasualUnprotected * pD1CasualInfected;
+
+      const egoSafetyCondoms = Math.pow(1 - pFluidInfectionRisk, Math.max(1, kFluid)) * Math.pow(1 - pCasualInfectionRisk, Math.max(1, kCasual));
+      const egoSafetyUnprotected = Math.pow(1 - pFluidUnprotectedRisk, Math.max(1, kFluid)) * Math.pow(1 - pCasualUnprotectedRisk, Math.max(1, kCasual));
+
+      const rawCondomNetworkExposureRisk = 1 - egoSafetyCondoms;
+      const rawCumulativeUnprotectedRisk = 1 - egoSafetyUnprotected;
+
+      // 4. Apply Ego's Personal Biomedical Armor (PrEP, Doxy-PEP, Vaccines) & Screening Modifiers to Ego's Personal Contact Point
+      const biomedicalMultiplier = this.getBiomedicalMultiplier(pathogen, prophylactics);
+      const netArmorMultiplier = biomedicalMultiplier * mTesting * mFinancial;
+      const finalProtectedProb = 1 - Math.pow(1 - rawCondomNetworkExposureRisk, netArmorMultiplier);
+      const finalUnprotectedProb = rawCumulativeUnprotectedRisk;
+
+      let totalProtectedRiskPct = Math.min(99.9, finalProtectedProb * 100);
+      let totalUnprotectedRiskPct = Math.min(99.9, finalUnprotectedProb * 100);
 
       // Ensure mathematical monotonicity invariant: totalProtectedRiskPct <= totalUnprotectedRiskPct
       if (totalProtectedRiskPct > totalUnprotectedRiskPct) {

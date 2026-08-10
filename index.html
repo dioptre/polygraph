@@ -6,8 +6,8 @@
   <title>Your PolyGraph StarChart — Extended Sexual Network & STI Epidemiology Visualizer</title>
   <meta name="description" content="Interactive network visualization and epidemiological STI transmission risk calculator for polyamorous, open, and slutty sexual networks.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
-  <script type="module" crossorigin src="./assets/index-C4fIUa3n.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-CGu8n06F.css">
+  <script type="module" crossorigin src="./assets/index-Dt0_vTKK.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DIYgT6Nx.css">
 </head>
 <body>
   <!-- Top Bar / Header -->
@@ -25,6 +25,10 @@
 
       <button id="btn-open-optimizer" class="btn-preview" style="background: linear-gradient(135deg, #10b981, #06b6d4); padding: 8px 16px; font-size: 13px;">
         💖 Partner Risk Optimizer
+      </button>
+
+      <button id="btn-open-share-modal" onclick="window.polygraphApp && window.polygraphApp.openShareModal()" class="btn-preview" style="background: linear-gradient(135deg, #8b5cf6, #ec4899); padding: 8px 16px; font-size: 13px;">
+        🔗 Share Profile Link
       </button>
 
       <label for="preset-select" style="font-size: 13px; color: var(--text-muted); margin-left: 10px;">Preset Profile:</label>
@@ -184,6 +188,41 @@
         <button id="btn-opt-apply-top" class="btn-q-next" style="background: linear-gradient(135deg, #10b981, var(--accent-cyan));">
           ✨ Apply Top Solution to Your PolyGraph
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Share Profile Link Modal Overlay -->
+  <div id="profile-share-overlay" class="questionnaire-overlay" style="display: none; z-index: 10000;">
+    <div class="questionnaire-card" style="max-width: 600px;">
+      <div class="q-header" style="background: linear-gradient(180deg, rgba(139, 92, 246, 0.15) 0%, rgba(15, 23, 42, 0) 100%); border-bottom-color: rgba(139, 92, 246, 0.3);">
+        <div class="q-magazine-tag" style="color: #a78bfa;">Instant Profile Sharing</div>
+        <h2 class="q-title" style="background: linear-gradient(90deg, #ffffff, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+          Share Your PolyGraph Profile
+        </h2>
+        <p class="q-subtitle">
+          Send this 1-click link to partners or friends. Anyone opening it will instantly view your exact network parameters.
+        </p>
+        <button id="btn-share-close" onclick="window.polygraphApp && window.polygraphApp.closeShareModal()" class="btn-preview" style="position: absolute; top: 18px; right: 18px; background: rgba(255,255,255,0.1); border: none; font-weight: bold; cursor: pointer; color: #fff; border-radius: 6px; padding: 4px 10px;">✕ Close</button>
+      </div>
+
+      <div style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+        <!-- 1-Click Shareable Link -->
+        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 10px; padding: 18px;">
+          <div style="font-size: 14px; font-weight: 800; color: #a78bfa; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between;">
+            <span>🔗 Your 1-Click Shareable Link</span>
+            <span id="toast-share-link" style="font-size: 11px; color: #10b981; font-weight: 700; display: none;">✅ Copied to Clipboard!</span>
+          </div>
+          <p style="font-size: 11px; color: #94a3b8; margin-bottom: 12px;">
+            Copy and send this link in a text, DM, or email. Anyone who opens it will automatically load your saved network parameters.
+          </p>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="input-share-url" readonly style="flex: 1; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.15); color: #cbd5e1; font-size: 11px; padding: 10px 12px; border-radius: 6px;" placeholder="Generating link...">
+            <button id="btn-copy-share-url" class="btn-preview" style="background: linear-gradient(135deg, #8b5cf6, #ec4899); font-size: 13px; font-weight: 800; white-space: nowrap; padding: 10px 18px;">
+              📋 Copy Link
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -361,8 +400,8 @@
               <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Probability of secret outside hookups.</div>
             </div>
             <div class="control-group">
-              <div class="control-label"><span>Your Extended Network Depth (N Degrees)</span><span id="q-val-nDegrees" class="val-badge">4 Steps</span></div>
-              <input type="range" id="q-input-nDegrees" min="0" max="10" value="4">
+              <div class="control-label"><span>Your Extended Network Depth (N Degrees)</span><span id="q-val-nDegrees" class="val-badge">3 Steps</span></div>
+              <input type="range" id="q-input-nDegrees" min="0" max="10" value="3">
               <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Network hops calculated for extended risk (up to 10).</div>
             </div>
             <div class="control-group" style="grid-column: span 2;">
@@ -651,9 +690,9 @@
         <div class="control-group">
           <div class="control-label">
             <span>Your Network Depth (N Degrees) <span class="help-icon" data-tooltip="Number of network degrees/hops to project your extended theoretical risk.">ℹ️</span></span>
-            <span id="val-nDegrees" class="val-badge">4 Steps</span>
+            <span id="val-nDegrees" class="val-badge">3 Steps</span>
           </div>
-          <input type="range" id="input-nDegrees" min="0" max="10" value="4">
+          <input type="range" id="input-nDegrees" min="0" max="10" value="3">
         </div>
 
         <div class="control-group">
@@ -762,7 +801,7 @@
       <!-- Canvas Floating Overlay Controls -->
       <div class="canvas-overlay">
         <button id="btn-toggle-preview" class="btn-preview active">
-          <span>✨ Your Extended N-Degree Preview Active</span>
+          <span>🌐 Extended Network Preview (Active)</span>
         </button>
 
         <div class="network-badge">
