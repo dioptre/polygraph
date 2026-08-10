@@ -286,6 +286,12 @@ export class ChartsManager {
       series: series
     };
 
+    const dom = document.getElementById('chart-sti');
+    if (dom) {
+      const calculatedHeight = Math.max(280, items.length * 36);
+      dom.style.height = `${calculatedHeight}px`;
+    }
+
     this.stiRiskChart.setOption(option, true);
     this.stiRiskChart.resize();
   }
