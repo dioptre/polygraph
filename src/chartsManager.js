@@ -268,31 +268,32 @@ export class ChartsManager {
           `;
         }
       },
-      grid: { left: '3%', right: '16%', bottom: '15px', top: '10px', containLabel: true },
+      grid: { left: '3%', right: '14%', bottom: '18px', top: '4px', containLabel: true },
       xAxis: {
         type: 'value',
         name: '1-Mo Risk (%)',
         max: 100,
         axisLine: { lineStyle: { color: '#64748b' } },
         splitLine: { lineStyle: { color: '#33415544' } },
-        axisLabel: { color: '#cbd5e1' }
+        axisLabel: { color: '#cbd5e1', fontSize: 10 }
       },
       yAxis: {
         type: 'category',
         data: names,
         axisLine: { lineStyle: { color: '#64748b' } },
-        axisLabel: { color: '#cbd5e1', fontSize: 11, fontWeight: '600' }
+        axisLabel: { color: '#cbd5e1', fontSize: 10, fontWeight: '600' }
       },
       series: series
     };
 
     const dom = document.getElementById('chart-sti');
     if (dom) {
-      const calculatedHeight = Math.max(200, items.length * 28);
+      const calculatedHeight = items.length <= 8 ? 165 : items.length * 25;
       dom.style.height = `${calculatedHeight}px`;
     }
 
     this.stiRiskChart.setOption(option, true);
+    this.stiRiskChart.resize();
     this.stiRiskChart.resize();
   }
 

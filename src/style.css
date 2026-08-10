@@ -441,10 +441,28 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .tab-content {
   flex: 1;
   min-height: 0;
-  padding: 10px 14px;
+  padding: 8px 12px;
   position: relative;
   z-index: 100;
-  overflow-y: auto;
+  overflow-y: auto !important;
+}
+
+.tab-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tab-content::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 4px;
+}
+
+.tab-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.4);
+  border-radius: 4px;
+}
+
+.tab-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.8);
 }
 
 .tab-pane {
