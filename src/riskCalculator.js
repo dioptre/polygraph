@@ -60,7 +60,7 @@ export class STIRiskCalculator {
     const category = (pathogen.category || '').toLowerCase();
 
     if (name.includes('hiv') && prepActive) {
-      return 0.001; // ~99.9% reduction with PrEP or U=U
+      return 0.0001; // ~99.99% reduction with PrEP or U=U
     }
     if (category.includes('bacteria') && doxyPepActive) {
       if (name.includes('chlamydia') || name.includes('syphilis')) {
@@ -184,16 +184,16 @@ export class STIRiskCalculator {
         mFluid = ((ejaculationPct / 100) * 1.0) + (((100 - ejaculationPct) / 100) * 0.30);
       }
 
-      const baselineWeightedActRiskPct = ((wAnal * pAnal) + (wVag * pVag) + (wOral * pOral) + (wSkin * pSkin)) * mDuration * mFluid;
+      const baselineWeightedActRiskPct = Math.min(99.9, ((wAnal * pAnal) + (wVag * pVag) + (wOral * pOral) + (wSkin * pSkin)) * mDuration * mFluid);
 
-      let effectiveActRiskUnprotected = Math.max(0.000001, baselineWeightedActRiskPct) / 100;
+      let effectiveActRiskUnprotected = Math.min(0.999, Math.max(0.000001, baselineWeightedActRiskPct) / 100);
       const condomEfficacy = (pathogen.condomTypicalEfficacy || 85) / 100;
-      let effectiveActRiskProtected = effectiveActRiskUnprotected * (1 - condomEfficacy);
+      let effectiveActRiskProtected = Math.min(0.999, effectiveActRiskUnprotected * (1 - condomEfficacy));
 
       // Apply Biomedical Multipliers (PrEP, Doxy-PEP, Vaccines)
       const biomedicalMultiplier = this.getBiomedicalMultiplier(pathogen, prophylactics);
-      effectiveActRiskUnprotected *= (biomedicalMultiplier * mTesting * mFinancial);
-      effectiveActRiskProtected *= (biomedicalMultiplier * mTesting * mFinancial);
+      effectiveActRiskUnprotected = Math.min(0.999, effectiveActRiskUnprotected * (biomedicalMultiplier * mTesting * mFinancial));
+      effectiveActRiskProtected = Math.min(0.999, effectiveActRiskProtected * (biomedicalMultiplier * mTesting * mFinancial));
 
       const pActFluid = (effectiveActRiskProtected * condomUsageInternal) + (effectiveActRiskUnprotected * (1 - condomUsageInternal));
       const pActCasual = (effectiveActRiskProtected * condomUsageExternal) + (effectiveActRiskUnprotected * (1 - condomUsageExternal));
@@ -211,9 +211,17 @@ export class STIRiskCalculator {
 
       const directFluidTransmissionProb = rFluidPartnerIfInfected * effectiveFluidPrevalence;
       const directCasualTransmissionProb = rCasualPartnerIfInfected * effectiveCasualPrevalence;
-
       const compositeDirectRisk = (fluidRatio * directFluidTransmissionProb) + (casualRatio * directCasualTransmissionProb);
-      const unprotectedDirectTransmissionProb = (1 - Math.pow(1 - effectiveActRiskUnprotected, (fluidRatio * fluidActsPerMonth) + (casualRatio * casualActsInitial))) * prevalence;
+
+      // Unprotected baseline transmission risk (0% condoms & 0 biomedical interventions)
+      const rawUnprotectedActRisk = Math.min(0.999, Math.max(0.000001, baselineWeightedActRiskPct) / 100);
+      const rFluidUnprotected = 1 - Math.pow(1 - rawUnprotectedActRisk, fluidActsPerMonth);
+      const rCasualUnprotected = 1 - Math.pow(1 - rawUnprotectedActRisk, casualActsInitial);
+
+      const directFluidUnprotectedProb = rFluidUnprotected * effectiveFluidPrevalence;
+      const directCasualUnprotectedProb = rCasualUnprotected * effectiveCasualPrevalence;
+
+      const compositeUnprotectedDirectRisk = (fluidRatio * directFluidUnprotectedProb) + (casualRatio * directCasualUnprotectedProb);
 
       let overallSafetyProduct = 1.0;
       let unprotectedSafetyProduct = 1.0;
@@ -223,14 +231,19 @@ export class STIRiskCalculator {
         const attenuation = Math.pow(0.5, d - 1);
 
         const protectedHopProb = compositeDirectRisk * attenuation;
-        const unprotectedHopProb = unprotectedDirectTransmissionProb * attenuation;
+        const unprotectedHopProb = compositeUnprotectedDirectRisk * attenuation;
 
         overallSafetyProduct *= Math.pow(1 - protectedHopProb, countAtDegree);
         unprotectedSafetyProduct *= Math.pow(1 - unprotectedHopProb, countAtDegree);
       }
 
-      const totalProtectedRiskPct = Math.min(99.9, (1 - overallSafetyProduct) * 100);
-      const totalUnprotectedRiskPct = Math.min(99.9, (1 - unprotectedSafetyProduct) * 100);
+      let totalProtectedRiskPct = Math.min(99.9, (1 - overallSafetyProduct) * 100);
+      let totalUnprotectedRiskPct = Math.min(99.9, (1 - unprotectedSafetyProduct) * 100);
+
+      // Ensure mathematical monotonicity invariant: totalProtectedRiskPct <= totalUnprotectedRiskPct
+      if (totalProtectedRiskPct > totalUnprotectedRiskPct) {
+        totalUnprotectedRiskPct = totalProtectedRiskPct;
+      }
 
       const formatPrecision = (val) => {
         if (val <= 0) return 0;

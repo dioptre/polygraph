@@ -284,23 +284,38 @@ export class ChartsManager {
           const rawName = names[params[0].dataIndex];
           const pathogen = itemMap[rawName];
           if (!pathogen) return '';
-          const prot = pathogen.monthlyRiskProtectedPct.toFixed(2);
+          const protVal = pathogen.monthlyRiskProtectedPct;
+          const prot = protVal < 0.01 && protVal > 0 ? protVal.toFixed(3) : protVal.toFixed(2);
           const unprot = pathogen.monthlyRiskUnprotectedPct.toFixed(2);
           const blocked = Math.max(0, pathogen.monthlyRiskUnprotectedPct - pathogen.monthlyRiskProtectedPct).toFixed(2);
 
-          const statusBadge = pathogen.monthlyRiskProtectedPct > 15 
-            ? '<span style="color: #ff2a85; font-weight: 800; background: rgba(255,42,133,0.15); padding: 2px 6px; border-radius: 4px;">⚠️ High Concern</span>' 
-            : pathogen.monthlyRiskProtectedPct > 5 
-            ? '<span style="color: #f59e0b; font-weight: 800; background: rgba(245,158,11,0.15); padding: 2px 6px; border-radius: 4px;">⚡ Moderate Risk</span>' 
-            : '<span style="color: #10b981; font-weight: 800; background: rgba(16,185,129,0.15); padding: 2px 6px; border-radius: 4px;">🛡️ Low Risk</span>';
+          let statusBadge = '';
+          let qualDesc = '';
+
+          if (protVal > 15) {
+            statusBadge = '<span style="color: #ff2a85; font-weight: 800; background: rgba(255,42,133,0.15); padding: 2px 6px; border-radius: 4px;">⚠️ High Concern</span>';
+            qualDesc = 'High monthly transmission probability. Barrier methods, routine STI panels, or targeted biomedical armor (PrEP / Doxy-PEP) are strongly recommended.';
+          } else if (protVal > 5) {
+            statusBadge = '<span style="color: #f59e0b; font-weight: 800; background: rgba(245,158,11,0.15); padding: 2px 6px; border-radius: 4px;">⚡ Moderate Risk</span>';
+            qualDesc = 'Moderate transmission likelihood. Consider routine screening every 3 months and active partner status alignment.';
+          } else if (protVal >= 1) {
+            statusBadge = '<span style="color: #10b981; font-weight: 800; background: rgba(16,185,129,0.15); padding: 2px 6px; border-radius: 4px;">🛡️ Low Risk</span>';
+            qualDesc = 'Low monthly network exposure. Standard preventive hygiene and periodic testing recommended.';
+          } else {
+            statusBadge = '<span style="color: #38bdf8; font-weight: 800; background: rgba(56,189,248,0.15); padding: 2px 6px; border-radius: 4px;">💚 Minimal / Negligible</span>';
+            qualDesc = 'Minimal exposure under current protection & network parameters.';
+          }
 
           return `
             <div style="font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
               <span>${pathogen.name}</span>
               ${statusBadge}
             </div>
-            <div style="font-size: 11px; color: #94a3b8; margin-bottom: 8px;">
-              ${pathogen.category} | ${pathogen.curable === 'Yes' ? '💊 Curable with Antibiotics' : '🛡️ Viral / Chronic Pathogen'}
+            <div style="font-size: 11px; color: #94a3b8; margin-bottom: 6px;">
+              ${pathogen.category} | ${pathogen.curable === 'Yes' || pathogen.curable?.includes('Curable') ? '💊 Curable with Antibiotics' : '🛡️ Chronic / Managed Pathogen'}
+            </div>
+            <div style="font-size: 11px; color: #e2e8f0; font-style: italic; background: rgba(255,255,255,0.05); padding: 6px 8px; border-radius: 6px; margin-bottom: 8px; border-left: 3px solid #00f0ff;">
+              "${qualDesc}"
             </div>
             <div style="font-size: 12px; color: #00f0ff; margin-bottom: 2px;">
               • Protected Monthly Risk (With Prophylaxis): <strong>${prot}%</strong>
@@ -310,6 +325,9 @@ export class ChartsManager {
             </div>
             <div style="font-size: 12px; color: #10b981; font-weight: 700; margin-top: 4px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
               🛡️ Prophylactic Barrier Avoided: <strong>-${blocked}%</strong>
+            </div>
+            <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">
+              💊 Primary Protocol: ${pathogen.primaryTreatment || 'Standard Care'}
             </div>
           `;
         }

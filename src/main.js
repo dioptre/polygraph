@@ -920,7 +920,9 @@ class AppController {
 
     if (riskResults.length > 0) {
       const topSTI = [...riskResults].sort((a, b) => b.monthlyRiskProtectedPct - a.monthlyRiskProtectedPct)[0];
-      document.getElementById('metric-top-sti').textContent = `${topSTI.name}: ~${topSTI.monthlyRiskProtectedPct}% (1 Mo)`;
+      const val = topSTI.monthlyRiskProtectedPct;
+      const tier = val > 15 ? '⚠️ High Concern' : val > 5 ? '⚡ Moderate Risk' : val >= 1 ? '🛡️ Low Risk' : '💚 Minimal Exposure';
+      document.getElementById('metric-top-sti').textContent = `${topSTI.name}: ~${val}% (1 Mo) • ${tier}`;
     }
   }
 
