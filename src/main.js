@@ -699,7 +699,13 @@ class AppController {
 
         const targetTab = btn.getAttribute('data-tab');
         document.querySelectorAll('.tab-pane').forEach(pane => {
-          pane.style.display = pane.id === targetTab ? 'block' : 'none';
+          if (pane.id === targetTab) {
+            pane.classList.add('active');
+            pane.style.display = 'block';
+          } else {
+            pane.classList.remove('active');
+            pane.style.display = 'none';
+          }
         });
 
         setTimeout(() => this.chartsManager.resizeAll(), 50);
