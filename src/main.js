@@ -253,6 +253,7 @@ class AppController {
         mpoxVaccinated: true
       }
     };
+    window.polygraphApp = this;
   }
 
   async init() {
@@ -602,6 +603,12 @@ class AppController {
   }
 
   bindEvents() {
+    document.addEventListener('change', (e) => {
+      if (e.target && (e.target.id === 'sti-category-filter' || e.target.id === 'sti-view-mode')) {
+        this.handleSTIFilterChange();
+      }
+    });
+
     document.getElementById('preset-select')?.addEventListener('change', (e) => {
       this.applyPreset(e.target.value);
     });

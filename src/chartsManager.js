@@ -324,10 +324,14 @@ export class ChartsManager {
       dom.style.height = `${calculatedHeight}px`;
     }
 
-    this.stiRiskChart.setOption(option, true);
-    requestAnimationFrame(() => {
-      if (this.stiRiskChart) this.stiRiskChart.resize();
-    });
+    if (this.stiRiskChart) {
+      this.stiRiskChart.resize();
+      this.stiRiskChart.setOption(option, true);
+      this.stiRiskChart.resize();
+      requestAnimationFrame(() => {
+        if (this.stiRiskChart) this.stiRiskChart.resize();
+      });
+    }
   }
 
   updateLongitudinalProjection(longitudinalData) {
