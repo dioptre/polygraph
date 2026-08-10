@@ -167,92 +167,11 @@ export class ChartsManager {
     // Update Toolbar Badge Text for instant user visual feedback
     const badgeEl = document.getElementById('sti-profile-title-badge');
     if (badgeEl) {
-      const catNames = { top: 'Top 8 Threats', bacterial: 'Curable Bacterial', skin: 'Skin-to-Skin', viral: 'Viral & HIV', all: 'All 32 STIs' };
       const modeNames = { protected: 'Protected', delta: 'Armor Delta', unprotected: 'Raw Baseline' };
-      badgeEl.textContent = `📊 1-Mo Risk (${catNames[categoryFilter] || 'Top'} - ${modeNames[viewMode] || 'Protected'}):`;
+      badgeEl.textContent = `📊 Displaying ${items.length} Pathogens (${modeNames[viewMode] || 'Protected'}):`;
     }
 
-    let series = [];
-    const itemMap = {};
-    items.forEach(it => { itemMap[it.name] = it; });
-
-    if (viewMode === 'unprotected') {
-      const data = items.map(s => ({
-        value: Number(s.monthlyRiskUnprotectedPct.toFixed(2)),
-        itemStyle: {
-          color: { type: 'linear', x: 0, y: 0, x2: 1, y2: 0, colorStops: [{ offset: 0, color: '#ff2a85' }, { offset: 1, color: '#e11d48' }] },
-          borderRadius: [0, 4, 4, 0]
-        }
-      }));
-      series.push({
-        name: 'Raw Baseline Risk (No Prophylaxis)',
-        type: 'bar',
-        data: data,
-        label: {
-          show: true,
-          position: 'right',
-          color: '#ff2a85',
-          formatter: '{c}%'
-        }
-      });
-    } else if (viewMode === 'delta') {
-      const protectedData = items.map(s => ({
-        value: Number(s.monthlyRiskProtectedPct.toFixed(2)),
-        itemStyle: { color: getItemColor(s.monthlyRiskProtectedPct), borderRadius: [0, 0, 0, 0] }
-      }));
-
-      const blockedData = items.map(s => {
-        const delta = Math.max(0, s.monthlyRiskUnprotectedPct - s.monthlyRiskProtectedPct);
-        return {
-          value: Number(delta.toFixed(2)),
-          itemStyle: { color: 'rgba(16, 185, 129, 0.35)', borderRadius: [0, 4, 4, 0] }
-        };
-      });
-
-      series.push(
-        {
-          name: 'Your Protected Risk (With Prophylaxis)',
-          type: 'bar',
-          stack: 'total',
-          data: protectedData
-        },
-        {
-          name: '🛡️ Prophylactic Barrier (Blocked by Condoms/Meds)',
-          type: 'bar',
-          stack: 'total',
-          data: blockedData,
-          label: {
-            show: true,
-            position: 'right',
-            color: '#10b981',
-            formatter: (params) => {
-              const pathogen = itemMap[params.name];
-              if (!pathogen) return '';
-              return `Blocked: -${(pathogen.monthlyRiskUnprotectedPct - pathogen.monthlyRiskProtectedPct).toFixed(1)}% (Base: ${pathogen.monthlyRiskUnprotectedPct.toFixed(1)}%)`;
-            }
-          }
-        }
-      );
-    } else {
-      // Protected mode (Default)
-      const data = items.map(s => ({
-        value: Number(s.monthlyRiskProtectedPct.toFixed(2)),
-        itemStyle: { color: getItemColor(s.monthlyRiskProtectedPct), borderRadius: [0, 4, 4, 0] },
-        labelTextColor: getItemTextColor(s.monthlyRiskProtectedPct)
-      }));
-
-      series.push({
-        name: 'Your Protected Risk (With Prophylaxis)',
-        type: 'bar',
-        data: data,
-        label: {
-          show: true,
-          position: 'right',
-          color: '#cbd5e1',
-          formatter: (params) => `${params.value}%`
-        }
-      });
-    }
+    const yAxisLabels = items.map((s, idx) => `#${items.length - idx} ${s.name}`);
 
     const option = {
       backgroundColor: 'transparent',
@@ -305,7 +224,7 @@ export class ChartsManager {
       },
       yAxis: {
         type: 'category',
-        data: names,
+        data: yAxisLabels,
         axisLine: { lineStyle: { color: '#64748b' } },
         axisLabel: { color: '#cbd5e1', fontSize: 10, fontWeight: '600' }
       },
