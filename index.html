@@ -6,7 +6,7 @@
   <title>Your PolyGraph StarChart — Extended Sexual Network & STI Epidemiology Visualizer</title>
   <meta name="description" content="Interactive network visualization and epidemiological STI transmission risk calculator for polyamorous, open, and slutty sexual networks.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
-  <script type="module" crossorigin src="./assets/index-QslOC_xD.js"></script>
+  <script type="module" crossorigin src="./assets/index-Q_71ahHI.js"></script>
   <link rel="stylesheet" crossorigin href="./assets/index-C5VFWmKm.css">
 </head>
 <body>
@@ -790,7 +790,7 @@
 
             <!-- Controls -->
             <div style="display: flex; gap: 6px; align-items: center;">
-              <select id="sti-category-filter" class="preset-select" style="padding: 3px 8px; font-size: 11px; height: 26px; border-color: rgba(0,240,255,0.4); cursor: pointer; pointer-events: auto;">
+              <select id="sti-category-filter" class="preset-select" onchange="window.polygraphApp && window.polygraphApp.handleSTIFilterChange()" style="padding: 3px 8px; font-size: 11px; height: 26px; border-color: rgba(0,240,255,0.4); cursor: pointer; pointer-events: auto;">
                 <option value="top" selected>🔥 Top Threats (Highest Risk)</option>
                 <option value="bacterial">💊 Curable / Bacterial STIs</option>
                 <option value="skin">💋 Skin-to-Skin Pathogens</option>
@@ -798,7 +798,7 @@
                 <option value="all">🌐 All Pathogens (32 STIs)</option>
               </select>
 
-              <select id="sti-view-mode" class="preset-select" style="padding: 3px 8px; font-size: 11px; height: 26px; border-color: rgba(255,42,133,0.4); cursor: pointer; pointer-events: auto;">
+              <select id="sti-view-mode" class="preset-select" onchange="window.polygraphApp && window.polygraphApp.handleSTIFilterChange()" style="padding: 3px 8px; font-size: 11px; height: 26px; border-color: rgba(255,42,133,0.4); cursor: pointer; pointer-events: auto;">
                 <option value="protected" selected>🛡️ Protected (With Prophylaxis)</option>
                 <option value="delta">📊 Prophylactic Barrier (Risk Avoided)</option>
                 <option value="unprotected">⚠️ Raw Baseline (No Prophylaxis)</option>
