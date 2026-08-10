@@ -108,9 +108,18 @@ export class ChartsManager {
   updateSTIRiskProfile(riskResults, categoryFilter = 'top', viewMode = 'protected') {
     if (!this.stiRiskChart || !riskResults) return;
 
-    // Filter pathogens by category
     let filtered = [...riskResults];
 
+    // 1. Sort descending by selected view mode risk metric FIRST
+    if (viewMode === 'unprotected') {
+      filtered.sort((a, b) => b.monthlyRiskUnprotectedPct - a.monthlyRiskUnprotectedPct);
+    } else if (viewMode === 'delta') {
+      filtered.sort((a, b) => (b.monthlyRiskUnprotectedPct - b.monthlyRiskProtectedPct) - (a.monthlyRiskUnprotectedPct - a.monthlyRiskProtectedPct));
+    } else {
+      filtered.sort((a, b) => b.monthlyRiskProtectedPct - a.monthlyRiskProtectedPct);
+    }
+
+    // 2. Filter pathogens by category
     if (categoryFilter === 'bacterial') {
       filtered = filtered.filter(s => {
         const cur = (s.curable || '').toLowerCase();
@@ -133,6 +142,7 @@ export class ChartsManager {
       });
     }
 
+    // 3. Slice top 8 items for Top Threats
     if (categoryFilter === 'top') {
       filtered = filtered.slice(0, 8);
     }

@@ -294,6 +294,7 @@ class AppController {
     }
 
     // 6. Sync UI & Render
+    window.polygraphApp = this;
     this.syncUIWithParams();
     this.updateAll();
 
@@ -586,6 +587,23 @@ class AppController {
     this.updateAll();
   }
 
+  handleSTIFilterChange() {
+    const catSel = document.getElementById('sti-category-filter');
+    const modeSel = document.getElementById('sti-view-mode');
+    const cat = catSel ? catSel.value : 'top';
+    const mode = modeSel ? modeSel.value : 'protected';
+
+    if (!this.lastRiskResults && this.params) {
+      const graph = this.networkGen.generateGraph();
+      const metrics = this.networkGen.calculateNetworkMetrics(graph);
+      this.lastRiskResults = this.riskCalc.calculateNetworkRisk(metrics, this.params, this.prophylactics);
+    }
+
+    if (this.lastRiskResults) {
+      this.chartsManager.updateSTIRiskProfile(this.lastRiskResults, cat, mode);
+    }
+  }
+
   bindEvents() {
     document.getElementById('preset-select')?.addEventListener('change', (e) => {
       this.applyPreset(e.target.value);
@@ -739,16 +757,8 @@ class AppController {
     const catSel = document.getElementById('sti-category-filter');
     const modeSel = document.getElementById('sti-view-mode');
 
-    const refreshSTIRiskChart = () => {
-      if (this.lastRiskResults) {
-        const cat = catSel ? catSel.value : 'top';
-        const mode = modeSel ? modeSel.value : 'protected';
-        this.chartsManager.updateSTIRiskProfile(this.lastRiskResults, cat, mode);
-      }
-    };
-
-    if (catSel) catSel.addEventListener('change', refreshSTIRiskChart);
-    if (modeSel) modeSel.addEventListener('change', refreshSTIRiskChart);
+    if (catSel) catSel.addEventListener('change', () => this.handleSTIFilterChange());
+    if (modeSel) modeSel.addEventListener('change', () => this.handleSTIFilterChange());
 
     document.addEventListener('click', () => {
       document.querySelectorAll('.help-icon').forEach(i => i.classList.remove('active'));
