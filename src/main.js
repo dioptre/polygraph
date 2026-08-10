@@ -593,15 +593,12 @@ class AppController {
     const cat = catSel ? catSel.value : 'top';
     const mode = modeSel ? modeSel.value : 'protected';
 
-    if (!this.lastRiskResults && this.params) {
-      const graph = this.networkGen.generateGraph();
-      const metrics = this.networkGen.calculateNetworkMetrics(graph);
-      this.lastRiskResults = this.riskCalc.calculateNetworkRisk(metrics, this.params, this.prophylactics);
-    }
+    this.networkGen.updateParams(this.params);
+    const graph = this.networkGen.generateGraph();
+    const metrics = this.networkGen.calculateNetworkMetrics(graph);
+    this.lastRiskResults = this.riskCalc.calculateNetworkRisk(metrics, this.params, this.prophylactics);
 
-    if (this.lastRiskResults) {
-      this.chartsManager.updateSTIRiskProfile(this.lastRiskResults, cat, mode);
-    }
+    this.chartsManager.updateSTIRiskProfile(this.lastRiskResults, cat, mode);
   }
 
   bindEvents() {

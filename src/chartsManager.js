@@ -314,13 +314,14 @@ export class ChartsManager {
 
     const dom = document.getElementById('chart-sti');
     if (dom) {
-      const calculatedHeight = Math.max(260, items.length * 30);
+      const calculatedHeight = Math.max(260, items.length * 28);
       dom.style.height = `${calculatedHeight}px`;
     }
 
     this.stiRiskChart.setOption(option, true);
-    this.stiRiskChart.resize();
-    this.stiRiskChart.resize();
+    requestAnimationFrame(() => {
+      if (this.stiRiskChart) this.stiRiskChart.resize();
+    });
   }
 
   updateLongitudinalProjection(longitudinalData) {
