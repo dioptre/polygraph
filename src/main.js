@@ -1,3 +1,4 @@
+import './style.css';
 import { STIDataLoader } from './stiData.js';
 import { NetworkGenerator } from './networkGenerator.js';
 import { GraphVisualizer } from './graphVisualizer.js';
@@ -602,15 +603,31 @@ class AppController {
   handleSTIFilterChange() {
     const catSel = document.getElementById('sti-category-filter');
     const modeSel = document.getElementById('sti-view-mode');
+    const horizonSel = document.getElementById('sti-time-horizon');
     const cat = catSel ? catSel.value : 'top';
     const mode = modeSel ? modeSel.value : 'protected';
+    const horizon = horizonSel ? Number(horizonSel.value) : 1;
 
     this.networkGen.updateParams(this.params);
     const graph = this.networkGen.generateGraph();
     const metrics = this.networkGen.calculateNetworkMetrics(graph);
     this.lastRiskResults = this.riskCalc.calculateNetworkRisk(metrics, this.params, this.prophylactics);
 
-    this.chartsManager.updateSTIRiskProfile(this.lastRiskResults, cat, mode);
+    this.chartsManager.updateSTIRiskProfile(this.lastRiskResults, cat, mode, horizon);
+
+    if (this.lastRiskResults && this.lastRiskResults.length > 0) {
+      const topSTI = [...this.lastRiskResults].sort((a, b) => b.monthlyRiskProtectedPct - a.monthlyRiskProtectedPct)[0];
+      const pMonthly = topSTI.monthlyRiskProtectedPct / 100;
+      const pHorizon = (1 - Math.pow(1 - pMonthly, horizon)) * 100;
+      const val = pHorizon < 0.01 && pHorizon > 0 ? parseFloat(pHorizon.toFixed(3)) : parseFloat(pHorizon.toFixed(2));
+      const tier = val > 15 ? '⚠️ High Concern' : val > 5 ? '⚡ Moderate Risk' : val >= 1 ? '🛡️ Low Risk' : '💚 Minimal Exposure';
+      
+      const horizonLabel = horizon === 12 ? '1 Yr' : horizon === 24 ? '2 Yrs' : horizon === 36 ? '3 Yrs' : horizon === 60 ? '5 Yrs' : horizon === 120 ? '10 Yrs' : `${horizon} Mo`;
+      const badgeElem = document.getElementById('metric-top-sti');
+      if (badgeElem) {
+        badgeElem.textContent = `${topSTI.name}: ~${val}% (${horizonLabel}) • ${tier}`;
+      }
+    }
   }
 
   bindEvents() {
@@ -789,9 +806,11 @@ class AppController {
 
     const catSel = document.getElementById('sti-category-filter');
     const modeSel = document.getElementById('sti-view-mode');
+    const horizonSel = document.getElementById('sti-time-horizon');
 
     if (catSel) catSel.addEventListener('change', () => this.handleSTIFilterChange());
     if (modeSel) modeSel.addEventListener('change', () => this.handleSTIFilterChange());
+    if (horizonSel) horizonSel.addEventListener('change', () => this.handleSTIFilterChange());
 
     document.addEventListener('click', () => {
       document.querySelectorAll('.help-icon').forEach(i => i.classList.remove('active'));
@@ -903,10 +922,12 @@ class AppController {
     this.lastRiskResults = riskResults;
     const catSel = document.getElementById('sti-category-filter');
     const modeSel = document.getElementById('sti-view-mode');
+    const horizonSel = document.getElementById('sti-time-horizon');
     const cat = catSel ? catSel.value : 'top';
     const mode = modeSel ? modeSel.value : 'protected';
+    const horizon = horizonSel ? Number(horizonSel.value) : 1;
 
-    this.chartsManager.updateSTIRiskProfile(riskResults, cat, mode);
+    this.chartsManager.updateSTIRiskProfile(riskResults, cat, mode, horizon);
     this.chartsManager.updateLongitudinalProjection(longitudinalData);
     this.chartsManager.updateTopologyRadar(metrics, this.params);
     this.chartsManager.resizeAll();
@@ -920,9 +941,13 @@ class AppController {
 
     if (riskResults.length > 0) {
       const topSTI = [...riskResults].sort((a, b) => b.monthlyRiskProtectedPct - a.monthlyRiskProtectedPct)[0];
-      const val = topSTI.monthlyRiskProtectedPct;
+      const pMonthly = topSTI.monthlyRiskProtectedPct / 100;
+      const pHorizon = (1 - Math.pow(1 - pMonthly, horizon)) * 100;
+      const val = pHorizon < 0.01 && pHorizon > 0 ? parseFloat(pHorizon.toFixed(3)) : parseFloat(pHorizon.toFixed(2));
       const tier = val > 15 ? '⚠️ High Concern' : val > 5 ? '⚡ Moderate Risk' : val >= 1 ? '🛡️ Low Risk' : '💚 Minimal Exposure';
-      document.getElementById('metric-top-sti').textContent = `${topSTI.name}: ~${val}% (1 Mo) • ${tier}`;
+      
+      const horizonLabel = horizon === 12 ? '1 Yr' : horizon === 24 ? '2 Yrs' : horizon === 36 ? '3 Yrs' : horizon === 60 ? '5 Yrs' : horizon === 120 ? '10 Yrs' : `${horizon} Mo`;
+      document.getElementById('metric-top-sti').textContent = `${topSTI.name}: ~${val}% (${horizonLabel}) • ${tier}`;
     }
   }
 

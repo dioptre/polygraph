@@ -105,7 +105,7 @@ export class ChartsManager {
     this.networkGrowthChart.resize();
   }
 
-  updateSTIRiskProfile(riskResults, categoryFilter = 'top', viewMode = 'protected') {
+  updateSTIRiskProfile(riskResults, categoryFilter = 'top', viewMode = 'protected', timeHorizonMonths = 1) {
     const dom = document.getElementById('chart-sti');
     if (!dom) return;
 
@@ -120,15 +120,33 @@ export class ChartsManager {
 
     if (!this.stiRiskChart || !riskResults || riskResults.length === 0) return;
 
+    const horizon = Math.max(1, Number(timeHorizonMonths) || 1);
+    const getHorizonLabel = (m) => {
+      if (m === 12) return '1 Yr';
+      if (m === 24) return '2 Yrs';
+      if (m === 36) return '3 Yrs';
+      if (m === 60) return '5 Yrs';
+      if (m === 120) return '10 Yrs';
+      return `${m} Mo`;
+    };
+    const horizonStr = getHorizonLabel(horizon);
+
+    const scaleRisk = (pMonthlyPct) => {
+      if (horizon === 1) return pMonthlyPct;
+      const pMonthly = pMonthlyPct / 100;
+      const pHorizon = 1 - Math.pow(1 - pMonthly, horizon);
+      return Math.min(99.9, pHorizon * 100);
+    };
+
     let filtered = [...riskResults];
 
     // 1. Sort descending by selected view mode risk metric FIRST
     if (viewMode === 'unprotected') {
-      filtered.sort((a, b) => b.monthlyRiskUnprotectedPct - a.monthlyRiskUnprotectedPct);
+      filtered.sort((a, b) => scaleRisk(b.monthlyRiskUnprotectedPct) - scaleRisk(a.monthlyRiskUnprotectedPct));
     } else if (viewMode === 'delta') {
-      filtered.sort((a, b) => (b.monthlyRiskUnprotectedPct - b.monthlyRiskProtectedPct) - (a.monthlyRiskUnprotectedPct - a.monthlyRiskProtectedPct));
+      filtered.sort((a, b) => (scaleRisk(b.monthlyRiskUnprotectedPct) - scaleRisk(b.monthlyRiskProtectedPct)) - (scaleRisk(a.monthlyRiskUnprotectedPct) - scaleRisk(a.monthlyRiskProtectedPct)));
     } else {
-      filtered.sort((a, b) => b.monthlyRiskProtectedPct - a.monthlyRiskProtectedPct);
+      filtered.sort((a, b) => scaleRisk(b.monthlyRiskProtectedPct) - scaleRisk(a.monthlyRiskProtectedPct));
     }
 
     // 2. Filter pathogens by category
@@ -178,7 +196,7 @@ export class ChartsManager {
     const badgeEl = document.getElementById('sti-profile-title-badge');
     if (badgeEl) {
       const modeNames = { protected: 'Protected', delta: 'Armor Delta', unprotected: 'Raw Baseline' };
-      badgeEl.textContent = `📊 Displaying ${items.length} Pathogens (${modeNames[viewMode] || 'Protected'}):`;
+      badgeEl.textContent = `📊 Displaying ${items.length} Pathogens (${modeNames[viewMode] || 'Protected'}) over:`;
     }
 
     const itemMap = {};
@@ -189,16 +207,19 @@ export class ChartsManager {
     let series = [];
 
     if (viewMode === 'unprotected') {
-      const data = items.map(s => ({
-        value: Number(s.monthlyRiskUnprotectedPct.toFixed(2)),
-        itemStyle: {
-          color: { type: 'linear', x: 0, y: 0, x2: 1, y2: 0, colorStops: [{ offset: 0, color: '#ff2a85' }, { offset: 1, color: '#e11d48' }] },
-          borderRadius: [0, 4, 4, 0]
-        }
-      }));
+      const data = items.map(s => {
+        const val = scaleRisk(s.monthlyRiskUnprotectedPct);
+        return {
+          value: Number(val.toFixed(2)),
+          itemStyle: {
+            color: { type: 'linear', x: 0, y: 0, x2: 1, y2: 0, colorStops: [{ offset: 0, color: '#ff2a85' }, { offset: 1, color: '#e11d48' }] },
+            borderRadius: [0, 4, 4, 0]
+          }
+        };
+      });
       series.push({
         id: 'series-unprotected',
-        name: 'Raw Baseline Risk (No Prophylaxis)',
+        name: `Raw Baseline Risk (${horizonStr})`,
         type: 'bar',
         data: data,
         label: {
@@ -209,13 +230,18 @@ export class ChartsManager {
         }
       });
     } else if (viewMode === 'delta') {
-      const protectedData = items.map(s => ({
-        value: Number(s.monthlyRiskProtectedPct.toFixed(2)),
-        itemStyle: { color: getItemColor(s.monthlyRiskProtectedPct), borderRadius: [0, 0, 0, 0] }
-      }));
+      const protectedData = items.map(s => {
+        const val = scaleRisk(s.monthlyRiskProtectedPct);
+        return {
+          value: Number(val.toFixed(2)),
+          itemStyle: { color: getItemColor(val), borderRadius: [0, 0, 0, 0] }
+        };
+      });
 
       const blockedData = items.map(s => {
-        const delta = Math.max(0, s.monthlyRiskUnprotectedPct - s.monthlyRiskProtectedPct);
+        const protVal = scaleRisk(s.monthlyRiskProtectedPct);
+        const unprotVal = scaleRisk(s.monthlyRiskUnprotectedPct);
+        const delta = Math.max(0, unprotVal - protVal);
         return {
           value: Number(delta.toFixed(2)),
           itemStyle: { color: 'rgba(16, 185, 129, 0.35)', borderRadius: [0, 4, 4, 0] }
@@ -225,14 +251,14 @@ export class ChartsManager {
       series.push(
         {
           id: 'series-protected-delta',
-          name: 'Your Protected Risk (With Prophylaxis)',
+          name: `Protected Risk (${horizonStr})`,
           type: 'bar',
           stack: 'total',
           data: protectedData
         },
         {
           id: 'series-blocked-delta',
-          name: '🛡️ Prophylactic Barrier (Blocked by Condoms/Meds)',
+          name: `🛡️ Prophylactic Barrier (${horizonStr})`,
           type: 'bar',
           stack: 'total',
           data: blockedData,
@@ -244,22 +270,28 @@ export class ChartsManager {
               const rawName = names[params.dataIndex];
               const pathogen = itemMap[rawName];
               if (!pathogen) return '';
-              return `Blocked: -${(pathogen.monthlyRiskUnprotectedPct - pathogen.monthlyRiskProtectedPct).toFixed(1)}% (Base: ${pathogen.monthlyRiskUnprotectedPct.toFixed(1)}%)`;
+              const protVal = scaleRisk(pathogen.monthlyRiskProtectedPct);
+              const unprotVal = scaleRisk(pathogen.monthlyRiskUnprotectedPct);
+              const delta = Math.max(0, unprotVal - protVal);
+              return `Blocked: -${delta.toFixed(1)}% (Base: ${unprotVal.toFixed(1)}%)`;
             }
           }
         }
       );
     } else {
       // Protected mode (Default)
-      const data = items.map(s => ({
-        value: Number(s.monthlyRiskProtectedPct.toFixed(2)),
-        itemStyle: { color: getItemColor(s.monthlyRiskProtectedPct), borderRadius: [0, 4, 4, 0] },
-        labelTextColor: getItemTextColor(s.monthlyRiskProtectedPct)
-      }));
+      const data = items.map(s => {
+        const val = scaleRisk(s.monthlyRiskProtectedPct);
+        return {
+          value: Number(val.toFixed(2)),
+          itemStyle: { color: getItemColor(val), borderRadius: [0, 4, 4, 0] },
+          labelTextColor: getItemTextColor(val)
+        };
+      });
 
       series.push({
         id: 'series-protected',
-        name: 'Your Protected Risk (With Prophylaxis)',
+        name: `Protected Risk (${horizonStr})`,
         type: 'bar',
         data: data,
         label: {
@@ -284,26 +316,27 @@ export class ChartsManager {
           const rawName = names[params[0].dataIndex];
           const pathogen = itemMap[rawName];
           if (!pathogen) return '';
-          const protVal = pathogen.monthlyRiskProtectedPct;
+          const protVal = scaleRisk(pathogen.monthlyRiskProtectedPct);
+          const unprotVal = scaleRisk(pathogen.monthlyRiskUnprotectedPct);
           const prot = protVal < 0.01 && protVal > 0 ? protVal.toFixed(3) : protVal.toFixed(2);
-          const unprot = pathogen.monthlyRiskUnprotectedPct.toFixed(2);
-          const blocked = Math.max(0, pathogen.monthlyRiskUnprotectedPct - pathogen.monthlyRiskProtectedPct).toFixed(2);
+          const unprot = unprotVal.toFixed(2);
+          const blocked = Math.max(0, unprotVal - protVal).toFixed(2);
 
           let statusBadge = '';
           let qualDesc = '';
 
           if (protVal > 15) {
             statusBadge = '<span style="color: #ff2a85; font-weight: 800; background: rgba(255,42,133,0.15); padding: 2px 6px; border-radius: 4px;">⚠️ High Concern</span>';
-            qualDesc = 'High monthly transmission probability. Barrier methods, routine STI panels, or targeted biomedical armor (PrEP / Doxy-PEP) are strongly recommended.';
+            qualDesc = `High transmission probability over ${horizonStr}. Barrier methods, routine STI panels, or targeted biomedical armor (PrEP / Doxy-PEP) are strongly recommended.`;
           } else if (protVal > 5) {
             statusBadge = '<span style="color: #f59e0b; font-weight: 800; background: rgba(245,158,11,0.15); padding: 2px 6px; border-radius: 4px;">⚡ Moderate Risk</span>';
-            qualDesc = 'Moderate transmission likelihood. Consider routine screening every 3 months and active partner status alignment.';
+            qualDesc = `Moderate transmission likelihood over ${horizonStr}. Consider routine screening every 3 months and active partner status alignment.`;
           } else if (protVal >= 1) {
             statusBadge = '<span style="color: #10b981; font-weight: 800; background: rgba(16,185,129,0.15); padding: 2px 6px; border-radius: 4px;">🛡️ Low Risk</span>';
-            qualDesc = 'Low monthly network exposure. Standard preventive hygiene and periodic testing recommended.';
+            qualDesc = `Low network exposure over ${horizonStr}. Standard preventive hygiene and periodic testing recommended.`;
           } else {
             statusBadge = '<span style="color: #38bdf8; font-weight: 800; background: rgba(56,189,248,0.15); padding: 2px 6px; border-radius: 4px;">💚 Minimal / Negligible</span>';
-            qualDesc = 'Minimal exposure under current protection & network parameters.';
+            qualDesc = `Minimal exposure over ${horizonStr} under current protection & network parameters.`;
           }
 
           return `
@@ -318,10 +351,10 @@ export class ChartsManager {
               "${qualDesc}"
             </div>
             <div style="font-size: 12px; color: #00f0ff; margin-bottom: 2px;">
-              • Protected Monthly Risk (With Prophylaxis): <strong>${prot}%</strong>
+              • Protected Risk (${horizonStr} Horizon): <strong>${prot}%</strong>
             </div>
             <div style="font-size: 12px; color: #ff2a85; margin-bottom: 2px;">
-              • Raw Baseline Risk (No Prophylaxis): <strong>${unprot}%</strong>
+              • Raw Baseline Risk (${horizonStr} Horizon): <strong>${unprot}%</strong>
             </div>
             <div style="font-size: 12px; color: #10b981; font-weight: 700; margin-top: 4px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
               🛡️ Prophylactic Barrier Avoided: <strong>-${blocked}%</strong>
@@ -335,21 +368,23 @@ export class ChartsManager {
       grid: { left: '3%', right: '14%', bottom: '30px', top: '4px', containLabel: true },
       xAxis: {
         type: 'value',
-        name: '1-Mo Risk (%)',
+        name: `${horizonStr} Risk (%)`,
+        nameLocation: 'end',
+        nameTextStyle: { color: '#cbd5e1', fontSize: 11 },
+        min: 0,
         max: 100,
-        axisLine: { lineStyle: { color: '#64748b' } },
-        splitLine: { lineStyle: { color: '#33415544' } },
-        axisLabel: { color: '#cbd5e1', fontSize: 10 }
+        axisLine: { lineStyle: { color: '#334155' } },
+        splitLine: { lineStyle: { color: 'rgba(255,255,255,0.05)' } },
+        axisLabel: { color: '#94a3b8', formatter: '{value}%' }
       },
       yAxis: {
         type: 'category',
         data: names,
-        axisLine: { lineStyle: { color: '#64748b' } },
+        axisLine: { lineStyle: { color: '#334155' } },
         axisLabel: {
-          color: '#cbd5e1',
-          fontSize: 10,
-          fontWeight: '600',
-          formatter: (value, index) => `#${names.length - index} ${value}`
+          color: '#e2e8f0',
+          fontSize: 11,
+          formatter: (value) => value.length > 24 ? value.slice(0, 22) + '...' : value
         }
       },
       series: series

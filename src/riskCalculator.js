@@ -186,17 +186,22 @@ export class STIRiskCalculator {
 
       const baselineWeightedActRiskPct = Math.min(99.9, ((wAnal * pAnal) + (wVag * pVag) + (wOral * pOral) + (wSkin * pSkin)) * mDuration * mFluid);
 
-      let effectiveActRiskUnprotected = Math.min(0.999, Math.max(0.000001, baselineWeightedActRiskPct) / 100);
-      const condomEfficacy = (pathogen.condomTypicalEfficacy || 85) / 100;
-      let effectiveActRiskProtected = Math.min(0.999, effectiveActRiskUnprotected * (1 - condomEfficacy));
+      // 1. Raw per-act transmission risk (0% condoms, 0 biomedical armor, 0 screening modifier)
+      const rawUnprotectedActRisk = Math.min(0.999, Math.max(0.000001, baselineWeightedActRiskPct) / 100);
 
-      // Apply Biomedical Multipliers (PrEP, Doxy-PEP, Vaccines)
+      // 2. Per-act risk with User's Biomedical Armor (PrEP, Doxy-PEP, Vaccines) & Screening Modifiers
       const biomedicalMultiplier = this.getBiomedicalMultiplier(pathogen, prophylactics);
-      effectiveActRiskUnprotected = Math.min(0.999, effectiveActRiskUnprotected * (biomedicalMultiplier * mTesting * mFinancial));
-      effectiveActRiskProtected = Math.min(0.999, effectiveActRiskProtected * (biomedicalMultiplier * mTesting * mFinancial));
+      const actRiskWithBiomedical = Math.min(0.999, rawUnprotectedActRisk * (biomedicalMultiplier * mTesting * mFinancial));
 
-      const pActFluid = (effectiveActRiskProtected * condomUsageInternal) + (effectiveActRiskUnprotected * (1 - condomUsageInternal));
-      const pActCasual = (effectiveActRiskProtected * condomUsageExternal) + (effectiveActRiskUnprotected * (1 - condomUsageExternal));
+      // 3. Per-act risk with Condoms + Biomedical Armor
+      const condomEfficacy = (pathogen.condomTypicalEfficacy || 85) / 100;
+      const actRiskWithCondomAndBiomedical = Math.min(0.999, actRiskWithBiomedical * (1 - condomEfficacy));
+
+      // 4. Weighted per-act risk incorporating User's Exact Condom Usage Sliders:
+      // - condomUsageInternal: % condom usage with fluid-bonded polycule partners
+      // - condomUsageExternal: % condom usage with casual / open partners
+      const pActFluid = (actRiskWithCondomAndBiomedical * condomUsageInternal) + (actRiskWithBiomedical * (1 - condomUsageInternal));
+      const pActCasual = (actRiskWithCondomAndBiomedical * condomUsageExternal) + (actRiskWithBiomedical * (1 - condomUsageExternal));
 
       const rFluidPartnerIfInfected = 1 - Math.pow(1 - pActFluid, fluidActsPerMonth);
       const rCasualPartnerIfInfected = 1 - Math.pow(1 - pActCasual, casualActsInitial);
@@ -213,8 +218,7 @@ export class STIRiskCalculator {
       const directCasualTransmissionProb = rCasualPartnerIfInfected * effectiveCasualPrevalence;
       const compositeDirectRisk = (fluidRatio * directFluidTransmissionProb) + (casualRatio * directCasualTransmissionProb);
 
-      // Unprotected baseline transmission risk (0% condoms & 0 biomedical interventions)
-      const rawUnprotectedActRisk = Math.min(0.999, Math.max(0.000001, baselineWeightedActRiskPct) / 100);
+      // Unprotected baseline transmission risk (0% condoms, 0 biomedical interventions, 0 testing)
       const rFluidUnprotected = 1 - Math.pow(1 - rawUnprotectedActRisk, fluidActsPerMonth);
       const rCasualUnprotected = 1 - Math.pow(1 - rawUnprotectedActRisk, casualActsInitial);
 

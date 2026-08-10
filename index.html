@@ -6,7 +6,7 @@
   <title>Your PolyGraph StarChart — Extended Sexual Network & STI Epidemiology Visualizer</title>
   <meta name="description" content="Interactive network visualization and epidemiological STI transmission risk calculator for polyamorous, open, and slutty sexual networks.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
-  <script type="module" crossorigin src="./assets/index--AWAm0pZ.js"></script>
+  <script type="module" crossorigin src="./assets/index-C4fIUa3n.js"></script>
   <link rel="stylesheet" crossorigin href="./assets/index-CGu8n06F.css">
 </head>
 <body>
@@ -26,10 +26,6 @@
       <button id="btn-open-optimizer" class="btn-preview" style="background: linear-gradient(135deg, #10b981, #06b6d4); padding: 8px 16px; font-size: 13px;">
         💖 Partner Risk Optimizer
       </button>
-
-      <a href="./game.html" target="_blank" class="btn-preview" style="background: linear-gradient(135deg, #ff2a85, #ffcc00); color: #000; font-weight: bold; padding: 8px 16px; font-size: 13px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
-        🎮 Play SF Sexual Trail (8-Bit CYOA Game)
-      </a>
 
       <label for="preset-select" style="font-size: 13px; color: var(--text-muted); margin-left: 10px;">Preset Profile:</label>
       <select id="preset-select" class="preset-select">
@@ -813,9 +809,24 @@
         <div id="tab-sti" class="tab-pane" style="display: none; height: 230px; overflow-y: scroll !important; -webkit-overflow-scrolling: touch; touch-action: pan-y !important; padding-right: 6px; padding-bottom: 30px;">
           <!-- Compact Toolbar & Controls -->
           <div style="position: sticky; top: 0; z-index: 1000; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(0, 240, 255, 0.25); border-radius: 8px; padding: 6px 12px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <span id="sti-profile-title-badge" style="font-size: 12px; font-weight: 800; color: #00f0ff;">📊 1-Mo STI Exposure Risk:</span>
-              <span style="font-size: 10px; font-weight: 700; color: #ff2a85;">■ High (&gt;15%)</span>
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span id="sti-profile-title-badge" style="font-size: 12px; font-weight: 800; color: #00f0ff;">📊 Displaying 8 Pathogens (Protected) over:</span>
+              
+              <!-- Time Horizon Dropdown directly embedded in Title Header -->
+              <select id="sti-time-horizon" class="preset-select" onchange="window.polygraphApp && window.polygraphApp.handleSTIFilterChange()" style="padding: 2px 8px; font-size: 11px; height: 26px; border-color: rgba(16,185,129,0.5); background: rgba(16,185,129,0.15); color: #10b981; font-weight: 700; cursor: pointer; pointer-events: auto; position: relative; z-index: 1001; border-radius: 6px;">
+                <option value="1" selected>⏱️ 1 Month (Default)</option>
+                <option value="2">⏱️ 2 Months</option>
+                <option value="3">⏱️ 3 Months</option>
+                <option value="6">⏱️ 6 Months</option>
+                <option value="9">⏱️ 9 Months</option>
+                <option value="12">⏱️ 1 Year (12 Mo)</option>
+                <option value="24">⏱️ 2 Years</option>
+                <option value="36">⏱️ 3 Years</option>
+                <option value="60">⏱️ 5 Years</option>
+                <option value="120">⏱️ 10 Years</option>
+              </select>
+
+              <span style="font-size: 10px; font-weight: 700; color: #ff2a85; margin-left: 4px;">■ High (&gt;15%)</span>
               <span style="font-size: 10px; font-weight: 700; color: #f59e0b;">■ Med (5–15%)</span>
               <span style="font-size: 10px; font-weight: 700; color: #10b981;">■ Low (&lt;5%)</span>
             </div>
