@@ -159,7 +159,7 @@ export class ChartsManager {
         itemStyle: { color: getItemColor(s.monthlyRiskUnprotectedPct), borderRadius: [0, 4, 4, 0] }
       }));
       series.push({
-        name: 'Raw Baseline Risk (No Armor)',
+        name: 'Raw Baseline Risk (No Prophylaxis)',
         type: 'bar',
         data: data,
         label: {
@@ -185,13 +185,13 @@ export class ChartsManager {
 
       series.push(
         {
-          name: 'Your Protected Risk (With Armor)',
+          name: 'Your Protected Risk (With Prophylaxis)',
           type: 'bar',
           stack: 'total',
           data: protectedData
         },
         {
-          name: '🛡️ Armor Risk Avoided (Blocked by Condoms/Meds)',
+          name: '🛡️ Prophylactic Barrier (Blocked by Condoms/Meds)',
           type: 'bar',
           stack: 'total',
           data: blockedData,
@@ -202,7 +202,7 @@ export class ChartsManager {
             formatter: (params) => {
               const pathogen = itemMap[params.name];
               if (!pathogen) return '';
-              return `Shield: -${(pathogen.monthlyRiskUnprotectedPct - pathogen.monthlyRiskProtectedPct).toFixed(1)}% (Base: ${pathogen.monthlyRiskUnprotectedPct.toFixed(1)}%)`;
+              return `Blocked: -${(pathogen.monthlyRiskUnprotectedPct - pathogen.monthlyRiskProtectedPct).toFixed(1)}% (Base: ${pathogen.monthlyRiskUnprotectedPct.toFixed(1)}%)`;
             }
           }
         }
@@ -216,7 +216,7 @@ export class ChartsManager {
       }));
 
       series.push({
-        name: 'Your Protected Risk (With Your Armor)',
+        name: 'Your Protected Risk (With Prophylaxis)',
         type: 'bar',
         data: data,
         label: {
@@ -257,13 +257,13 @@ export class ChartsManager {
               ${pathogen.category} | ${pathogen.curable === 'Yes' ? '💊 Curable with Antibiotics' : '🛡️ Viral / Chronic Pathogen'}
             </div>
             <div style="font-size: 12px; color: #00f0ff; margin-bottom: 2px;">
-              • Protected Monthly Risk (With Your Armor): <strong>${prot}%</strong>
+              • Protected Monthly Risk (With Prophylaxis): <strong>${prot}%</strong>
             </div>
             <div style="font-size: 12px; color: #ff2a85; margin-bottom: 2px;">
-              • Raw Baseline Risk (No Armor): <strong>${unprot}%</strong>
+              • Raw Baseline Risk (No Prophylaxis): <strong>${unprot}%</strong>
             </div>
             <div style="font-size: 12px; color: #10b981; font-weight: 700; margin-top: 4px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
-              🛡️ Armor Risk Avoided: <strong>-${blocked}%</strong>
+              🛡️ Prophylactic Barrier Avoided: <strong>-${blocked}%</strong>
             </div>
           `;
         }
