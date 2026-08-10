@@ -105,15 +105,128 @@ export class ChartsManager {
     this.networkGrowthChart.resize();
   }
 
-  updateSTIRiskProfile(riskResults) {
-    if (!this.stiRiskChart) return;
+  updateSTIRiskProfile(riskResults, categoryFilter = 'top', viewMode = 'protected') {
+    if (!this.stiRiskChart || !riskResults) return;
 
-    // Show top 10 STIs sorted by protected risk
-    const sorted = [...riskResults].sort((a, b) => b.monthlyRiskProtectedPct - a.monthlyRiskProtectedPct).slice(0, 10);
+    // Filter pathogens by category
+    let filtered = [...riskResults];
 
-    const names = sorted.map(s => s.name).reverse();
-    const protectedRisk = sorted.map(s => s.monthlyRiskProtectedPct).reverse();
-    const unprotectedRisk = sorted.map(s => s.monthlyRiskUnprotectedPct).reverse();
+    if (categoryFilter === 'bacterial') {
+      filtered = filtered.filter(s => s.curable === 'Yes' || s.category === 'Bacterial' || s.category === 'Protozoal');
+    } else if (categoryFilter === 'skin') {
+      filtered = filtered.filter(s => s.category === 'Skin / Direct Contact' || s.category === 'Viral (Skin/Fluid)' || s.name.includes('HSV') || s.name.includes('HPV') || s.name.includes('Mpox') || s.name.includes('BV'));
+    } else if (categoryFilter === 'viral') {
+      filtered = filtered.filter(s => s.curable === 'No' || s.name.includes('HIV') || s.name.includes('Hepatitis'));
+    }
+
+    // Sort descending by selected view mode risk metric
+    if (viewMode === 'unprotected') {
+      filtered.sort((a, b) => b.monthlyRiskUnprotectedPct - a.monthlyRiskUnprotectedPct);
+    } else if (viewMode === 'delta') {
+      filtered.sort((a, b) => (b.monthlyRiskUnprotectedPct - b.monthlyRiskProtectedPct) - (a.monthlyRiskUnprotectedPct - a.monthlyRiskProtectedPct));
+    } else {
+      filtered.sort((a, b) => b.monthlyRiskProtectedPct - a.monthlyRiskProtectedPct);
+    }
+
+    if (categoryFilter === 'top') {
+      filtered = filtered.slice(0, 8);
+    }
+
+    // Map data for horizontal bars (reversed so highest risk is at top of y-axis)
+    const items = [...filtered].reverse();
+    const names = items.map(s => s.name);
+    
+    // Map items to color objects based on risk level
+    const getItemColor = (val) => {
+      if (val > 15) return { type: 'linear', x: 0, y: 0, x2: 1, y2: 0, colorStops: [{ offset: 0, color: '#ff2a85' }, { offset: 1, color: '#e11d48' }] };
+      if (val > 5) return { type: 'linear', x: 0, y: 0, x2: 1, y2: 0, colorStops: [{ offset: 0, color: '#f59e0b' }, { offset: 1, color: '#d97706' }] };
+      return { type: 'linear', x: 0, y: 0, x2: 1, y2: 0, colorStops: [{ offset: 0, color: '#10b981' }, { offset: 1, color: '#00f0ff' }] };
+    };
+
+    const getItemTextColor = (val) => {
+      if (val > 15) return '#ff2a85';
+      if (val > 5) return '#f59e0b';
+      return '#00f0ff';
+    };
+
+    let series = [];
+    const itemMap = {};
+    items.forEach(it => { itemMap[it.name] = it; });
+
+    if (viewMode === 'unprotected') {
+      const data = items.map(s => ({
+        value: Number(s.monthlyRiskUnprotectedPct.toFixed(2)),
+        itemStyle: { color: getItemColor(s.monthlyRiskUnprotectedPct), borderRadius: [0, 4, 4, 0] }
+      }));
+      series.push({
+        name: 'Raw Baseline Risk (No Armor)',
+        type: 'bar',
+        data: data,
+        label: {
+          show: true,
+          position: 'right',
+          color: '#ff2a85',
+          formatter: '{c}%'
+        }
+      });
+    } else if (viewMode === 'delta') {
+      const protectedData = items.map(s => ({
+        value: Number(s.monthlyRiskProtectedPct.toFixed(2)),
+        itemStyle: { color: getItemColor(s.monthlyRiskProtectedPct), borderRadius: [0, 0, 0, 0] }
+      }));
+
+      const blockedData = items.map(s => {
+        const delta = Math.max(0, s.monthlyRiskUnprotectedPct - s.monthlyRiskProtectedPct);
+        return {
+          value: Number(delta.toFixed(2)),
+          itemStyle: { color: 'rgba(16, 185, 129, 0.35)', borderRadius: [0, 4, 4, 0] }
+        };
+      });
+
+      series.push(
+        {
+          name: 'Your Protected Risk (With Armor)',
+          type: 'bar',
+          stack: 'total',
+          data: protectedData
+        },
+        {
+          name: '🛡️ Armor Risk Avoided (Blocked by Condoms/Meds)',
+          type: 'bar',
+          stack: 'total',
+          data: blockedData,
+          label: {
+            show: true,
+            position: 'right',
+            color: '#10b981',
+            formatter: (params) => {
+              const pathogen = itemMap[params.name];
+              if (!pathogen) return '';
+              return `Shield: -${(pathogen.monthlyRiskUnprotectedPct - pathogen.monthlyRiskProtectedPct).toFixed(1)}% (Base: ${pathogen.monthlyRiskUnprotectedPct.toFixed(1)}%)`;
+            }
+          }
+        }
+      );
+    } else {
+      // Protected mode (Default)
+      const data = items.map(s => ({
+        value: Number(s.monthlyRiskProtectedPct.toFixed(2)),
+        itemStyle: { color: getItemColor(s.monthlyRiskProtectedPct), borderRadius: [0, 4, 4, 0] },
+        labelTextColor: getItemTextColor(s.monthlyRiskProtectedPct)
+      }));
+
+      series.push({
+        name: 'Your Protected Risk (With Your Armor)',
+        type: 'bar',
+        data: data,
+        label: {
+          show: true,
+          position: 'right',
+          color: '#cbd5e1',
+          formatter: (params) => `${params.value}%`
+        }
+      });
+    }
 
     const option = {
       backgroundColor: 'transparent',
@@ -121,24 +234,44 @@ export class ChartsManager {
         trigger: 'axis',
         axisPointer: { type: 'shadow' },
         confine: true,
-        extraCssText: 'z-index: 99999 !important; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px;',
+        extraCssText: 'z-index: 99999 !important; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 240, 255, 0.4); border-radius: 10px; padding: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);',
         formatter: (params) => {
-          let html = `<strong>${params[0].name}</strong><br/>`;
-          params.forEach(p => {
-            html += `${p.marker} ${p.seriesName}: <strong>${p.value.toFixed(2)}%</strong><br/>`;
-          });
-          return html;
+          const pathogen = itemMap[params[0].name];
+          if (!pathogen) return '';
+          const prot = pathogen.monthlyRiskProtectedPct.toFixed(2);
+          const unprot = pathogen.monthlyRiskUnprotectedPct.toFixed(2);
+          const blocked = Math.max(0, pathogen.monthlyRiskUnprotectedPct - pathogen.monthlyRiskProtectedPct).toFixed(2);
+
+          const statusBadge = pathogen.monthlyRiskProtectedPct > 15 
+            ? '<span style="color: #ff2a85; font-weight: 800; background: rgba(255,42,133,0.15); padding: 2px 6px; border-radius: 4px;">⚠️ High Concern</span>' 
+            : pathogen.monthlyRiskProtectedPct > 5 
+            ? '<span style="color: #f59e0b; font-weight: 800; background: rgba(245,158,11,0.15); padding: 2px 6px; border-radius: 4px;">⚡ Moderate Risk</span>' 
+            : '<span style="color: #10b981; font-weight: 800; background: rgba(16,185,129,0.15); padding: 2px 6px; border-radius: 4px;">🛡️ Low Risk</span>';
+
+          return `
+            <div style="font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+              <span>${pathogen.name}</span>
+              ${statusBadge}
+            </div>
+            <div style="font-size: 11px; color: #94a3b8; margin-bottom: 8px;">
+              ${pathogen.category} | ${pathogen.curable === 'Yes' ? '💊 Curable with Antibiotics' : '🛡️ Viral / Chronic Pathogen'}
+            </div>
+            <div style="font-size: 12px; color: #00f0ff; margin-bottom: 2px;">
+              • Protected Monthly Risk (With Your Armor): <strong>${prot}%</strong>
+            </div>
+            <div style="font-size: 12px; color: #ff2a85; margin-bottom: 2px;">
+              • Raw Baseline Risk (No Armor): <strong>${unprot}%</strong>
+            </div>
+            <div style="font-size: 12px; color: #10b981; font-weight: 700; margin-top: 4px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
+              🛡️ Armor Risk Avoided: <strong>-${blocked}%</strong>
+            </div>
+          `;
         }
       },
-      legend: {
-        data: ['Your Protected Risk (With Condoms)', 'Your Unprotected Baseline Risk'],
-        textStyle: { color: '#cbd5e1' },
-        top: 0
-      },
-      grid: { left: '3%', right: '8%', bottom: '5%', top: '15%', containLabel: true },
+      grid: { left: '3%', right: '18%', bottom: '5%', top: '8%', containLabel: true },
       xAxis: {
         type: 'value',
-        name: 'Your 1-Mo Exposure Risk (%)',
+        name: '1-Mo Risk (%)',
         max: 100,
         axisLine: { lineStyle: { color: '#64748b' } },
         splitLine: { lineStyle: { color: '#33415544' } },
@@ -148,28 +281,9 @@ export class ChartsManager {
         type: 'category',
         data: names,
         axisLine: { lineStyle: { color: '#64748b' } },
-        axisLabel: { color: '#cbd5e1', fontSize: 11 }
+        axisLabel: { color: '#cbd5e1', fontSize: 11, fontWeight: '600' }
       },
-      series: [
-        {
-          name: 'Your Protected Risk (With Condoms)',
-          type: 'bar',
-          data: protectedRisk,
-          itemStyle: { color: '#00f0ff', borderRadius: [0, 4, 4, 0] },
-          label: {
-            show: true,
-            position: 'right',
-            color: '#00f0ff',
-            formatter: '{c}%'
-          }
-        },
-        {
-          name: 'Your Unprotected Baseline Risk',
-          type: 'bar',
-          data: unprotectedRisk,
-          itemStyle: { color: '#ff2a8566', borderRadius: [0, 4, 4, 0] }
-        }
-      ]
+      series: series
     };
 
     this.stiRiskChart.setOption(option, true);

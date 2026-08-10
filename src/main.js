@@ -730,6 +730,20 @@ class AppController {
       });
     });
 
+    const catSel = document.getElementById('sti-category-filter');
+    const modeSel = document.getElementById('sti-view-mode');
+
+    const refreshSTIRiskChart = () => {
+      if (this.lastRiskResults) {
+        const cat = catSel ? catSel.value : 'top';
+        const mode = modeSel ? modeSel.value : 'protected';
+        this.chartsManager.updateSTIRiskProfile(this.lastRiskResults, cat, mode);
+      }
+    };
+
+    if (catSel) catSel.addEventListener('change', refreshSTIRiskChart);
+    if (modeSel) modeSel.addEventListener('change', refreshSTIRiskChart);
+
     document.addEventListener('click', () => {
       document.querySelectorAll('.help-icon').forEach(i => i.classList.remove('active'));
     });
@@ -817,7 +831,13 @@ class AppController {
     const longitudinalData = this.riskCalc.calculateLongitudinalRisk(riskResults, this.params, this.prophylactics);
 
     this.chartsManager.updateNetworkGrowth(metrics);
-    this.chartsManager.updateSTIRiskProfile(riskResults);
+    this.lastRiskResults = riskResults;
+    const catSel = document.getElementById('sti-category-filter');
+    const modeSel = document.getElementById('sti-view-mode');
+    const cat = catSel ? catSel.value : 'top';
+    const mode = modeSel ? modeSel.value : 'protected';
+
+    this.chartsManager.updateSTIRiskProfile(riskResults, cat, mode);
     this.chartsManager.updateLongitudinalProjection(longitudinalData);
     this.chartsManager.updateTopologyRadar(metrics, this.params);
     this.chartsManager.resizeAll();
