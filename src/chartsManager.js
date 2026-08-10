@@ -268,7 +268,7 @@ export class ChartsManager {
           `;
         }
       },
-      grid: { left: '3%', right: '18%', bottom: '5%', top: '8%', containLabel: true },
+      grid: { left: '3%', right: '16%', bottom: '15px', top: '10px', containLabel: true },
       xAxis: {
         type: 'value',
         name: '1-Mo Risk (%)',
@@ -288,7 +288,7 @@ export class ChartsManager {
 
     const dom = document.getElementById('chart-sti');
     if (dom) {
-      const calculatedHeight = Math.max(280, items.length * 36);
+      const calculatedHeight = Math.max(200, items.length * 28);
       dom.style.height = `${calculatedHeight}px`;
     }
 

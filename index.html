@@ -6,7 +6,7 @@
   <title>Your PolyGraph StarChart — Extended Sexual Network & STI Epidemiology Visualizer</title>
   <meta name="description" content="Interactive network visualization and epidemiological STI transmission risk calculator for polyamorous, open, and slutty sexual networks.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
-  <script type="module" crossorigin src="./assets/index-CyI1bU6i.js"></script>
+  <script type="module" crossorigin src="./assets/index-B0MZLtMD.js"></script>
   <link rel="stylesheet" crossorigin href="./assets/index-C5VFWmKm.css">
 </head>
 <body>
@@ -778,24 +778,19 @@
         </div>
 
         <!-- Tab 2: STI Risk Profile -->
-        <div id="tab-sti" class="tab-pane" style="display: none; padding-right: 6px;">
-          <!-- Informational Banner & Controls -->
-          <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 10px; padding: 12px 16px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
-            <div>
-              <div style="font-size: 13px; font-weight: 800; color: #00f0ff; display: flex; align-items: center; gap: 6px;">
-                <span>📊 Your 1-Month STI Exposure Risk Profile</span>
-              </div>
-              <div style="font-size: 11px; color: var(--text-muted); margin-top: 3px;">
-                Estimated probability of infection per month given your lovers & condom use.
-                <span style="color: #ff2a85; font-weight: 700; margin-left: 6px;">■ High (&gt;15%)</span>
-                <span style="color: #f59e0b; font-weight: 700; margin-left: 6px;">■ Moderate (5–15%)</span>
-                <span style="color: #10b981; font-weight: 700; margin-left: 6px;">■ Low (&lt;5%)</span>
-              </div>
+        <div id="tab-sti" class="tab-pane" style="display: none; height: 100%; overflow-y: auto; padding-right: 4px;">
+          <!-- Compact Toolbar & Controls -->
+          <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(0, 240, 255, 0.25); border-radius: 8px; padding: 6px 12px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 12px; font-weight: 800; color: #00f0ff;">📊 1-Mo STI Exposure Risk:</span>
+              <span style="font-size: 10px; font-weight: 700; color: #ff2a85;">■ High (&gt;15%)</span>
+              <span style="font-size: 10px; font-weight: 700; color: #f59e0b;">■ Med (5–15%)</span>
+              <span style="font-size: 10px; font-weight: 700; color: #10b981;">■ Low (&lt;5%)</span>
             </div>
 
             <!-- Controls -->
-            <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
-              <select id="sti-category-filter" class="preset-select" style="padding: 5px 10px; font-size: 11px; border-color: rgba(0,240,255,0.4);">
+            <div style="display: flex; gap: 6px; align-items: center;">
+              <select id="sti-category-filter" class="preset-select" style="padding: 3px 8px; font-size: 11px; height: 26px; border-color: rgba(0,240,255,0.4);">
                 <option value="top" selected>🔥 Top Threats (Highest Risk)</option>
                 <option value="bacterial">💊 Curable / Bacterial STIs</option>
                 <option value="skin">💋 Skin-to-Skin Pathogens</option>
@@ -803,7 +798,7 @@
                 <option value="all">🌐 All Pathogens (32 STIs)</option>
               </select>
 
-              <select id="sti-view-mode" class="preset-select" style="padding: 5px 10px; font-size: 11px; border-color: rgba(255,42,133,0.4);">
+              <select id="sti-view-mode" class="preset-select" style="padding: 3px 8px; font-size: 11px; height: 26px; border-color: rgba(255,42,133,0.4);">
                 <option value="protected" selected>🛡️ Protected (With Prophylaxis)</option>
                 <option value="delta">📊 Prophylactic Barrier (Risk Avoided)</option>
                 <option value="unprotected">⚠️ Raw Baseline (No Prophylaxis)</option>
