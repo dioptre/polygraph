@@ -288,7 +288,7 @@ export class ChartsManager {
 
     const dom = document.getElementById('chart-sti');
     if (dom) {
-      const calculatedHeight = items.length <= 8 ? 165 : items.length * 25;
+      const calculatedHeight = Math.max(260, items.length * 30);
       dom.style.height = `${calculatedHeight}px`;
     }
 

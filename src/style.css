@@ -447,22 +447,33 @@ input[type="range"]::-webkit-slider-thumb:hover {
   overflow-y: auto !important;
 }
 
+#tab-sti::-webkit-scrollbar,
 .tab-content::-webkit-scrollbar {
-  width: 6px;
+  width: 10px !important;
+  display: block !important;
 }
 
+#tab-sti::-webkit-scrollbar-track,
 .tab-content::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.8);
-  border-radius: 4px;
+  background: rgba(15, 23, 42, 0.9) !important;
+  border-radius: 6px !important;
 }
 
+#tab-sti::-webkit-scrollbar-thumb,
 .tab-content::-webkit-scrollbar-thumb {
-  background: rgba(0, 240, 255, 0.4);
-  border-radius: 4px;
+  background: #00f0ff !important;
+  border-radius: 6px !important;
+  box-shadow: 0 0 10px #00f0ff !important;
 }
 
+#tab-sti::-webkit-scrollbar-thumb:hover,
 .tab-content::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 240, 255, 0.8);
+  background: #ff2a85 !important;
+  box-shadow: 0 0 15px #ff2a85 !important;
+}
+
+.chart-container canvas {
+  touch-action: pan-y !important;
 }
 
 .tab-pane {
