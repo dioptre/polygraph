@@ -422,6 +422,12 @@ input[type="range"]::-webkit-slider-thumb:hover {
   color: #f8fafc;
 }
 
+/* Force ECharts chart tooltips to render over sticky headers and controls */
+.echarts-tooltip,
+div[style*="z-index"][style*="background"] {
+  z-index: 999999 !important;
+}
+
 /* Analytics Section */
 .analytics-area {
   grid-area: analytics;

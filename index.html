@@ -6,8 +6,8 @@
   <title>Your PolyGraph StarChart — Extended Sexual Network & STI Epidemiology Visualizer</title>
   <meta name="description" content="Interactive network visualization and epidemiological STI transmission risk calculator for polyamorous, open, and slutty sexual networks.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
-  <script type="module" crossorigin src="./assets/index-Dt0_vTKK.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-DIYgT6Nx.css">
+  <script type="module" crossorigin src="./assets/index-Cgxf6zUC.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CSdUWt3a.css">
 </head>
 <body>
   <!-- Top Bar / Header -->
@@ -845,14 +845,14 @@
         </div>
 
         <!-- Tab 2: STI Risk Profile -->
-        <div id="tab-sti" class="tab-pane" style="display: none; height: 230px; overflow-y: scroll !important; -webkit-overflow-scrolling: touch; touch-action: pan-y !important; padding-right: 6px; padding-bottom: 30px;">
+        <div id="tab-sti" class="tab-pane" style="display: none; height: 320px; overflow-y: auto !important; -webkit-overflow-scrolling: touch; touch-action: pan-y !important; padding-right: 6px; padding-bottom: 160px;">
           <!-- Compact Toolbar & Controls -->
-          <div style="position: sticky; top: 0; z-index: 1000; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(0, 240, 255, 0.25); border-radius: 8px; padding: 6px 12px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+          <div style="position: sticky; top: 0; z-index: 10; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(0, 240, 255, 0.25); border-radius: 8px; padding: 6px 12px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
               <span id="sti-profile-title-badge" style="font-size: 12px; font-weight: 800; color: #00f0ff;">📊 Displaying 8 Pathogens (Protected) over:</span>
               
               <!-- Time Horizon Dropdown directly embedded in Title Header -->
-              <select id="sti-time-horizon" class="preset-select" onchange="window.polygraphApp && window.polygraphApp.handleSTIFilterChange()" style="padding: 2px 8px; font-size: 11px; height: 26px; border-color: rgba(16,185,129,0.5); background: rgba(16,185,129,0.15); color: #10b981; font-weight: 700; cursor: pointer; pointer-events: auto; position: relative; z-index: 1001; border-radius: 6px;">
+              <select id="sti-time-horizon" class="preset-select" onchange="window.polygraphApp && window.polygraphApp.handleSTIFilterChange()" style="padding: 2px 8px; font-size: 11px; height: 26px; border-color: rgba(16,185,129,0.5); background: rgba(16,185,129,0.15); color: #10b981; font-weight: 700; cursor: pointer; pointer-events: auto; position: relative; z-index: 11; border-radius: 6px;">
                 <option value="1" selected>⏱️ 1 Month (Default)</option>
                 <option value="2">⏱️ 2 Months</option>
                 <option value="3">⏱️ 3 Months</option>
@@ -872,7 +872,7 @@
 
             <!-- Controls -->
             <div style="display: flex; gap: 6px; align-items: center;">
-              <select id="sti-category-filter" class="preset-select" onchange="window.polygraphApp && window.polygraphApp.handleSTIFilterChange()" style="padding: 3px 8px; font-size: 11px; height: 26px; border-color: rgba(0,240,255,0.4); cursor: pointer; pointer-events: auto; position: relative; z-index: 1001;">
+              <select id="sti-category-filter" class="preset-select" onchange="window.polygraphApp && window.polygraphApp.handleSTIFilterChange()" style="padding: 3px 8px; font-size: 11px; height: 26px; border-color: rgba(0,240,255,0.4); cursor: pointer; pointer-events: auto; position: relative; z-index: 11;">
                 <option value="top" selected>🔥 Top Threats (Highest Risk)</option>
                 <option value="bacterial">💊 Curable / Bacterial STIs</option>
                 <option value="skin">💋 Skin-to-Skin Pathogens</option>
@@ -880,7 +880,7 @@
                 <option value="all">🌐 All Pathogens (32 STIs)</option>
               </select>
 
-              <select id="sti-view-mode" class="preset-select" onchange="window.polygraphApp && window.polygraphApp.handleSTIFilterChange()" style="padding: 3px 8px; font-size: 11px; height: 26px; border-color: rgba(255,42,133,0.4); cursor: pointer; pointer-events: auto; position: relative; z-index: 1001;">
+              <select id="sti-view-mode" class="preset-select" onchange="window.polygraphApp && window.polygraphApp.handleSTIFilterChange()" style="padding: 3px 8px; font-size: 11px; height: 26px; border-color: rgba(255,42,133,0.4); cursor: pointer; pointer-events: auto; position: relative; z-index: 11;">
                 <option value="protected" selected>🛡️ Protected (With Prophylaxis)</option>
                 <option value="delta">📊 Prophylactic Barrier (Risk Avoided)</option>
                 <option value="unprotected">⚠️ Raw Baseline (No Prophylaxis)</option>

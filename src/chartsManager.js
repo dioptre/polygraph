@@ -199,6 +199,13 @@ export class ChartsManager {
       badgeEl.textContent = `📊 Displaying ${items.length} Pathogens (${modeNames[viewMode] || 'Protected'}) over:`;
     }
 
+    const dynamicChartHeight = Math.max(220, items.length * 28 + 40);
+    const chartEl = document.getElementById('chart-sti');
+    if (chartEl) {
+      chartEl.style.height = `${dynamicChartHeight}px`;
+      this.stiRiskChart.resize();
+    }
+
     const itemMap = {};
     items.forEach(it => {
       itemMap[it.name] = it;
@@ -310,7 +317,27 @@ export class ChartsManager {
         trigger: 'axis',
         axisPointer: { type: 'shadow' },
         confine: true,
-        extraCssText: 'z-index: 99999 !important; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 240, 255, 0.4); border-radius: 10px; padding: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);',
+        position: function (point, params, dom, rect, size) {
+          const contentWidth = size.contentSize[0];
+          const contentHeight = size.contentSize[1];
+          const viewWidth = size.viewSize[0];
+          const viewHeight = size.viewSize[1];
+
+          let x = point[0] + 15;
+          let y = point[1] - 20;
+
+          if (x + contentWidth > viewWidth - 10) {
+            x = Math.max(10, point[0] - contentWidth - 15);
+          }
+
+          if (y + contentHeight > viewHeight - 10) {
+            y = Math.max(10, point[1] - contentHeight - 15);
+          }
+          if (y < 10) y = 10;
+
+          return [x, y];
+        },
+        extraCssText: 'z-index: 999999 !important; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 240, 255, 0.4); border-radius: 10px; padding: 10px 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.95); pointer-events: none;',
         formatter: (params) => {
           if (!params || params.length === 0) return '';
           const rawName = names[params[0].dataIndex];
