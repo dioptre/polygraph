@@ -159,13 +159,10 @@ export class STIRiskCalculator {
 
       if (demographicProfile === 'wsw_female') {
         pAnal = 0;
-        pVag = pathogen.receptiveVaginal * 0.08;
-        if (pathogen.name.toLowerCase().includes('hiv')) {
-          pAnal = 0;
-          pVag = 0.0001;
-          pOral = 0.0001;
-          pSkin = 0;
-        }
+        // WSW transmission incorporates mucosal fluid exchange, menstrual blood contact, and unbarriered sex toy sharing
+        pVag = pathogen.receptiveVaginal * 0.50;
+        pOral = (pathogen.oral || 0.005) * 1.5;
+        pSkin = (pathogen.skinContact || 0.001) * 2.0;
       } else if (demographicProfile === 'msm_tgnc') {
         pAnal *= 1.35;
         pOral *= 1.2;
@@ -189,7 +186,7 @@ export class STIRiskCalculator {
 
       const baselineWeightedActRiskPct = ((wAnal * pAnal) + (wVag * pVag) + (wOral * pOral) + (wSkin * pSkin)) * mDuration * mFluid;
 
-      let effectiveActRiskUnprotected = Math.max(0.00001, baselineWeightedActRiskPct) / 100;
+      let effectiveActRiskUnprotected = Math.max(0.000001, baselineWeightedActRiskPct) / 100;
       const condomEfficacy = (pathogen.condomTypicalEfficacy || 85) / 100;
       let effectiveActRiskProtected = effectiveActRiskUnprotected * (1 - condomEfficacy);
 
@@ -205,8 +202,12 @@ export class STIRiskCalculator {
       const rCasualPartnerIfInfected = 1 - Math.pow(1 - pActCasual, casualActsInitial);
 
       const outgroupFactor = Math.min(1.0, Math.max(0.0, casualRatio + (fluidRatio * (params.sluttinessIndex !== undefined ? params.sluttinessIndex : 0.86)) + ((params.cheatingLikelihood || 0) / 100)));
-      const effectiveFluidPrevalence = prevalence * Math.max(0.05, outgroupFactor);
-      const effectiveCasualPrevalence = prevalence;
+      
+      // Outgroup Network Prevalence Bridge:
+      // Open multi-partner networks bridge into broader population subgroups (including bisexual/pansexual partners & MSM with 12% HIV prevalence)
+      const msmBridgePrevalence = pathogen.name.toLowerCase().includes('hiv') ? 0.12 : prevalence;
+      const effectiveCasualPrevalence = prevalence + ((msmBridgePrevalence - prevalence) * (outgroupFactor * 0.35));
+      const effectiveFluidPrevalence = effectiveCasualPrevalence * Math.max(0.05, outgroupFactor);
 
       const directFluidTransmissionProb = rFluidPartnerIfInfected * effectiveFluidPrevalence;
       const directCasualTransmissionProb = rCasualPartnerIfInfected * effectiveCasualPrevalence;
@@ -231,6 +232,12 @@ export class STIRiskCalculator {
       const totalProtectedRiskPct = Math.min(99.9, (1 - overallSafetyProduct) * 100);
       const totalUnprotectedRiskPct = Math.min(99.9, (1 - unprotectedSafetyProduct) * 100);
 
+      const formatPrecision = (val) => {
+        if (val <= 0) return 0;
+        if (val < 0.01) return parseFloat(val.toFixed(3));
+        return parseFloat(val.toFixed(2));
+      };
+
       return {
         id: pathogen.id,
         name: pathogen.name,
@@ -238,9 +245,9 @@ export class STIRiskCalculator {
         curable: pathogen.curable,
         sfHighRiskGroup: pathogen.sfHighRiskGroup,
         prevalencePct: parseFloat((prevalence * 100).toFixed(2)),
-        baselineActRiskPct: parseFloat(baselineWeightedActRiskPct.toFixed(4)),
-        monthlyRiskProtectedPct: parseFloat(totalProtectedRiskPct.toFixed(2)),
-        monthlyRiskUnprotectedPct: parseFloat(totalUnprotectedRiskPct.toFixed(2)),
+        baselineActRiskPct: parseFloat(baselineWeightedActRiskPct.toFixed(5)),
+        monthlyRiskProtectedPct: formatPrecision(totalProtectedRiskPct),
+        monthlyRiskUnprotectedPct: formatPrecision(totalUnprotectedRiskPct),
         primaryTreatment: pathogen.primaryTreatment
       };
     });
