@@ -1,6 +1,6 @@
 /**
  * San Francisco & Oakland Sexual Trail — 128 Audited Master CYOA Scenarios
- * Cleanly divided into 5 Narrative Acts with ZERO generic templates, ZERO # numbers, and 100% UNIQUE choices!
+ * Cleanly divided into 5 Narrative Acts with 32 dedicated 8-Bit Scene Images & Regional Isolation!
  */
 window.SF_SCENARIOS_128 = [
   {
@@ -47,7 +47,8 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 1,
@@ -83,7 +84,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "grantsItem": "vip_soma_wristband"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 2,
@@ -119,7 +121,8 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 3,
@@ -147,7 +150,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "grantsItem": "magnet_health_pass"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 4,
@@ -174,7 +178,8 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 5,
@@ -216,13 +221,14 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": true
   },
   {
     "id": 6,
     "act": "ACT I: 16TH STREET MURAL ALLEY",
     "neighborhood": "Clarion Erotic Mural Alley",
-    "image": "./images/mission_loft.jpg",
+    "image": "./images/clarion_mural.jpg",
     "narrative": "Neon street lamps illuminate vibrant street murals along Clarion Alley. Nico, a paint-splattered muralist with a broad smile, steps up with two spray cans. 'Art and intimacy are both about raw expression without shame,' Nico says, winking at you.",
     "choices": [
       {
@@ -242,7 +248,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": false,
         "missesPrep": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 7,
@@ -267,7 +274,8 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": false
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 8,
@@ -294,13 +302,14 @@ window.SF_SCENARIOS_128 = [
         "actType": "dialogue",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 9,
     "act": "ACT I: MISSION NOCTURNE",
     "neighborhood": "Castro Theater Marquee Foyer",
-    "image": "./images/castro_rooftop.jpg",
+    "image": "./images/castro_marquee.jpg",
     "narrative": "The energy inside Castro Theater Marquee Foyer is intoxicating. Historic velvet lounge near the organ balcony. Friends and lovers gather under dim crimson lights to share intimate confessions and plan their next adventure.",
     "choices": [
       {
@@ -330,7 +339,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Castro Theater Marquee Foyer"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 10,
@@ -366,7 +376,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Mission Polycule Mansion"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 11,
@@ -402,7 +413,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Dolores Hillside Rope Circle"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 12,
@@ -438,13 +450,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at 18th Street Coffee Roastery"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 13,
     "act": "ACT I: MISSION NOCTURNE",
     "neighborhood": "Clarion Alley Erotic Art Walk",
-    "image": "./images/mission_loft.jpg",
+    "image": "./images/clarion_mural.jpg",
     "narrative": "The energy inside Clarion Alley Erotic Art Walk is intoxicating. Radical queer art installations illuminated under street lamps. Friends and lovers gather under dim crimson lights to share intimate confessions and plan their next adventure.",
     "choices": [
       {
@@ -474,13 +487,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Clarion Alley Erotic Art Walk"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 14,
     "act": "ACT I: MISSION NOCTURNE",
     "neighborhood": "Bernal Heights Sunset Vista",
-    "image": "./images/mission_loft.jpg",
+    "image": "./images/twin_peaks.jpg",
     "narrative": "The energy inside Bernal Heights Sunset Vista is intoxicating. Panoramic view of the city skyline as fog rolls over Twin Peaks. Friends and lovers gather under dim crimson lights to share intimate confessions and plan their next adventure.",
     "choices": [
       {
@@ -510,7 +524,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Bernal Heights Sunset Vista"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 15,
@@ -546,13 +561,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at 24th Street Taqueria Rendezvous"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 16,
     "act": "ACT I: MISSION NOCTURNE",
     "neighborhood": "Armory Fortress Courtyard",
-    "image": "./images/armory_dungeon.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "The energy inside Armory Fortress Courtyard is intoxicating. Imposing red-brick arches where kink leather gear displays line the walk. Friends and lovers gather under dim crimson lights to share intimate confessions and plan their next adventure.",
     "choices": [
       {
@@ -582,13 +598,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Armory Fortress Courtyard"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 17,
     "act": "ACT I: MISSION NOCTURNE",
     "neighborhood": "Armory Velvet Foyer Lounge",
-    "image": "./images/armory_dungeon.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "The energy inside Armory Velvet Foyer Lounge is intoxicating. Dungeon orientation room with plush velvet chairs and safety rules. Friends and lovers gather under dim crimson lights to share intimate confessions and plan their next adventure.",
     "choices": [
       {
@@ -618,13 +635,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Armory Velvet Foyer Lounge"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 18,
     "act": "ACT I: MISSION NOCTURNE",
     "neighborhood": "Armory Suspension Rig Hall",
-    "image": "./images/armory_dungeon.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "The energy inside Armory Suspension Rig Hall is intoxicating. Soaring ceilings with iron suspension beams and padded mats. Friends and lovers gather under dim crimson lights to share intimate confessions and plan their next adventure.",
     "choices": [
       {
@@ -654,13 +672,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Armory Suspension Rig Hall"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 19,
     "act": "ACT I: MISSION NOCTURNE",
     "neighborhood": "Armory Dungeon Play Nook",
-    "image": "./images/armory_dungeon.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "The energy inside Armory Dungeon Play Nook is intoxicating. Private curtained niche for consensual impact and barrier play. Friends and lovers gather under dim crimson lights to share intimate confessions and plan their next adventure.",
     "choices": [
       {
@@ -690,7 +709,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Armory Dungeon Play Nook"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 20,
@@ -726,7 +746,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Mission Creek Kayak Dock"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 21,
@@ -762,7 +783,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Castro Rooftop Cabana Deck"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 22,
@@ -798,7 +820,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Mission Disco Vinyl Parlor"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 23,
@@ -834,7 +857,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Duboce Park Sun Meadow"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 24,
@@ -870,13 +894,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Valencia Rooftop Fire Pit"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 25,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "BART Embarcadero Transit Crossing",
-    "image": "./images/sf_cityhall.jpg",
+    "image": "./images/oakland_bart.jpg",
     "narrative": "You board the silver BART train under Market Street. The train roars through the dark tube beneath San Francisco Bay. Emerging into warm sunlight in Downtown Oakland, Kai, an East Bay poly educator with an infectious laugh, greets you at the station barrier.",
     "choices": [
       {
@@ -905,13 +930,14 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": true
   },
   {
     "id": 26,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Grand Lake Theater Speakeasy",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/fox_theater_oakland.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Grand Lake Theater Speakeasy. Hidden cocktail bar concealed behind a velvet curtain near the movie screen. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -940,13 +966,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Grand Lake Theater Speakeasy"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 27,
     "act": "ACT II: TELEGRAPH INTIMACY WORKSHOP",
     "neighborhood": "Telegraph Avenue Intimacy Workshop",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/telegraph_workshop.jpg",
     "narrative": "Inside a sunlit loft on Telegraph Avenue, fifteen East Bay practitioners sit on meditation cushions. Kai leads a workshop on radical consent and emotional vulnerability, handing you the East Bay Poly Intimacy Pact!",
     "choices": [
       {
@@ -968,13 +995,14 @@ window.SF_SCENARIOS_128 = [
         "actType": "anal",
         "isIngroup": false
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 28,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Telegraph Art Murals Courtyard",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/telegraph_workshop.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Telegraph Art Murals Courtyard. Outdoor mural gallery displaying East Bay radical community art. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -1003,13 +1031,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Telegraph Art Murals Courtyard"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 29,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Oakland Polycule Co-Op Kitchen",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/jack_london_square.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Oakland Polycule Co-Op Kitchen. Spacious communal kitchen filled with scents of roasted spices and fresh bread. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -1038,7 +1067,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Oakland Polycule Co-Op Kitchen"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 30,
@@ -1073,13 +1103,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Berkeley Commune Library Study"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 31,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Redwood Regional Park Forest Trail",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/berkeley_telegraph.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Redwood Regional Park Forest Trail. Towering redwood canopy filtered by golden morning sunbeams. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -1108,7 +1139,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Redwood Regional Park Forest Trail"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 32,
@@ -1133,13 +1165,14 @@ window.SF_SCENARIOS_128 = [
         "actType": "clinic",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 33,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Jack London Waterfront Pier",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/jack_london_square.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Jack London Waterfront Pier. Estuary pier watching glowing cargo ships glide past under starry skies. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -1168,13 +1201,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Jack London Waterfront Pier"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 34,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Oakland Underground Soundstage",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/lake_merritt.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Oakland Underground Soundstage. Warehouse space vibrating with deep techno bass and laser lights. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -1203,13 +1237,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Oakland Underground Soundstage"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 35,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Uptown Oakland Velvet Lounge",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/grand_lake_speakeasy.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Uptown Oakland Velvet Lounge. Plush leather booths and vintage vinyl soul records playing. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -1238,7 +1273,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Uptown Oakland Velvet Lounge"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 36,
@@ -1273,13 +1309,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Berkeley Hills Telescope Deck"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 37,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Fruitvale Cultural Art Center",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/jack_london_square.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Fruitvale Cultural Art Center. Vibrant gallery showcasing Latinx queer artists and live music. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -1308,7 +1345,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Fruitvale Cultural Art Center"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 38,
@@ -1343,13 +1381,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Piedmont Avenue Tea Sanctuary"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 39,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Oakland Greenhouse Solarium",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/berkeley_telegraph.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Oakland Greenhouse Solarium. Humid glass conservatory filled with tropical orchids and plush lounges. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -1378,7 +1417,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Oakland Greenhouse Solarium"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 40,
@@ -1413,13 +1453,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Berkeley Redwood Cabin Loft"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 41,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Lake Merritt Boathouse Terrace",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/lake_merritt.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Lake Merritt Boathouse Terrace. Nighttime pedal boat rentals gliding across tranquil waters. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -1448,13 +1489,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Lake Merritt Boathouse Terrace"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 42,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Telegraph Avenue Synth Lab",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/telegraph_workshop.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Telegraph Avenue Synth Lab. Modular synthesizer studio where electronic artists craft ambient soundscapes. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -1483,13 +1525,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Telegraph Avenue Synth Lab"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 43,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Grand Lake Rooftop Garden",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/grand_lake_speakeasy.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Grand Lake Rooftop Garden. Private rooftop garden offering panoramic evening views of Lake Merritt. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -1518,13 +1561,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Grand Lake Rooftop Garden"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 44,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "East Bay Harm Reduction Collective",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/temescal_alley.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at East Bay Harm Reduction Collective. Volunteer hub packaging safer-sex kits and barrier supplies. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -1553,13 +1597,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at East Bay Harm Reduction Collective"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 45,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Oakland West BART Return Platform",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/oakland_bart.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Oakland West BART Return Platform. BART platform illuminated by night lights as trains head back to SF. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -1588,13 +1633,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Oakland West BART Return Platform"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 46,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "12th Street Oakland Plaza",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/oakland_bart.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at 12th Street Oakland Plaza. Open plaza filled with food trucks, street musicians, and warm sunlight. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -1623,13 +1669,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at 12th Street Oakland Plaza"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 47,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Grand Lake Theater Speakeasy",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/fox_theater_oakland.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Grand Lake Theater Speakeasy. Hidden cocktail bar concealed behind a velvet curtain near the movie screen. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -1658,13 +1705,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Grand Lake Theater Speakeasy"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 48,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Lake Merritt Pergola Promenade",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/lake_merritt.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Lake Merritt Pergola Promenade. Illuminated shoreline path decorated with glowing fairy lights. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -1693,13 +1741,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Lake Merritt Pergola Promenade"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 49,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Telegraph Art Murals Courtyard",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/telegraph_workshop.jpg",
     "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Telegraph Art Murals Courtyard. Outdoor mural gallery displaying East Bay radical community art. Deep consent discussions and playful sparks fill the air.",
     "choices": [
       {
@@ -1728,13 +1777,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Telegraph Art Murals Courtyard"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 50,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa 10th Street Transit Hub",
-    "image": "./images/speakeasy_cellar.jpg",
+    "image": "./images/lake_merritt.jpg",
     "narrative": "Returning across the Bay, San Francisco's SoMa district pulsates with heavy industrial bass and neon signs. Flashing motorcycle headlights pierce through ambient fog as partygoers converge on Folsom and Dore Alley.",
     "choices": [
       {
@@ -1762,13 +1812,14 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": true
   },
   {
     "id": 51,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Folsom Leather Corner Stage",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/grand_lake_speakeasy.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at Folsom Leather Corner Stage. Stage showcasing custom leather harnesses and gear craft. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -1797,13 +1848,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Folsom Leather Corner Stage"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 52,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Folsom VIP Play Pen",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/temescal_alley.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at Folsom VIP Play Pen. Enclosed outdoor play arena equipped with padded benches. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -1832,13 +1884,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Folsom VIP Play Pen"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 53,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Dore Alley Brick Archway",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/temescal_alley.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at Dore Alley Brick Archway. Dark brick alleyway humming with industrial techno and fog machines. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -1867,13 +1920,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Dore Alley Brick Archway"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 54,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Speakeasy Velvet Chaise Lounge",
-    "image": "./images/speakeasy_cellar.jpg",
+    "image": "./images/grand_lake_speakeasy.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at Speakeasy Velvet Chaise Lounge. Opulent velvet lounge decorated with vintage mirrors and champagne ice buckets. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -1902,13 +1956,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Speakeasy Velvet Chaise Lounge"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 55,
     "act": "ACT III: DORE ALLEY SPEAKEASY CELLAR",
     "neighborhood": "Subterranean Dore Alley Speakeasy",
-    "image": "./images/speakeasy_cellar.jpg",
+    "image": "./images/temescal_alley.jpg",
     "narrative": "Flashing your silver-embossed black VIP Wristband opens a hidden heavy oak door below Dore Alley. Down polished stone steps lies an exclusive subterranean speakeasy with crystal chandeliers, velvet lounges, and champagne bars.",
     "choices": [
       {
@@ -1929,13 +1984,14 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true,
         "grantsItem": "doxy_pouch"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 56,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Steamworks Reception",
-    "image": "./images/soma_bathhouse.jpg",
+    "image": "./images/telegraph_workshop.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Steamworks Reception. Keycard check-in desk providing fresh towels and locker keys. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -1964,13 +2020,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at SoMa Steamworks Reception"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 57,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Steamworks Plunge Pool",
-    "image": "./images/soma_bathhouse.jpg",
+    "image": "./images/fox_theater_oakland.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Steamworks Plunge Pool. Chilled plunge pool surrounded by cedar benches and cucumber water. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -1999,13 +2056,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at SoMa Steamworks Plunge Pool"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 58,
     "act": "ACT III: SOMA STEAMWORKS SAUNA",
     "neighborhood": "SoMa Bathhouse Steamroom",
-    "image": "./images/soma_bathhouse.jpg",
+    "image": "./images/lake_merritt.jpg",
     "narrative": "Thick cedar steam rolls across private sauna cabins. Julian, a sculpted Castro gym instructor, drops his towel onto the bench, his sweat-glistening chest rising and falling in rhythm to ambient synth beats.",
     "choices": [
       {
@@ -2026,13 +2084,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": false,
         "usesCondom": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 59,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Armory Fortress Master Gate",
-    "image": "./images/armory_dungeon.jpg",
+    "image": "./images/grand_lake_speakeasy.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at Armory Fortress Master Gate. Historic castle gate entry with massive iron doors. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2061,13 +2120,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Armory Fortress Master Gate"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 60,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Armory Leather Bench Corridor",
-    "image": "./images/armory_dungeon.jpg",
+    "image": "./images/temescal_alley.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at Armory Leather Bench Corridor. Play benches equipped with leather restraints and safety check stations. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2096,13 +2156,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Armory Leather Bench Corridor"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 61,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Industrial Rooftop Garden",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/jack_london_square.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Industrial Rooftop Garden. Urban oasis overlooking the neon cityscape of SoMa. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2131,13 +2192,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at SoMa Industrial Rooftop Garden"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 62,
     "act": "ACT III: ARMORY MASTER VAULT",
     "neighborhood": "Armory Kink Castle Dungeon",
-    "image": "./images/armory_dungeon.jpg",
+    "image": "./images/berkeley_commune.jpg",
     "narrative": "Inside the red-brick fortress of the Armory, heavy velvet drapes isolate the private master vault. Unlocking the vault door with the `armory_master_key`, Sienna welcomes you to an exclusive suspension rope play session.",
     "choices": [
       {
@@ -2158,13 +2220,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": false,
         "usesCondom": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 63,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Howard Street Speakeasy Courtyard",
-    "image": "./images/speakeasy_cellar.jpg",
+    "image": "./images/grand_lake_speakeasy.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at Howard Street Speakeasy Courtyard. Secluded brick patio serving artisanal mezcal and craft cocktails. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2193,13 +2256,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Howard Street Speakeasy Courtyard"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 64,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa After-Hours Soundcheck Loft",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/telegraph_workshop.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa After-Hours Soundcheck Loft. Vibrant warehouse loft where local DJs play deep underground house. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2228,13 +2292,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at SoMa After-Hours Soundcheck Loft"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 65,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Harrison Street Art Gallery",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/fox_theater_oakland.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at Harrison Street Art Gallery. Exhibition displaying radical queer erotic portraiture. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2263,13 +2328,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Harrison Street Art Gallery"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 66,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Polycule Co-Op Penthouse",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/lake_merritt.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Polycule Co-Op Penthouse. Spacious penthouse hosting a joint SF & East Bay polycule mixer. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2298,13 +2364,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at SoMa Polycule Co-Op Penthouse"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 67,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Folsom Street Photo Exhibition",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/grand_lake_speakeasy.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at Folsom Street Photo Exhibition. Archival gallery showcasing 1970s San Francisco leather history. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2333,13 +2400,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Folsom Street Photo Exhibition"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 68,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Darkroom Sensory Tunnel",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/temescal_alley.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Darkroom Sensory Tunnel. Sensory play tunnel immersed in complete darkness and ambient bass. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2368,13 +2436,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at SoMa Darkroom Sensory Tunnel"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 69,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "11th Street VIP Promoter Booth",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/jack_london_square.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at 11th Street VIP Promoter Booth. VIP booth where nightlife organizers toast with cold champagne. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2403,13 +2472,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at 11th Street VIP Promoter Booth"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 70,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Midnight Taco Truck",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/berkeley_commune.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Midnight Taco Truck. Late-night street food stand surrounded by happy clubgoers. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2438,13 +2508,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at SoMa Midnight Taco Truck"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 71,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Acoustic Guitar Lounge",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/berkeley_telegraph.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Acoustic Guitar Lounge. Unplugged song circle featuring traveling polycule musicians. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2473,13 +2544,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at SoMa Acoustic Guitar Lounge"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 72,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Howard Leather Craft Studio",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/telegraph_workshop.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at Howard Leather Craft Studio. Workshop bench for custom leather fittings and harness craft. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2508,13 +2580,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Howard Leather Craft Studio"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 73,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Neon Alley Arcade Bar",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/temescal_alley.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Neon Alley Arcade Bar. Retro arcade venue featuring 16-bit video games and craft beers. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2543,13 +2616,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at SoMa Neon Alley Arcade Bar"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 74,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Folsom Street Gear Exchange",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/lake_merritt.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at Folsom Street Gear Exchange. Community trade station for leather gear, boots, and barrier supplies. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2578,13 +2652,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Folsom Street Gear Exchange"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 75,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Solarium Cuddle Deck",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/grand_lake_speakeasy.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Solarium Cuddle Deck. Cushioned rooftop lounge under starry midnight skies. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2613,13 +2688,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at SoMa Solarium Cuddle Deck"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 76,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Harm Reduction Tent",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/temescal_alley.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Harm Reduction Tent. Outreach station distributing free STI literature and Doxy-PEP info. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2648,13 +2724,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at SoMa Harm Reduction Tent"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 77,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Howard Underground Sound Vault",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/jack_london_square.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at Howard Underground Sound Vault. Subterranean vault vibrating with experimental industrial synth. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2683,13 +2760,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Howard Underground Sound Vault"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 78,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Roof Garden Fire Pit",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/berkeley_commune.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Roof Garden Fire Pit. Open-air fire pit where lovers roast marshmallows and share stories. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2718,13 +2796,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at SoMa Roof Garden Fire Pit"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 79,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Midnight Espresso Parlor",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/grand_lake_speakeasy.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Midnight Espresso Parlor. Late-night cafe serving double espressos and consent advice. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2753,13 +2832,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at SoMa Midnight Espresso Parlor"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 80,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Embarcadero Pier Ferry Departure",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/jack_london_square.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at Embarcadero Pier Ferry Departure. Waterfront ferry pier under glowing streetlights preparing for Marin. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2788,13 +2868,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Embarcadero Pier Ferry Departure"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 81,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Folsom Street Fair Entrance",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/fox_theater_oakland.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at Folsom Street Fair Entrance. Epic leather festival gates crowded with gear enthusiasts under the sun. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2823,13 +2904,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Folsom Street Fair Entrance"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 82,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Folsom Leather Corner Stage",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/lake_merritt.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at Folsom Leather Corner Stage. Stage showcasing custom leather harnesses and gear craft. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2858,13 +2940,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Folsom Leather Corner Stage"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 83,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Folsom VIP Play Pen",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/grand_lake_speakeasy.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at Folsom VIP Play Pen. Enclosed outdoor play arena equipped with padded benches. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2893,13 +2976,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Folsom VIP Play Pen"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 84,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Dore Alley Brick Archway",
-    "image": "./images/folsom_fest.jpg",
+    "image": "./images/temescal_alley.jpg",
     "narrative": "The pulse of SoMa's industrial circuit is intense at Dore Alley Brick Archway. Dark brick alleyway humming with industrial techno and fog machines. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
@@ -2928,13 +3012,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Dore Alley Brick Archway"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 85,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Sausalito Ferry Pier Transit Hub",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Salt spray hits your face as the ferry glides past Alcatraz toward Sausalito and Marin. Golden Gate Bridge towers gleam in the afternoon sun against rugged coastal bluffs.",
     "choices": [
       {
@@ -2961,13 +3046,14 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": true
   },
   {
     "id": 86,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Sausalito Houseboat Solarium Cabin",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Sausalito Houseboat Solarium Cabin. Sunlit plant conservatory aboard a historic wooden houseboat. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -2996,13 +3082,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Sausalito Houseboat Solarium Cabin"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 87,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Marin Headlands Vista Point",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Marin Headlands Vista Point. High ocean cliff offering breathtaking views of the Golden Gate Bridge. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3031,13 +3118,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Marin Headlands Vista Point"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 88,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Point Bonita Lighthouse Terrace",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Point Bonita Lighthouse Terrace. Suspension bridge path leading to a dramatic ocean lighthouse cliff. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3066,13 +3154,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Point Bonita Lighthouse Terrace"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 89,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Baker Beach Bonfire Circle",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Baker Beach Bonfire Circle. Crackling driftwood bonfire surrounded by ocean waves and starlight. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3101,13 +3190,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Baker Beach Bonfire Circle"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 90,
     "act": "ACT IV: BAKER BEACH SUNSET DUNES",
     "neighborhood": "Baker Beach Clothing-Optional",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Salt spray hits your face as a bonfire crackles against the Golden Gate Bridge skyline. The crowd is uninhibited, bare skin glowing red in the firelight embers.",
     "choices": [
       {
@@ -3127,13 +3217,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": false,
         "usesCondom": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 91,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Mount Tamalpais Starlight Ridge",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Mount Tamalpais Starlight Ridge. Mountain peak overlooking a sea of fog illuminated by moonlight. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3162,13 +3253,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Mount Tamalpais Starlight Ridge"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 92,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Marin Redwood Solarium Cabin",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Marin Redwood Solarium Cabin. Rustic mountain chalet featuring an outdoor cedar hot tub under pine trees. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3197,13 +3289,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Marin Redwood Solarium Cabin"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 93,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Presidio Officers Club Grand Foyer",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Presidio Officers Club Grand Foyer. Historic spanish tile foyer surrounded by fragrant eucalyptus groves. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3232,13 +3325,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Presidio Officers Club Grand Foyer"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 94,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Presidio Redwood Grove Sanctuary",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Presidio Redwood Grove Sanctuary. Tranquil forest walking trail shaded by ancient redwood trees. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3267,13 +3361,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Presidio Redwood Grove Sanctuary"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 95,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Presidio Lawn Sunshine Tapestry",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Presidio Lawn Sunshine Tapestry. Sunlit lawn picnic featuring champagne flutes and polycule friends. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3302,13 +3397,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Presidio Lawn Sunshine Tapestry"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 96,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Ocean Beach Sunset Dunes",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Ocean Beach Sunset Dunes. Expansive sandy beach where Pacific Ocean waves crash against the shore. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3337,13 +3433,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Ocean Beach Sunset Dunes"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 97,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Ocean Beach Coastal Pavilion",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Ocean Beach Coastal Pavilion. Covered pavilion offering panoramic views of the Pacific horizon. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3372,13 +3469,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Ocean Beach Coastal Pavilion"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 98,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Ocean Beach Dawn Bonfire",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Ocean Beach Dawn Bonfire. Early morning bonfire embers warming early risers as the sun crests. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3407,13 +3505,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Ocean Beach Dawn Bonfire"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 99,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Sausalito Harbor Seafood Lounge",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Sausalito Harbor Seafood Lounge. Waterfront restaurant serving oysters and sparkling wine. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3442,13 +3541,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Sausalito Harbor Seafood Lounge"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 100,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Marin Headlands Night Observatory",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Marin Headlands Night Observatory. Stargazing terrace high above the Pacific Ocean bluffs. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3477,13 +3577,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Marin Headlands Night Observatory"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 101,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Presidio Historic Ballroom Stage",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Presidio Historic Ballroom Stage. Elegant wooden floor ballroom preparing for evening galas. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3512,13 +3613,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Presidio Historic Ballroom Stage"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 102,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Ocean Beach Pacific Horizon",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Ocean Beach Pacific Horizon. Shoreline walk along the wet sand tide line. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3547,13 +3649,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Ocean Beach Pacific Horizon"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 103,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Sausalito Pier Sunset Lounge",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Sausalito Pier Sunset Lounge. Pier bar overlooking the evening lights of San Francisco. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3582,13 +3685,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Sausalito Pier Sunset Lounge"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 104,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Marin Redwood Sauna Cabin",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Marin Redwood Sauna Cabin. Eucalyptus steam sauna tucked into a redwood ravine. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3617,13 +3721,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Marin Redwood Sauna Cabin"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 105,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Baker Beach Sunrise Dunes",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Baker Beach Sunrise Dunes. Pink dawn sky reflecting off wet ocean sands. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3652,13 +3757,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Baker Beach Sunrise Dunes"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 106,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Presidio Lawn Cuddle Circle",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Presidio Lawn Cuddle Circle. Group cuddle pile under eucalyptus shade trees. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3687,13 +3793,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Presidio Lawn Cuddle Circle"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 107,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Ocean Beach Fire Pit Nook",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Ocean Beach Fire Pit Nook. Beach pit where lovers roast s'mores and share disclosure stories. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3722,13 +3829,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Ocean Beach Fire Pit Nook"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 108,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Marin Mountain Solarium Deck",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Marin Mountain Solarium Deck. Sunbathing deck high above the Marin fog line. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3757,13 +3865,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Marin Mountain Solarium Deck"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 109,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Sausalito Houseboat Music Studio",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Sausalito Houseboat Music Studio. Recording studio aboard a houseboat recording acoustic indie songs. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3792,13 +3901,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Sausalito Houseboat Music Studio"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 110,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Presidio Officers Club VIP Lounge",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Presidio Officers Club VIP Lounge. VIP reception room preparing for the final City Hall Gala. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3827,13 +3937,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Presidio Officers Club VIP Lounge"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 111,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Ocean Beach Pacific Sunset Terrace",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Ocean Beach Pacific Sunset Terrace. Deck overlooking golden hour ocean sunsets. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3862,13 +3973,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Ocean Beach Pacific Sunset Terrace"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 112,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "San Francisco City Hall Arrival Plaza",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame San Francisco City Hall Arrival Plaza. Civic Center plaza illuminated by golden floodlights. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3897,13 +4009,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at San Francisco City Hall Arrival Plaza"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 113,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Sausalito Waterfront Houseboat Deck",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Sausalito Waterfront Houseboat Deck. Bohemian floating home with potted flowers and gentle bay tide reflections. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3932,13 +4045,14 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Sausalito Waterfront Houseboat Deck"
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 114,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Sausalito Houseboat Solarium Cabin",
-    "image": "./images/baker_beach.jpg",
+    "image": "./images/mission_loft.jpg",
     "narrative": "Ocean air, salt spray, and coastal winds frame Sausalito Houseboat Solarium Cabin. Sunlit plant conservatory aboard a historic wooden houseboat. Intimate moments unfold under open skies.",
     "choices": [
       {
@@ -3967,7 +4081,8 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true,
         "addsPolyculeMember": "Companion at Sausalito Houseboat Solarium Cabin"
       }
-    ]
+    ],
+    "isTransitHub": true
   },
   {
     "id": 115,
@@ -3984,7 +4099,8 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 116,
@@ -4001,7 +4117,8 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 117,
@@ -4018,7 +4135,8 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 118,
@@ -4035,7 +4153,8 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 119,
@@ -4052,7 +4171,8 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 120,
@@ -4069,7 +4189,8 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 121,
@@ -4086,7 +4207,8 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 122,
@@ -4103,7 +4225,8 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 123,
@@ -4120,7 +4243,8 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 124,
@@ -4137,7 +4261,8 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 125,
@@ -4154,7 +4279,8 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 126,
@@ -4171,7 +4297,8 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   },
   {
     "id": 127,
@@ -4188,6 +4315,7 @@ window.SF_SCENARIOS_128 = [
         "actType": "action",
         "isIngroup": true
       }
-    ]
+    ],
+    "isTransitHub": false
   }
 ];

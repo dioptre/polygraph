@@ -342,7 +342,7 @@
       </div>
       <div class="hud-stat">
         <span class="hud-label">Condoms</span>
-        <span id="hud-condoms" class="hud-value">10</span>
+        <span id="hud-condoms" class="hud-value">2 / 2</span>
       </div>
     </div>
 
@@ -427,7 +427,7 @@
         description: 'Daily PrEP user who loves wild SoMa night-outs. 99.9% HIV protection when consistent, but prone to late-night forgotten pills.',
         initialPrep: 100,
         initialDoxy: 3,
-        initialCondoms: 5,
+        initialCondoms: 2,
         polyMembers: ['Primary Anchor'],
         bonusText: '+20% Sex Points on One-Night Encounters'
       },
@@ -437,7 +437,7 @@
         description: 'Fetish fair regular who carries Doxy-PEP everywhere. High bacterial STI immunity, strict consent negotiations.',
         initialPrep: 80,
         initialDoxy: 10,
-        initialCondoms: 8,
+        initialCondoms: 2,
         polyMembers: ['Leather Sub'],
         bonusText: '+75% Bacterial STI Protection from Doxy-PEP'
       },
@@ -447,7 +447,7 @@
         description: 'Nurturing polycule hub with an established inner circle. High ingroup intimacy multipliers.',
         initialPrep: 90,
         initialDoxy: 5,
-        initialCondoms: 15,
+        initialCondoms: 2,
         polyMembers: ['Nesting Partner', 'Secondary Switch'],
         bonusText: 'Starts with 2 Polycule Members (+30% Ingroup Point Multiplier)'
       },
@@ -4812,6 +4812,9 @@
         this.sequenceIndex = 0;
         const char = this.characterClass || CHARACTER_CLASSES[0];
 
+        // Enforce Max 2 Condoms Cap
+        const startCondoms = Math.min(2, char.initialCondoms || 2);
+
         this.state = {
           character: char,
           currentNodeId: 0, // Starts at Node 0 (Act I: Mission Arrival)
@@ -4819,7 +4822,8 @@
           health: 100,
           prepAdherence: char.initialPrep,
           polyculeMembers: char.initialPolycule ? [...char.initialPolycule] : (char.polyMembers ? [...char.polyMembers] : ["Alex"]),
-          condomsInInventory: char.initialCondoms || 10,
+          condomsInInventory: startCondoms,
+          maxCondomsCap: 2,
           doxyPepDoses: char.initialDoxy || 5,
           inventoryItems: [],
           questsCompleted: { soma: false, oakland: false, armory: false, clinic: false, polycule: false },
@@ -4939,11 +4943,11 @@
         if (choice.actType === 'clinic') {
           this.state.prepAdherence = 100;
           this.state.doxyPepDoses = 10;
-          this.state.condomsInInventory += 10;
+          this.state.condomsInInventory = Math.min(2, this.state.condomsInInventory + 2);
           this.state.health = Math.min(100, this.state.health + 40);
           this.state.activeSTIs = []; // Full antibiotic cleanse!
           this.state.sexScore += choice.sexPoints;
-          this.state.lastEventMessage = "🩺 Clinic Visit: Fully cleansed active STIs, restocked +10 Condoms, Doxy-PEP & restored Health!";
+          this.state.lastEventMessage = "🩺 Clinic Visit: Fully cleansed active STIs, restocked Condoms, Doxy-PEP & restored Health!";
           this.advanceNode(choice.targetNodeId);
           return;
         }
@@ -4967,17 +4971,19 @@
         const wantsCondom = choice.usesCondom === true;
 
         if (wantsCondom) {
-          if (this.state.condomsInInventory > 0) {
-            this.state.condomsInInventory -= 1; // DECREMENT INVENTORY!
-            // Monte Carlo Condom Breakage Check (~3% failure rate per act)
-            if (Math.random() < 0.03) {
-              messageLog.push("💥 CONDOM RIPPED! Latex barrier failed mid-encounter!");
-            } else {
-              actualCondomUsed = true;
-              messageLog.push("🛡️ Latex Condom equipped from inventory (1 consumed). Risk reduced!");
-            }
+          if (this.state.condomsInInventory <= 0) {
+            this.state.lastEventMessage = "🔒 CONDOM REQUIRED! You have 0 condoms in your inventory. Go bareback, or visit Magnet SF Clinic / Health Tents to restock!";
+            this.playSound('danger');
+            return;
+          }
+
+          this.state.condomsInInventory -= 1; // DECREMENT INVENTORY!
+          // Monte Carlo Condom Breakage Check (~3% failure rate per act)
+          if (Math.random() < 0.03) {
+            messageLog.push("💥 CONDOM RIPPED! Latex barrier failed mid-encounter!");
           } else {
-            messageLog.push("⚠️ OUT OF CONDOMS! Inventory empty! Act performed WITHOUT barrier protection!");
+            actualCondomUsed = true;
+            messageLog.push("🛡️ Latex Condom equipped from inventory (1 consumed). Risk reduced!");
           }
         }
 
@@ -5162,6 +5168,7 @@
 
     // UI Controller Logic
     const engine = new StandaloneCYOAEngine();
+    window.engine = engine;
 
     const hudNode = document.getElementById('hud-node');
     const hudScore = document.getElementById('hud-score');
@@ -5223,7 +5230,7 @@
       hudScore.textContent = `${state.sexScore} PTS`;
       hudHealth.textContent = `${state.health}%`;
       hudPolycule.textContent = `${state.polyculeMembers.length} Members`;
-      hudCondoms.textContent = state.condomsInInventory;
+      hudCondoms.textContent = `${state.condomsInInventory} / 2`;
 
       const q = state.questsCompleted || { soma: false, oakland: false, armory: false, clinic: false, polycule: false };
       const qText = `ODYSSEY TASKS: 🎟️ SoMa [${q.soma ? '✓' : ' '}] | 🌉 Oakland [${q.oakland ? '✓' : ' '}] | ⛓️ Armory [${q.armory ? '✓' : ' '}] | 💊 Clinic [${q.clinic ? '✓' : ' '}] | 💖 Polycule [${q.polycule ? '✓' : ' '}]`;
@@ -5243,21 +5250,23 @@
       locationTag.textContent = `${currentNode.act ? currentNode.act + ' • ' : ''}📍 ${currentNode.neighborhood}`;
       narrativeText.textContent = currentNode.narrative;
 
-      // Assign scene image based on neighborhood
+      // Assign scene image based on currentNode.image or neighborhood fallback
       const sceneImg = document.getElementById('scene-image');
       if (sceneImg) {
-        let imgFile = './images/mission_loft.jpg';
-        const nh = (currentNode.neighborhood || '').toLowerCase();
-        if (nh.includes('folsom')) imgFile = './images/folsom_fest.jpg';
-        else if (nh.includes('soma') || nh.includes('bathhouse') || nh.includes('steam')) imgFile = './images/soma_bathhouse.jpg';
-        else if (nh.includes('dolores') || nh.includes('picnic')) imgFile = './images/dolores_picnic.jpg';
-        else if (nh.includes('clinic') || nh.includes('magnet')) imgFile = './images/castro_clinic.jpg';
-        else if (nh.includes('armory') || nh.includes('dungeon')) imgFile = './images/armory_dungeon.jpg';
-        else if (nh.includes('rooftop') || nh.includes('hot tub')) imgFile = './images/castro_rooftop.jpg';
-        else if (nh.includes('speakeasy') || nh.includes('cellar')) imgFile = './images/speakeasy_cellar.jpg';
-        else if (nh.includes('baker') || nh.includes('beach')) imgFile = './images/baker_beach.jpg';
-        else if (nh.includes('berkeley') || nh.includes('commune')) imgFile = './images/berkeley_commune.jpg';
-        else if (nh.includes('city hall') || nh.includes('dome') || nh.includes('finale')) imgFile = './images/sf_cityhall.jpg';
+        let imgFile = currentNode.image || './images/mission_loft.jpg';
+        if (!currentNode.image) {
+          const nh = (currentNode.neighborhood || '').toLowerCase();
+          if (nh.includes('folsom')) imgFile = './images/folsom_fest.jpg';
+          else if (nh.includes('soma') || nh.includes('bathhouse') || nh.includes('steam')) imgFile = './images/soma_bathhouse.jpg';
+          else if (nh.includes('dolores') || nh.includes('picnic')) imgFile = './images/dolores_picnic.jpg';
+          else if (nh.includes('clinic') || nh.includes('magnet')) imgFile = './images/castro_clinic.jpg';
+          else if (nh.includes('armory') || nh.includes('dungeon')) imgFile = './images/armory_dungeon.jpg';
+          else if (nh.includes('rooftop') || nh.includes('hot tub')) imgFile = './images/castro_rooftop.jpg';
+          else if (nh.includes('speakeasy') || nh.includes('cellar')) imgFile = './images/speakeasy_cellar.jpg';
+          else if (nh.includes('baker') || nh.includes('beach')) imgFile = './images/baker_beach.jpg';
+          else if (nh.includes('berkeley') || nh.includes('commune')) imgFile = './images/berkeley_commune.jpg';
+          else if (nh.includes('city hall') || nh.includes('dome') || nh.includes('finale')) imgFile = './images/sf_cityhall.jpg';
+        }
         sceneImg.src = imgFile;
       }
 
@@ -5265,10 +5274,24 @@
       currentNode.choices.forEach((choice, index) => {
         const btn = document.createElement('button');
         btn.className = 'btn-choice';
-        let badgeHtml = `<span class="key-badge">${index + 1}</span>`;
-        if (choice.requiresItem && !state.inventoryItems.includes(choice.requiresItem)) {
-          badgeHtml += ` <span style="background: #ef4444; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-right: 6px;">🔒 LOCKED</span>`;
+        
+        const isItemLocked = choice.requiresItem && !state.inventoryItems.includes(choice.requiresItem);
+        const isCondomLocked = choice.usesCondom === true && state.condomsInInventory <= 0;
+        const isLocked = isItemLocked || isCondomLocked;
+
+        if (isLocked) {
+          btn.classList.add('btn-locked');
+          btn.style.opacity = '0.55';
+          btn.style.cursor = 'not-allowed';
         }
+
+        let badgeHtml = `<span class="key-badge">${index + 1}</span>`;
+        if (isItemLocked) {
+          badgeHtml += ` <span style="background: #ef4444; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-right: 6px;">🔒 ITEM REQUIRED</span>`;
+        } else if (isCondomLocked) {
+          badgeHtml += ` <span style="background: #ef4444; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-right: 6px;">🔒 NO CONDOMS (0/2)</span>`;
+        }
+
         btn.innerHTML = `${badgeHtml} <span>${choice.text}</span>`;
         btn.addEventListener('click', () => {
           engine.makeChoice(index);
