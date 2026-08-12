@@ -4,3 +4,5 @@ dist/
 *.log
 scratch/
 test-results/
+all_nodes_review.md
+gameplay_playwright_test.png
