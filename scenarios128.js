@@ -1,6 +1,6 @@
 /**
- * San Francisco & Oakland Sexual Trail — 128 Audited Master CYOA Scenarios
- * Cleanly divided into 5 Narrative Acts with 32 dedicated 8-Bit Scene Images & Regional Isolation!
+ * San Francisco Sex Trail — 128 Audited Master CYOA Scenarios
+ * Cleanly divided into 5 Narrative Acts with Direct 6-Region Transit Hubs & 42 Dedicated 8-Bit Scene Images!
  */
 window.SF_SCENARIOS_128 = [
   {
@@ -54,7 +54,7 @@ window.SF_SCENARIOS_128 = [
     "id": 1,
     "act": "ACT I: MISSION BACK STUDIO",
     "neighborhood": "Mission Loft Back Studio",
-    "image": "./images/mission_loft.jpg",
+    "image": "./images/mission_studio.jpg",
     "narrative": "Wet acrylic paint shines under dim red lamps. Jax presses your hips against an easel displaying a giant canvas of fog rolling over the Golden Gate. Paint brushes clatter to the floor as his hands slide beneath your clothing, slick with linseed oil and heat.",
     "choices": [
       {
@@ -185,11 +185,11 @@ window.SF_SCENARIOS_128 = [
     "id": 5,
     "act": "BAY AREA REGIONAL TRANSIT HUB",
     "neighborhood": "Valencia Street Transit Hub",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "San Francisco and the East Bay lie open before you. Muni streetcars rattle along Market Street, BART trains roar beneath the Bay, and fog rolls over Twin Peaks. Where will your adventure lead next?",
+    "image": "./images/oakland_bart.jpg",
+    "narrative": "Bay Area Regional Transit Hub at Valencia Street Transit Hub. Muni streetcars, BART subway tubes, Sausalito ferries, and highway bridges connect all five major regions of San Francisco and Oakland. Where will your adventure take you next?",
     "choices": [
       {
-        "text": "🚇 Board the silver BART train at Embarcadero Station to cross under the Bay to Downtown Oakland!",
+        "text": "🚇 Board silver BART train to cross under the Bay to Downtown Oakland & Berkeley Communes!",
         "targetNodeId": 25,
         "sexPoints": 100,
         "riskLevel": "none",
@@ -198,7 +198,7 @@ window.SF_SCENARIOS_128 = [
         "grantsItem": "eastbay_bart_pass"
       },
       {
-        "text": "💊 Travel to Castro District to visit Magnet SF Clinic for a full 14-pathogen STI audit.",
+        "text": "💊 Travel to Castro District & Magnet SF Clinic on 18th Street for health audits.",
         "targetNodeId": 8,
         "sexPoints": 90,
         "riskLevel": "none",
@@ -206,7 +206,16 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true
       },
       {
-        "text": "⛓️ Travel to Armory Fortress to inspect the red-brick kink dungeon vaults.",
+        "text": "📍 Travel to Deep SoMa Circuit (Folsom Street Fair, Dore Speakeasies & Cat Club)",
+        "targetNodeId": 50,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "action",
+        "isIngroup": true,
+        "grantsItem": "vip_soma_wristband"
+      },
+      {
+        "text": "⛓️ Travel to Armory Kink Castle Dungeon Vaults & Rig Halls",
         "targetNodeId": 16,
         "sexPoints": 90,
         "riskLevel": "none",
@@ -214,9 +223,17 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": true
       },
       {
-        "text": "📍 Travel to SoMa Circuit (Folsom Street Fair & Speakeasy Cellars)",
-        "targetNodeId": 9,
-        "sexPoints": 80,
+        "text": "🌊 Board Sausalito Ferry to Coastal Arc (Houseboats, Marin Headlands & Baker Beach Dunes)",
+        "targetNodeId": 85,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "action",
+        "isIngroup": true
+      },
+      {
+        "text": "🏛️ Travel to Civic Center Plaza & San Francisco City Hall Victory Dome",
+        "targetNodeId": 115,
+        "sexPoints": 90,
         "riskLevel": "none",
         "actType": "action",
         "isIngroup": true
@@ -498,7 +515,7 @@ window.SF_SCENARIOS_128 = [
     "narrative": "The energy inside Bernal Heights Sunset Vista is intoxicating. Panoramic view of the city skyline as fog rolls over Twin Peaks. Friends and lovers gather under dim crimson lights to share intimate confessions and plan their next adventure.",
     "choices": [
       {
-        "text": "🔥 At Bernal Heights Sunset Vista, lose yourself in heat and sweat on the padded benches of Bernal Heights Sunset Vista!",
+        "text": "🔥 At Bernal Heights Sunset Vista, pull your partner into an intense bareback hookup!",
         "targetNodeId": 15,
         "sexPoints": 412,
         "riskLevel": "high",
@@ -531,7 +548,7 @@ window.SF_SCENARIOS_128 = [
     "id": 15,
     "act": "ACT I: MISSION NOCTURNE",
     "neighborhood": "24th Street Taqueria Rendezvous",
-    "image": "./images/mission_loft.jpg",
+    "image": "./images/mission_taqueria.jpg",
     "narrative": "The energy inside 24th Street Taqueria Rendezvous is intoxicating. Late-night carnitas tacos, horchata, and flirty post-party chatter. Friends and lovers gather under dim crimson lights to share intimate confessions and plan their next adventure.",
     "choices": [
       {
@@ -568,11 +585,11 @@ window.SF_SCENARIOS_128 = [
     "id": 16,
     "act": "ACT I: MISSION NOCTURNE",
     "neighborhood": "Armory Fortress Courtyard",
-    "image": "./images/mission_loft.jpg",
+    "image": "./images/armory_dungeon.jpg",
     "narrative": "The energy inside Armory Fortress Courtyard is intoxicating. Imposing red-brick arches where kink leather gear displays line the walk. Friends and lovers gather under dim crimson lights to share intimate confessions and plan their next adventure.",
     "choices": [
       {
-        "text": "🔥 At Armory Fortress Courtyard, unbutton your shirt and press your partner against the brick wall of Armory Fortress Courtyard in a haze of heat!",
+        "text": "🔥 At Armory Fortress Courtyard, pull your partner into an intense bareback hookup!",
         "targetNodeId": 17,
         "sexPoints": 418,
         "riskLevel": "high",
@@ -605,11 +622,11 @@ window.SF_SCENARIOS_128 = [
     "id": 17,
     "act": "ACT I: MISSION NOCTURNE",
     "neighborhood": "Armory Velvet Foyer Lounge",
-    "image": "./images/mission_loft.jpg",
+    "image": "./images/armory_dungeon.jpg",
     "narrative": "The energy inside Armory Velvet Foyer Lounge is intoxicating. Dungeon orientation room with plush velvet chairs and safety rules. Friends and lovers gather under dim crimson lights to share intimate confessions and plan their next adventure.",
     "choices": [
       {
-        "text": "🔥 At Armory Velvet Foyer Lounge, slide beneath the warm blankets at Armory Velvet Foyer Lounge for a midnight bareback session!",
+        "text": "🔥 At Armory Velvet Foyer Lounge, pull your partner into an intense bareback hookup!",
         "targetNodeId": 18,
         "sexPoints": 421,
         "riskLevel": "high",
@@ -642,11 +659,11 @@ window.SF_SCENARIOS_128 = [
     "id": 18,
     "act": "ACT I: MISSION NOCTURNE",
     "neighborhood": "Armory Suspension Rig Hall",
-    "image": "./images/mission_loft.jpg",
+    "image": "./images/armory_dungeon.jpg",
     "narrative": "The energy inside Armory Suspension Rig Hall is intoxicating. Soaring ceilings with iron suspension beams and padded mats. Friends and lovers gather under dim crimson lights to share intimate confessions and plan their next adventure.",
     "choices": [
       {
-        "text": "🔥 At Armory Suspension Rig Hall, lift your partner onto the mahogany counter at Armory Suspension Rig Hall for an intense bareback encounter!",
+        "text": "🔥 At Armory Suspension Rig Hall, pull your partner into an intense bareback hookup!",
         "targetNodeId": 19,
         "sexPoints": 424,
         "riskLevel": "high",
@@ -679,11 +696,11 @@ window.SF_SCENARIOS_128 = [
     "id": 19,
     "act": "ACT I: MISSION NOCTURNE",
     "neighborhood": "Armory Dungeon Play Nook",
-    "image": "./images/mission_loft.jpg",
+    "image": "./images/armory_dungeon.jpg",
     "narrative": "The energy inside Armory Dungeon Play Nook is intoxicating. Private curtained niche for consensual impact and barrier play. Friends and lovers gather under dim crimson lights to share intimate confessions and plan their next adventure.",
     "choices": [
       {
-        "text": "🔥 At Armory Dungeon Play Nook, lose yourself in heat and sweat on the padded benches of Armory Dungeon Play Nook!",
+        "text": "🔥 At Armory Dungeon Play Nook, pull your partner into an intense bareback hookup!",
         "targetNodeId": 20,
         "sexPoints": 427,
         "riskLevel": "high",
@@ -757,7 +774,7 @@ window.SF_SCENARIOS_128 = [
     "narrative": "The energy inside Castro Rooftop Cabana Deck is intoxicating. Heated swimming cabana overlooking the Castro neighborhood neon. Friends and lovers gather under dim crimson lights to share intimate confessions and plan their next adventure.",
     "choices": [
       {
-        "text": "🔥 At Castro Rooftop Cabana Deck, unbutton your shirt and press your partner against the brick wall of Castro Rooftop Cabana Deck in a haze of heat!",
+        "text": "🔥 At Castro Rooftop Cabana Deck, pull your partner into an intense bareback hookup!",
         "targetNodeId": 22,
         "sexPoints": 433,
         "riskLevel": "high",
@@ -794,7 +811,7 @@ window.SF_SCENARIOS_128 = [
     "narrative": "The energy inside Mission Disco Vinyl Parlor is intoxicating. 70s disco records spinning on vintage turntables. Friends and lovers gather under dim crimson lights to share intimate confessions and plan their next adventure.",
     "choices": [
       {
-        "text": "🔥 At Mission Disco Vinyl Parlor, slide beneath the warm blankets at Mission Disco Vinyl Parlor for a midnight bareback session!",
+        "text": "🔥 At Mission Disco Vinyl Parlor, pull your partner into an intense bareback hookup!",
         "targetNodeId": 23,
         "sexPoints": 436,
         "riskLevel": "high",
@@ -831,7 +848,7 @@ window.SF_SCENARIOS_128 = [
     "narrative": "The energy inside Duboce Park Sun Meadow is intoxicating. Lush grass meadow filled with sunbathers, dogs, and organic tea stands. Friends and lovers gather under dim crimson lights to share intimate confessions and plan their next adventure.",
     "choices": [
       {
-        "text": "🔥 At Duboce Park Sun Meadow, lift your partner onto the mahogany counter at Duboce Park Sun Meadow for an intense bareback encounter!",
+        "text": "🔥 At Duboce Park Sun Meadow, pull your partner into an intense bareback hookup!",
         "targetNodeId": 24,
         "sexPoints": 439,
         "riskLevel": "high",
@@ -868,7 +885,7 @@ window.SF_SCENARIOS_128 = [
     "narrative": "The energy inside Valencia Rooftop Fire Pit is intoxicating. Crackling wood fire pit with panoramic night views of the Mission. Friends and lovers gather under dim crimson lights to share intimate confessions and plan their next adventure.",
     "choices": [
       {
-        "text": "🔥 At Valencia Rooftop Fire Pit, lose yourself in heat and sweat on the padded benches of Valencia Rooftop Fire Pit!",
+        "text": "🔥 At Valencia Rooftop Fire Pit, pull your partner into an intense bareback hookup!",
         "targetNodeId": 25,
         "sexPoints": 442,
         "riskLevel": "high",
@@ -902,30 +919,54 @@ window.SF_SCENARIOS_128 = [
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "BART Embarcadero Transit Crossing",
     "image": "./images/oakland_bart.jpg",
-    "narrative": "You board the silver BART train under Market Street. The train roars through the dark tube beneath San Francisco Bay. Emerging into warm sunlight in Downtown Oakland, Kai, an East Bay poly educator with an infectious laugh, greets you at the station barrier.",
+    "narrative": "Bay Area Regional Transit Hub at BART Embarcadero Transit Crossing. Muni streetcars, BART subway tubes, Sausalito ferries, and highway bridges connect all five major regions of San Francisco and Oakland. Where will your adventure take you next?",
     "choices": [
       {
-        "text": "🌉 Follow Kai to the Telegraph Avenue Intimacy Workshop and acquire the East Bay Intimacy Pact!",
-        "targetNodeId": 27,
-        "sexPoints": 200,
+        "text": "🚇 Board silver BART train to cross under the Bay to Downtown Oakland & Berkeley Communes!",
+        "targetNodeId": 26,
+        "sexPoints": 100,
         "riskLevel": "none",
         "actType": "action",
         "isIngroup": true,
-        "grantsItem": "poly_intimacy_pact",
-        "completesQuest": "oakland"
+        "grantsItem": "eastbay_bart_pass"
       },
       {
-        "text": "🍸 Head to the Grand Lake Theater Speakeasy Parlor for flaming craft mezcal cocktails.",
-        "targetNodeId": 28,
-        "sexPoints": 160,
+        "text": "💊 Travel to Castro District & Magnet SF Clinic on 18th Street for health audits.",
+        "targetNodeId": 8,
+        "sexPoints": 90,
         "riskLevel": "none",
-        "actType": "investigate",
+        "actType": "clinic",
         "isIngroup": true
       },
       {
-        "text": "🌲 Take an express bus to the Berkeley Hills Redwood Chalet Poly Commune.",
-        "targetNodeId": 32,
-        "sexPoints": 180,
+        "text": "📍 Travel to Deep SoMa Circuit (Folsom Street Fair, Dore Speakeasies & Cat Club)",
+        "targetNodeId": 50,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "action",
+        "isIngroup": true,
+        "grantsItem": "vip_soma_wristband"
+      },
+      {
+        "text": "⛓️ Travel to Armory Kink Castle Dungeon Vaults & Rig Halls",
+        "targetNodeId": 16,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "action",
+        "isIngroup": true
+      },
+      {
+        "text": "🌊 Board Sausalito Ferry to Coastal Arc (Houseboats, Marin Headlands & Baker Beach Dunes)",
+        "targetNodeId": 85,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "action",
+        "isIngroup": true
+      },
+      {
+        "text": "🏛️ Travel to Civic Center Plaza & San Francisco City Hall Victory Dome",
+        "targetNodeId": 115,
+        "sexPoints": 90,
         "riskLevel": "none",
         "actType": "action",
         "isIngroup": true
@@ -937,11 +978,11 @@ window.SF_SCENARIOS_128 = [
     "id": 26,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Grand Lake Theater Speakeasy",
-    "image": "./images/fox_theater_oakland.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Grand Lake Theater Speakeasy. Hidden cocktail bar concealed behind a velvet curtain near the movie screen. Deep consent discussions and playful sparks fill the air.",
+    "image": "./images/castro_marquee.jpg",
+    "narrative": "Telegraph Avenue pulses with neon lights, vintage record shops, and boba stands. Lin, a piercing-adorned artist, invites you into a cozy back-room studio overflowing with radical Zines.",
     "choices": [
       {
-        "text": "🔥 At Grand Lake Theater Speakeasy, unbutton your shirt and press your partner against the brick wall of Grand Lake Theater Speakeasy in a haze of heat!",
+        "text": "🔥 At Grand Lake Theater Speakeasy, pull your partner into an intense bareback hookup!",
         "targetNodeId": 27,
         "sexPoints": 462,
         "riskLevel": "high",
@@ -974,7 +1015,7 @@ window.SF_SCENARIOS_128 = [
     "act": "ACT II: TELEGRAPH INTIMACY WORKSHOP",
     "neighborhood": "Telegraph Avenue Intimacy Workshop",
     "image": "./images/telegraph_workshop.jpg",
-    "narrative": "Inside a sunlit loft on Telegraph Avenue, fifteen East Bay practitioners sit on meditation cushions. Kai leads a workshop on radical consent and emotional vulnerability, handing you the East Bay Poly Intimacy Pact!",
+    "narrative": "Inside a sunlit Telegraph loft, velvet cushions cover cedar floorboards. Intimacy facilitators lead consent exercises as soft ambient synth echoes through the room.",
     "choices": [
       {
         "text": "📜 Sign the East Bay Intimacy Pact and welcome Kai into your Bay Area polycule network!",
@@ -1002,11 +1043,11 @@ window.SF_SCENARIOS_128 = [
     "id": 28,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Telegraph Art Murals Courtyard",
-    "image": "./images/telegraph_workshop.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Telegraph Art Murals Courtyard. Outdoor mural gallery displaying East Bay radical community art. Deep consent discussions and playful sparks fill the air.",
+    "image": "./images/clarion_mural.jpg",
+    "narrative": "Vibrant murals of East Bay community activists line the brick alleyway. Jax traces a finger along a freshly painted mural before offering you a cold cider.",
     "choices": [
       {
-        "text": "🔥 At Telegraph Art Murals Courtyard, lift your partner onto the mahogany counter at Telegraph Art Murals Courtyard for an intense bareback encounter!",
+        "text": "🔥 At Telegraph Art Murals Courtyard, pull your partner into an intense bareback hookup!",
         "targetNodeId": 29,
         "sexPoints": 466,
         "riskLevel": "high",
@@ -1038,11 +1079,11 @@ window.SF_SCENARIOS_128 = [
     "id": 29,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Oakland Polycule Co-Op Kitchen",
-    "image": "./images/jack_london_square.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Oakland Polycule Co-Op Kitchen. Spacious communal kitchen filled with scents of roasted spices and fresh bread. Deep consent discussions and playful sparks fill the air.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Temescal Alley's twinkling festoon lights glow above vintage barber shops and artisan leather studios. A local barista winks at you from across a marble counter.",
     "choices": [
       {
-        "text": "🔥 At Oakland Polycule Co-Op Kitchen, lose yourself in heat and sweat on the padded benches of Oakland Polycule Co-Op Kitchen!",
+        "text": "🔥 At Oakland Polycule Co-Op Kitchen, pull your partner into an intense bareback hookup!",
         "targetNodeId": 30,
         "sexPoints": 468,
         "riskLevel": "high",
@@ -1075,7 +1116,7 @@ window.SF_SCENARIOS_128 = [
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Berkeley Commune Library Study",
     "image": "./images/berkeley_commune.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Berkeley Commune Library Study. Cozy wood-paneled study filled with books on open relationships and ethics. Deep consent discussions and playful sparks fill the air.",
+    "narrative": "Inside the Temescal leather workshop, rich scents of saddle soap and oil fill the air. Custom harness craftspeople demonstrate leather braiding techniques.",
     "choices": [
       {
         "text": "🔥 At Berkeley Commune Library Study, pull your partner close against the leather couch at Berkeley Commune Library Study for a raw bareback hookup!",
@@ -1110,11 +1151,11 @@ window.SF_SCENARIOS_128 = [
     "id": 31,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Redwood Regional Park Forest Trail",
-    "image": "./images/berkeley_telegraph.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Redwood Regional Park Forest Trail. Towering redwood canopy filtered by golden morning sunbeams. Deep consent discussions and playful sparks fill the air.",
+    "image": "./images/redwood_regional.jpg",
+    "narrative": "Tall redwood trees filter golden sunlight onto the dirt trail at Redwood Regional Park. The quiet forest air is broken only by rustling leaves and shared laughter.",
     "choices": [
       {
-        "text": "🔥 At Redwood Regional Park Forest Trail, unbutton your shirt and press your partner against the brick wall of Redwood Regional Park Forest Trail in a haze of heat!",
+        "text": "🔥 At Redwood Regional Park Forest Trail, pull your partner into an intense bareback hookup!",
         "targetNodeId": 32,
         "sexPoints": 472,
         "riskLevel": "high",
@@ -1146,8 +1187,8 @@ window.SF_SCENARIOS_128 = [
     "id": 32,
     "act": "ACT II: BERKELEY REDWOOD COMMUNE",
     "neighborhood": "Berkeley Hills Redwood Chalet",
-    "image": "./images/berkeley_commune.jpg",
-    "narrative": "A sprawling redwood chalet overlooking San Francisco Bay. Eight polycule members gather around an outdoor cedar hot tub under coastal pines while acoustic music plays softly.",
+    "image": "./images/redwood_regional.jpg",
+    "narrative": "Warm cedar benches and thick ambient steam envelop you inside the Berkeley sauna. Travelers relax in quiet conversation as eucalyptus steam rises.",
     "choices": [
       {
         "text": "🛁 Slip into the bubbling cedar hot tub for a multi-partner fluid-bonded play session!",
@@ -1159,7 +1200,7 @@ window.SF_SCENARIOS_128 = [
       },
       {
         "text": "💊 Review PrEP adherence schedules and distribute Doxy-PEP doses to all commune members.",
-        "targetNodeId": 8,
+        "targetNodeId": 33,
         "sexPoints": 130,
         "riskLevel": "none",
         "actType": "clinic",
@@ -1172,11 +1213,11 @@ window.SF_SCENARIOS_128 = [
     "id": 33,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Jack London Waterfront Pier",
-    "image": "./images/jack_london_square.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Jack London Waterfront Pier. Estuary pier watching glowing cargo ships glide past under starry skies. Deep consent discussions and playful sparks fill the air.",
+    "image": "./images/orphan_andys.jpg",
+    "narrative": "Soft jazz floats over the Jack London Square boardwalk. Gentle Bay tides lap against wooden piers as street performers light fire batons.",
     "choices": [
       {
-        "text": "🔥 At Jack London Waterfront Pier, lift your partner onto the mahogany counter at Jack London Waterfront Pier for an intense bareback encounter!",
+        "text": "🔥 At Jack London Waterfront Pier, pull your partner into an intense bareback hookup!",
         "targetNodeId": 34,
         "sexPoints": 476,
         "riskLevel": "high",
@@ -1208,11 +1249,11 @@ window.SF_SCENARIOS_128 = [
     "id": 34,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Oakland Underground Soundstage",
-    "image": "./images/lake_merritt.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Oakland Underground Soundstage. Warehouse space vibrating with deep techno bass and laser lights. Deep consent discussions and playful sparks fill the air.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Vintage copper lighting and plush velvet booths define the Jack London lounge. Bartenders shake craft cocktails infused with smoked sage.",
     "choices": [
       {
-        "text": "🔥 At Oakland Underground Soundstage, lose yourself in heat and sweat on the padded benches of Oakland Underground Soundstage!",
+        "text": "🔥 At Oakland Underground Soundstage, pull your partner into an intense bareback hookup!",
         "targetNodeId": 35,
         "sexPoints": 478,
         "riskLevel": "high",
@@ -1244,8 +1285,8 @@ window.SF_SCENARIOS_128 = [
     "id": 35,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Uptown Oakland Velvet Lounge",
-    "image": "./images/grand_lake_speakeasy.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Uptown Oakland Velvet Lounge. Plush leather booths and vintage vinyl soul records playing. Deep consent discussions and playful sparks fill the air.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "High above the East Bay in the Berkeley Hills, cedar hot tubs steam on a redwood deck overlooking the Bay Bridge and SF skyline.",
     "choices": [
       {
         "text": "🔥 At Uptown Oakland Velvet Lounge, pull your partner close against the leather couch at Uptown Oakland Velvet Lounge for a raw bareback hookup!",
@@ -1281,10 +1322,10 @@ window.SF_SCENARIOS_128 = [
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Berkeley Hills Telescope Deck",
     "image": "./images/berkeley_commune.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Berkeley Hills Telescope Deck. High-altitude deck equipped with a telescope overlooking the Bay Bridge. Deep consent discussions and playful sparks fill the air.",
+    "narrative": "High-altitude telescope deck overlooking golden Bay Bridge lights. Astronomy enthusiasts and polycule friends discuss celestial orbits and romantic boundaries.",
     "choices": [
       {
-        "text": "🔥 At Berkeley Hills Telescope Deck, unbutton your shirt and press your partner against the brick wall of Berkeley Hills Telescope Deck in a haze of heat!",
+        "text": "🔥 At Berkeley Hills Telescope Deck, pull your partner into an intense bareback hookup!",
         "targetNodeId": 37,
         "sexPoints": 482,
         "riskLevel": "high",
@@ -1316,11 +1357,11 @@ window.SF_SCENARIOS_128 = [
     "id": 37,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Fruitvale Cultural Art Center",
-    "image": "./images/jack_london_square.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Fruitvale Cultural Art Center. Vibrant gallery showcasing Latinx queer artists and live music. Deep consent discussions and playful sparks fill the air.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Grand Lake Speakeasy's hidden velvet door swings open behind a vintage movie projector. Jazz trumpet melodies drift through amber lamp glow.",
     "choices": [
       {
-        "text": "🔥 At Fruitvale Cultural Art Center, slide beneath the warm blankets at Fruitvale Cultural Art Center for a midnight bareback session!",
+        "text": "🔥 At Fruitvale Cultural Art Center, pull your partner into an intense bareback hookup!",
         "targetNodeId": 38,
         "sexPoints": 484,
         "riskLevel": "high",
@@ -1352,11 +1393,11 @@ window.SF_SCENARIOS_128 = [
     "id": 38,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Piedmont Avenue Tea Sanctuary",
-    "image": "./images/berkeley_commune.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Piedmont Avenue Tea Sanctuary. Peaceful Japanese tea garden with bamboo fountains and koi ponds. Deep consent discussions and playful sparks fill the air.",
+    "image": "./images/orphan_andys.jpg",
+    "narrative": "Grand Lake Cinema's ornate balcony overlooks silver-screen classics. Whispered secrets and hand-holding warm the velvety dark auditorium.",
     "choices": [
       {
-        "text": "🔥 At Piedmont Avenue Tea Sanctuary, lift your partner onto the mahogany counter at Piedmont Avenue Tea Sanctuary for an intense bareback encounter!",
+        "text": "🔥 At Piedmont Avenue Tea Sanctuary, pull your partner into an intense bareback hookup!",
         "targetNodeId": 39,
         "sexPoints": 486,
         "riskLevel": "high",
@@ -1388,11 +1429,11 @@ window.SF_SCENARIOS_128 = [
     "id": 39,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Oakland Greenhouse Solarium",
-    "image": "./images/berkeley_telegraph.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Oakland Greenhouse Solarium. Humid glass conservatory filled with tropical orchids and plush lounges. Deep consent discussions and playful sparks fill the air.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Glowing green festoon lamps trace the Lake Merritt Pergola promenade. Couples and polycules stroll along the water under moonlit skies.",
     "choices": [
       {
-        "text": "🔥 At Oakland Greenhouse Solarium, lose yourself in heat and sweat on the padded benches of Oakland Greenhouse Solarium!",
+        "text": "🔥 At Oakland Greenhouse Solarium, pull your partner into an intense bareback hookup!",
         "targetNodeId": 40,
         "sexPoints": 488,
         "riskLevel": "high",
@@ -1424,8 +1465,8 @@ window.SF_SCENARIOS_128 = [
     "id": 40,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Berkeley Redwood Cabin Loft",
-    "image": "./images/berkeley_commune.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Berkeley Redwood Cabin Loft. Rustic wood-burning stove warming a cozy loft under the pine trees. Deep consent discussions and playful sparks fill the air.",
+    "image": "./images/redwood_regional.jpg",
+    "narrative": "Lake Merritt boat launch deck reflecting twinkling city lights across dark waters. Gentle ripples splash against wooden kayaks.",
     "choices": [
       {
         "text": "🔥 At Berkeley Redwood Cabin Loft, pull your partner close against the leather couch at Berkeley Redwood Cabin Loft for a raw bareback hookup!",
@@ -1461,10 +1502,10 @@ window.SF_SCENARIOS_128 = [
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Lake Merritt Boathouse Terrace",
     "image": "./images/lake_merritt.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Lake Merritt Boathouse Terrace. Nighttime pedal boat rentals gliding across tranquil waters. Deep consent discussions and playful sparks fill the air.",
+    "narrative": "Subterranean Oakland basement venue echoing with deep sub-bass and flashing strobe lights. Dancers in mesh and leather sway on the concrete floor.",
     "choices": [
       {
-        "text": "🔥 At Lake Merritt Boathouse Terrace, unbutton your shirt and press your partner against the brick wall of Lake Merritt Boathouse Terrace in a haze of heat!",
+        "text": "🔥 At Lake Merritt Boathouse Terrace, pull your partner into an intense bareback hookup!",
         "targetNodeId": 42,
         "sexPoints": 492,
         "riskLevel": "high",
@@ -1497,10 +1538,10 @@ window.SF_SCENARIOS_128 = [
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Telegraph Avenue Synth Lab",
     "image": "./images/telegraph_workshop.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Telegraph Avenue Synth Lab. Modular synthesizer studio where electronic artists craft ambient soundscapes. Deep consent discussions and playful sparks fill the air.",
+    "narrative": "Subterranean darkroom lounge illuminated by soft red neon tubes. Soft velvet couches line the walls as deep ambient techno hums.",
     "choices": [
       {
-        "text": "🔥 At Telegraph Avenue Synth Lab, slide beneath the warm blankets at Telegraph Avenue Synth Lab for a midnight bareback session!",
+        "text": "🔥 At Telegraph Avenue Synth Lab, pull your partner into an intense bareback hookup!",
         "targetNodeId": 43,
         "sexPoints": 494,
         "riskLevel": "high",
@@ -1533,10 +1574,10 @@ window.SF_SCENARIOS_128 = [
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Grand Lake Rooftop Garden",
     "image": "./images/grand_lake_speakeasy.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Grand Lake Rooftop Garden. Private rooftop garden offering panoramic evening views of Lake Merritt. Deep consent discussions and playful sparks fill the air.",
+    "narrative": "Fox Theater Oakland's grand terracotta foyer glows under chandelier lights. Concertgoers gather before an indie electronic performance.",
     "choices": [
       {
-        "text": "🔥 At Grand Lake Rooftop Garden, lift your partner onto the mahogany counter at Grand Lake Rooftop Garden for an intense bareback encounter!",
+        "text": "🔥 At Grand Lake Rooftop Garden, pull your partner into an intense bareback hookup!",
         "targetNodeId": 44,
         "sexPoints": 496,
         "riskLevel": "high",
@@ -1568,11 +1609,11 @@ window.SF_SCENARIOS_128 = [
     "id": 44,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "East Bay Harm Reduction Collective",
-    "image": "./images/temescal_alley.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at East Bay Harm Reduction Collective. Volunteer hub packaging safer-sex kits and barrier supplies. Deep consent discussions and playful sparks fill the air.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Fox Theater VIP Lounge overlooking the ornate stage. Leather sofas and vintage mirrors offer an intimate sanctuary above the crowd.",
     "choices": [
       {
-        "text": "🔥 At East Bay Harm Reduction Collective, lose yourself in heat and sweat on the padded benches of East Bay Harm Reduction Collective!",
+        "text": "🔥 At East Bay Harm Reduction Collective, pull your partner into an intense bareback hookup!",
         "targetNodeId": 45,
         "sexPoints": 498,
         "riskLevel": "high",
@@ -1605,7 +1646,7 @@ window.SF_SCENARIOS_128 = [
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Oakland West BART Return Platform",
     "image": "./images/oakland_bart.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Oakland West BART Return Platform. BART platform illuminated by night lights as trains head back to SF. Deep consent discussions and playful sparks fill the air.",
+    "narrative": "Berkeley Commune's lush kitchen garden filled with rosemary, lavender, and solar lanterns. Residents gather around an oak picnic table.",
     "choices": [
       {
         "text": "🔥 At Oakland West BART Return Platform, pull your partner close against the leather couch at Oakland West BART Return Platform for a raw bareback hookup!",
@@ -1640,11 +1681,11 @@ window.SF_SCENARIOS_128 = [
     "id": 46,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "12th Street Oakland Plaza",
-    "image": "./images/oakland_bart.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at 12th Street Oakland Plaza. Open plaza filled with food trucks, street musicians, and warm sunlight. Deep consent discussions and playful sparks fill the air.",
+    "image": "./images/civic_center_plaza.jpg",
+    "narrative": "Berkeley Commune Sunroom filled with potted ferns, acoustic guitars, and floor pillows. Gentle consent check-ins unfold over herbal tea.",
     "choices": [
       {
-        "text": "🔥 At 12th Street Oakland Plaza, unbutton your shirt and press your partner against the brick wall of 12th Street Oakland Plaza in a haze of heat!",
+        "text": "🔥 At 12th Street Oakland Plaza, pull your partner into an intense bareback hookup!",
         "targetNodeId": 47,
         "sexPoints": 502,
         "riskLevel": "high",
@@ -1676,11 +1717,11 @@ window.SF_SCENARIOS_128 = [
     "id": 47,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Grand Lake Theater Speakeasy",
-    "image": "./images/fox_theater_oakland.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Grand Lake Theater Speakeasy. Hidden cocktail bar concealed behind a velvet curtain near the movie screen. Deep consent discussions and playful sparks fill the air.",
+    "image": "./images/castro_marquee.jpg",
+    "narrative": "Grand Lake Theater Speakeasy Lounge hidden behind a velvet curtain near the film screen. Intimate leather booths offer privacy for deep conversations.",
     "choices": [
       {
-        "text": "🔥 At Grand Lake Theater Speakeasy, slide beneath the warm blankets at Grand Lake Theater Speakeasy for a midnight bareback session!",
+        "text": "🔥 At Grand Lake Theater Speakeasy, pull your partner into an intense bareback hookup!",
         "targetNodeId": 48,
         "sexPoints": 504,
         "riskLevel": "high",
@@ -1713,10 +1754,10 @@ window.SF_SCENARIOS_128 = [
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Lake Merritt Pergola Promenade",
     "image": "./images/lake_merritt.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Lake Merritt Pergola Promenade. Illuminated shoreline path decorated with glowing fairy lights. Deep consent discussions and playful sparks fill the air.",
+    "narrative": "Temescal Alley Courtyard under twinkling festoon lights. Local artisans showcase handcrafted leather journals and silver jewelry.",
     "choices": [
       {
-        "text": "🔥 At Lake Merritt Pergola Promenade, lift your partner onto the mahogany counter at Lake Merritt Pergola Promenade for an intense bareback encounter!",
+        "text": "🔥 At Lake Merritt Pergola Promenade, pull your partner into an intense bareback hookup!",
         "targetNodeId": 49,
         "sexPoints": 506,
         "riskLevel": "high",
@@ -1748,11 +1789,11 @@ window.SF_SCENARIOS_128 = [
     "id": 49,
     "act": "ACT II: OAKLAND DAY-TRIP",
     "neighborhood": "Telegraph Art Murals Courtyard",
-    "image": "./images/telegraph_workshop.jpg",
-    "narrative": "Oakland's vibrant art and polyamorous energy comes alive at Telegraph Art Murals Courtyard. Outdoor mural gallery displaying East Bay radical community art. Deep consent discussions and playful sparks fill the air.",
+    "image": "./images/clarion_mural.jpg",
+    "narrative": "Telegraph Art Murals Courtyard showcasing East Bay radical community art. Spray cans, stencils, and vibrant colors cover every brick.",
     "choices": [
       {
-        "text": "🔥 At Telegraph Art Murals Courtyard, lose yourself in heat and sweat on the padded benches of Telegraph Art Murals Courtyard!",
+        "text": "🔥 At Telegraph Art Murals Courtyard, pull your partner into an intense bareback hookup!",
         "targetNodeId": 50,
         "sexPoints": 508,
         "riskLevel": "high",
@@ -1784,30 +1825,55 @@ window.SF_SCENARIOS_128 = [
     "id": 50,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa 10th Street Transit Hub",
-    "image": "./images/lake_merritt.jpg",
-    "narrative": "Returning across the Bay, San Francisco's SoMa district pulsates with heavy industrial bass and neon signs. Flashing motorcycle headlights pierce through ambient fog as partygoers converge on Folsom and Dore Alley.",
+    "image": "./images/oakland_bart.jpg",
+    "narrative": "Bay Area Regional Transit Hub at SoMa 10th Street Transit Hub. Muni streetcars, BART subway tubes, Sausalito ferries, and highway bridges connect all five major regions of San Francisco and Oakland. Where will your adventure take you next?",
     "choices": [
       {
-        "text": "🎟️ Show your silver-embossed VIP Wristband to enter the subterranean Dore Alley Speakeasy!",
-        "targetNodeId": 55,
-        "sexPoints": 520,
-        "riskLevel": "medium",
-        "actType": "investigate",
-        "isIngroup": false,
-        "requiresItem": "vip_soma_wristband"
+        "text": "🚇 Board silver BART train to cross under the Bay to Downtown Oakland & Berkeley Communes!",
+        "targetNodeId": 25,
+        "sexPoints": 100,
+        "riskLevel": "none",
+        "actType": "action",
+        "isIngroup": true,
+        "grantsItem": "eastbay_bart_pass"
       },
       {
-        "text": "♨️ Walk into SoMa Steamworks Bathhouse for a steamy cedar sauna session.",
-        "targetNodeId": 58,
-        "sexPoints": 400,
-        "riskLevel": "high",
-        "actType": "anal",
-        "isIngroup": false
+        "text": "💊 Travel to Castro District & Magnet SF Clinic on 18th Street for health audits.",
+        "targetNodeId": 8,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "clinic",
+        "isIngroup": true
       },
       {
-        "text": "⛓️ At SoMa 10th Street Transit Hub, travel to Armory Kink Castle Dungeon to inspect the suspension vaults.",
-        "targetNodeId": 62,
-        "sexPoints": 300,
+        "text": "📍 Travel to Deep SoMa Circuit (Folsom Street Fair, Dore Speakeasies & Cat Club)",
+        "targetNodeId": 51,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "action",
+        "isIngroup": true,
+        "grantsItem": "vip_soma_wristband"
+      },
+      {
+        "text": "⛓️ Travel to Armory Kink Castle Dungeon Vaults & Rig Halls",
+        "targetNodeId": 16,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "action",
+        "isIngroup": true
+      },
+      {
+        "text": "🌊 Board Sausalito Ferry to Coastal Arc (Houseboats, Marin Headlands & Baker Beach Dunes)",
+        "targetNodeId": 85,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "action",
+        "isIngroup": true
+      },
+      {
+        "text": "🏛️ Travel to Civic Center Plaza & San Francisco City Hall Victory Dome",
+        "targetNodeId": 115,
+        "sexPoints": 90,
         "riskLevel": "none",
         "actType": "action",
         "isIngroup": true
@@ -1819,11 +1885,11 @@ window.SF_SCENARIOS_128 = [
     "id": 51,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Folsom Leather Corner Stage",
-    "image": "./images/grand_lake_speakeasy.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at Folsom Leather Corner Stage. Stage showcasing custom leather harnesses and gear craft. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/folsom_fest.jpg",
+    "narrative": "Stage showcasing custom leather harnesses and gear craft. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At Folsom Leather Corner Stage, unbutton your shirt and press your partner against the brick wall of Folsom Leather Corner Stage in a haze of heat!",
+        "text": "🔥 At Folsom Leather Corner Stage, pull your partner into an intense bareback hookup!",
         "targetNodeId": 52,
         "sexPoints": 532,
         "riskLevel": "high",
@@ -1855,11 +1921,11 @@ window.SF_SCENARIOS_128 = [
     "id": 52,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Folsom VIP Play Pen",
-    "image": "./images/temescal_alley.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at Folsom VIP Play Pen. Enclosed outdoor play arena equipped with padded benches. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/folsom_fest.jpg",
+    "narrative": "Enclosed outdoor play arena equipped with padded benches. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At Folsom VIP Play Pen, slide beneath the warm blankets at Folsom VIP Play Pen for a midnight bareback session!",
+        "text": "🔥 At Folsom VIP Play Pen, pull your partner into an intense bareback hookup!",
         "targetNodeId": 53,
         "sexPoints": 534,
         "riskLevel": "high",
@@ -1891,11 +1957,11 @@ window.SF_SCENARIOS_128 = [
     "id": 53,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Dore Alley Brick Archway",
-    "image": "./images/temescal_alley.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at Dore Alley Brick Archway. Dark brick alleyway humming with industrial techno and fog machines. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Dark brick alleyway humming with industrial techno and fog machines. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At Dore Alley Brick Archway, lift your partner onto the mahogany counter at Dore Alley Brick Archway for an intense bareback encounter!",
+        "text": "🔥 At Dore Alley Brick Archway, pull your partner into an intense bareback hookup!",
         "targetNodeId": 54,
         "sexPoints": 536,
         "riskLevel": "high",
@@ -1927,11 +1993,11 @@ window.SF_SCENARIOS_128 = [
     "id": 54,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Speakeasy Velvet Chaise Lounge",
-    "image": "./images/grand_lake_speakeasy.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at Speakeasy Velvet Chaise Lounge. Opulent velvet lounge decorated with vintage mirrors and champagne ice buckets. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Opulent velvet lounge decorated with vintage mirrors and champagne ice buckets. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At Speakeasy Velvet Chaise Lounge, lose yourself in heat and sweat on the padded benches of Speakeasy Velvet Chaise Lounge!",
+        "text": "🔥 At Speakeasy Velvet Chaise Lounge, pull your partner into an intense bareback hookup!",
         "targetNodeId": 55,
         "sexPoints": 538,
         "riskLevel": "high",
@@ -1963,7 +2029,7 @@ window.SF_SCENARIOS_128 = [
     "id": 55,
     "act": "ACT III: DORE ALLEY SPEAKEASY CELLAR",
     "neighborhood": "Subterranean Dore Alley Speakeasy",
-    "image": "./images/temescal_alley.jpg",
+    "image": "./images/telegraph_workshop.jpg",
     "narrative": "Flashing your silver-embossed black VIP Wristband opens a hidden heavy oak door below Dore Alley. Down polished stone steps lies an exclusive subterranean speakeasy with crystal chandeliers, velvet lounges, and champagne bars.",
     "choices": [
       {
@@ -1991,11 +2057,11 @@ window.SF_SCENARIOS_128 = [
     "id": 56,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Steamworks Reception",
-    "image": "./images/telegraph_workshop.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Steamworks Reception. Keycard check-in desk providing fresh towels and locker keys. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/soma_bathhouse.jpg",
+    "narrative": "Keycard check-in desk providing fresh towels and locker keys. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At SoMa Steamworks Reception, unbutton your shirt and press your partner against the brick wall of SoMa Steamworks Reception in a haze of heat!",
+        "text": "🔥 At SoMa Steamworks Reception, pull your partner into an intense bareback hookup!",
         "targetNodeId": 57,
         "sexPoints": 542,
         "riskLevel": "high",
@@ -2027,11 +2093,11 @@ window.SF_SCENARIOS_128 = [
     "id": 57,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Steamworks Plunge Pool",
-    "image": "./images/fox_theater_oakland.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Steamworks Plunge Pool. Chilled plunge pool surrounded by cedar benches and cucumber water. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/soma_bathhouse.jpg",
+    "narrative": "Chilled plunge pool surrounded by cedar benches and cucumber water. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At SoMa Steamworks Plunge Pool, slide beneath the warm blankets at SoMa Steamworks Plunge Pool for a midnight bareback session!",
+        "text": "🔥 At SoMa Steamworks Plunge Pool, pull your partner into an intense bareback hookup!",
         "targetNodeId": 58,
         "sexPoints": 544,
         "riskLevel": "high",
@@ -2063,7 +2129,7 @@ window.SF_SCENARIOS_128 = [
     "id": 58,
     "act": "ACT III: SOMA STEAMWORKS SAUNA",
     "neighborhood": "SoMa Bathhouse Steamroom",
-    "image": "./images/lake_merritt.jpg",
+    "image": "./images/soma_bathhouse.jpg",
     "narrative": "Thick cedar steam rolls across private sauna cabins. Julian, a sculpted Castro gym instructor, drops his towel onto the bench, his sweat-glistening chest rising and falling in rhythm to ambient synth beats.",
     "choices": [
       {
@@ -2091,11 +2157,11 @@ window.SF_SCENARIOS_128 = [
     "id": 59,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Armory Fortress Master Gate",
-    "image": "./images/grand_lake_speakeasy.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at Armory Fortress Master Gate. Historic castle gate entry with massive iron doors. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/armory_dungeon.jpg",
+    "narrative": "Historic castle gate entry with massive iron doors. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At Armory Fortress Master Gate, lose yourself in heat and sweat on the padded benches of Armory Fortress Master Gate!",
+        "text": "🔥 At Armory Fortress Master Gate, pull your partner into an intense bareback hookup!",
         "targetNodeId": 60,
         "sexPoints": 548,
         "riskLevel": "high",
@@ -2127,8 +2193,8 @@ window.SF_SCENARIOS_128 = [
     "id": 60,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Armory Leather Bench Corridor",
-    "image": "./images/temescal_alley.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at Armory Leather Bench Corridor. Play benches equipped with leather restraints and safety check stations. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/armory_dungeon.jpg",
+    "narrative": "Play benches equipped with leather restraints and safety check stations. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
         "text": "🔥 At Armory Leather Bench Corridor, pull your partner close against the leather couch at Armory Leather Bench Corridor for a raw bareback hookup!",
@@ -2163,11 +2229,11 @@ window.SF_SCENARIOS_128 = [
     "id": 61,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Industrial Rooftop Garden",
-    "image": "./images/jack_london_square.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Industrial Rooftop Garden. Urban oasis overlooking the neon cityscape of SoMa. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/castro_rooftop.jpg",
+    "narrative": "Urban oasis overlooking the neon cityscape of SoMa. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At SoMa Industrial Rooftop Garden, unbutton your shirt and press your partner against the brick wall of SoMa Industrial Rooftop Garden in a haze of heat!",
+        "text": "🔥 At SoMa Industrial Rooftop Garden, pull your partner into an intense bareback hookup!",
         "targetNodeId": 62,
         "sexPoints": 552,
         "riskLevel": "high",
@@ -2199,7 +2265,7 @@ window.SF_SCENARIOS_128 = [
     "id": 62,
     "act": "ACT III: ARMORY MASTER VAULT",
     "neighborhood": "Armory Kink Castle Dungeon",
-    "image": "./images/berkeley_commune.jpg",
+    "image": "./images/armory_dungeon.jpg",
     "narrative": "Inside the red-brick fortress of the Armory, heavy velvet drapes isolate the private master vault. Unlocking the vault door with the `armory_master_key`, Sienna welcomes you to an exclusive suspension rope play session.",
     "choices": [
       {
@@ -2227,11 +2293,11 @@ window.SF_SCENARIOS_128 = [
     "id": 63,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Howard Street Speakeasy Courtyard",
-    "image": "./images/grand_lake_speakeasy.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at Howard Street Speakeasy Courtyard. Secluded brick patio serving artisanal mezcal and craft cocktails. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Secluded brick patio serving artisanal mezcal and craft cocktails. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At Howard Street Speakeasy Courtyard, lift your partner onto the mahogany counter at Howard Street Speakeasy Courtyard for an intense bareback encounter!",
+        "text": "🔥 At Howard Street Speakeasy Courtyard, pull your partner into an intense bareback hookup!",
         "targetNodeId": 64,
         "sexPoints": 556,
         "riskLevel": "high",
@@ -2263,11 +2329,11 @@ window.SF_SCENARIOS_128 = [
     "id": 64,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa After-Hours Soundcheck Loft",
-    "image": "./images/telegraph_workshop.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa After-Hours Soundcheck Loft. Vibrant warehouse loft where local DJs play deep underground house. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/the_endup.jpg",
+    "narrative": "Vibrant warehouse loft where local DJs play deep underground house. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At SoMa After-Hours Soundcheck Loft, lose yourself in heat and sweat on the padded benches of SoMa After-Hours Soundcheck Loft!",
+        "text": "🔥 At SoMa After-Hours Soundcheck Loft, pull your partner into an intense bareback hookup!",
         "targetNodeId": 65,
         "sexPoints": 558,
         "riskLevel": "high",
@@ -2299,8 +2365,8 @@ window.SF_SCENARIOS_128 = [
     "id": 65,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Harrison Street Art Gallery",
-    "image": "./images/fox_theater_oakland.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at Harrison Street Art Gallery. Exhibition displaying radical queer erotic portraiture. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Exhibition displaying radical queer erotic portraiture. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
         "text": "🔥 At Harrison Street Art Gallery, pull your partner close against the leather couch at Harrison Street Art Gallery for a raw bareback hookup!",
@@ -2335,11 +2401,11 @@ window.SF_SCENARIOS_128 = [
     "id": 66,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Polycule Co-Op Penthouse",
-    "image": "./images/lake_merritt.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Polycule Co-Op Penthouse. Spacious penthouse hosting a joint SF & East Bay polycule mixer. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Spacious penthouse hosting a joint SF & East Bay polycule mixer. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At SoMa Polycule Co-Op Penthouse, unbutton your shirt and press your partner against the brick wall of SoMa Polycule Co-Op Penthouse in a haze of heat!",
+        "text": "🔥 At SoMa Polycule Co-Op Penthouse, pull your partner into an intense bareback hookup!",
         "targetNodeId": 67,
         "sexPoints": 562,
         "riskLevel": "high",
@@ -2371,11 +2437,11 @@ window.SF_SCENARIOS_128 = [
     "id": 67,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Folsom Street Photo Exhibition",
-    "image": "./images/grand_lake_speakeasy.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at Folsom Street Photo Exhibition. Archival gallery showcasing 1970s San Francisco leather history. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/folsom_fest.jpg",
+    "narrative": "Archival gallery showcasing 1970s San Francisco leather history. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At Folsom Street Photo Exhibition, slide beneath the warm blankets at Folsom Street Photo Exhibition for a midnight bareback session!",
+        "text": "🔥 At Folsom Street Photo Exhibition, pull your partner into an intense bareback hookup!",
         "targetNodeId": 68,
         "sexPoints": 564,
         "riskLevel": "high",
@@ -2407,11 +2473,11 @@ window.SF_SCENARIOS_128 = [
     "id": 68,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Darkroom Sensory Tunnel",
-    "image": "./images/temescal_alley.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Darkroom Sensory Tunnel. Sensory play tunnel immersed in complete darkness and ambient bass. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/soma_darkroom.jpg",
+    "narrative": "Sensory play tunnel immersed in complete darkness and ambient bass. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At SoMa Darkroom Sensory Tunnel, lift your partner onto the mahogany counter at SoMa Darkroom Sensory Tunnel for an intense bareback encounter!",
+        "text": "🔥 At SoMa Darkroom Sensory Tunnel, pull your partner into an intense bareback hookup!",
         "targetNodeId": 69,
         "sexPoints": 566,
         "riskLevel": "high",
@@ -2443,11 +2509,11 @@ window.SF_SCENARIOS_128 = [
     "id": 69,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "11th Street VIP Promoter Booth",
-    "image": "./images/jack_london_square.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at 11th Street VIP Promoter Booth. VIP booth where nightlife organizers toast with cold champagne. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "VIP booth where nightlife organizers toast with cold champagne. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At 11th Street VIP Promoter Booth, lose yourself in heat and sweat on the padded benches of 11th Street VIP Promoter Booth!",
+        "text": "🔥 At 11th Street VIP Promoter Booth, pull your partner into an intense bareback hookup!",
         "targetNodeId": 70,
         "sexPoints": 568,
         "riskLevel": "high",
@@ -2479,8 +2545,8 @@ window.SF_SCENARIOS_128 = [
     "id": 70,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Midnight Taco Truck",
-    "image": "./images/berkeley_commune.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Midnight Taco Truck. Late-night street food stand surrounded by happy clubgoers. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/mission_taqueria.jpg",
+    "narrative": "Late-night street food stand surrounded by happy clubgoers. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
         "text": "🔥 At SoMa Midnight Taco Truck, pull your partner close against the leather couch at SoMa Midnight Taco Truck for a raw bareback hookup!",
@@ -2515,11 +2581,11 @@ window.SF_SCENARIOS_128 = [
     "id": 71,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Acoustic Guitar Lounge",
-    "image": "./images/berkeley_telegraph.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Acoustic Guitar Lounge. Unplugged song circle featuring traveling polycule musicians. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Unplugged song circle featuring traveling polycule musicians. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At SoMa Acoustic Guitar Lounge, unbutton your shirt and press your partner against the brick wall of SoMa Acoustic Guitar Lounge in a haze of heat!",
+        "text": "🔥 At SoMa Acoustic Guitar Lounge, pull your partner into an intense bareback hookup!",
         "targetNodeId": 72,
         "sexPoints": 572,
         "riskLevel": "high",
@@ -2551,11 +2617,11 @@ window.SF_SCENARIOS_128 = [
     "id": 72,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Howard Leather Craft Studio",
-    "image": "./images/telegraph_workshop.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at Howard Leather Craft Studio. Workshop bench for custom leather fittings and harness craft. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/mission_studio.jpg",
+    "narrative": "Workshop bench for custom leather fittings and harness craft. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At Howard Leather Craft Studio, slide beneath the warm blankets at Howard Leather Craft Studio for a midnight bareback session!",
+        "text": "🔥 At Howard Leather Craft Studio, pull your partner into an intense bareback hookup!",
         "targetNodeId": 73,
         "sexPoints": 574,
         "riskLevel": "high",
@@ -2587,11 +2653,11 @@ window.SF_SCENARIOS_128 = [
     "id": 73,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Neon Alley Arcade Bar",
-    "image": "./images/temescal_alley.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Neon Alley Arcade Bar. Retro arcade venue featuring 16-bit video games and craft beers. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Retro arcade venue featuring 16-bit video games and craft beers. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At SoMa Neon Alley Arcade Bar, lift your partner onto the mahogany counter at SoMa Neon Alley Arcade Bar for an intense bareback encounter!",
+        "text": "🔥 At SoMa Neon Alley Arcade Bar, pull your partner into an intense bareback hookup!",
         "targetNodeId": 74,
         "sexPoints": 576,
         "riskLevel": "high",
@@ -2623,11 +2689,11 @@ window.SF_SCENARIOS_128 = [
     "id": 74,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Folsom Street Gear Exchange",
-    "image": "./images/lake_merritt.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at Folsom Street Gear Exchange. Community trade station for leather gear, boots, and barrier supplies. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/folsom_fest.jpg",
+    "narrative": "Community trade station for leather gear, boots, and barrier supplies. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At Folsom Street Gear Exchange, lose yourself in heat and sweat on the padded benches of Folsom Street Gear Exchange!",
+        "text": "🔥 At Folsom Street Gear Exchange, pull your partner into an intense bareback hookup!",
         "targetNodeId": 75,
         "sexPoints": 578,
         "riskLevel": "high",
@@ -2659,8 +2725,8 @@ window.SF_SCENARIOS_128 = [
     "id": 75,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Solarium Cuddle Deck",
-    "image": "./images/grand_lake_speakeasy.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Solarium Cuddle Deck. Cushioned rooftop lounge under starry midnight skies. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Cushioned rooftop lounge under starry midnight skies. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
         "text": "🔥 At SoMa Solarium Cuddle Deck, pull your partner close against the leather couch at SoMa Solarium Cuddle Deck for a raw bareback hookup!",
@@ -2695,11 +2761,11 @@ window.SF_SCENARIOS_128 = [
     "id": 76,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Harm Reduction Tent",
-    "image": "./images/temescal_alley.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Harm Reduction Tent. Outreach station distributing free STI literature and Doxy-PEP info. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Outreach station distributing free STI literature and Doxy-PEP info. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At SoMa Harm Reduction Tent, unbutton your shirt and press your partner against the brick wall of SoMa Harm Reduction Tent in a haze of heat!",
+        "text": "🔥 At SoMa Harm Reduction Tent, pull your partner into an intense bareback hookup!",
         "targetNodeId": 77,
         "sexPoints": 582,
         "riskLevel": "high",
@@ -2731,11 +2797,11 @@ window.SF_SCENARIOS_128 = [
     "id": 77,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Howard Underground Sound Vault",
-    "image": "./images/jack_london_square.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at Howard Underground Sound Vault. Subterranean vault vibrating with experimental industrial synth. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Subterranean vault vibrating with experimental industrial synth. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At Howard Underground Sound Vault, slide beneath the warm blankets at Howard Underground Sound Vault for a midnight bareback session!",
+        "text": "🔥 At Howard Underground Sound Vault, pull your partner into an intense bareback hookup!",
         "targetNodeId": 78,
         "sexPoints": 584,
         "riskLevel": "high",
@@ -2767,11 +2833,11 @@ window.SF_SCENARIOS_128 = [
     "id": 78,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Roof Garden Fire Pit",
-    "image": "./images/berkeley_commune.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Roof Garden Fire Pit. Open-air fire pit where lovers roast marshmallows and share stories. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Open-air fire pit where lovers roast marshmallows and share stories. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At SoMa Roof Garden Fire Pit, lift your partner onto the mahogany counter at SoMa Roof Garden Fire Pit for an intense bareback encounter!",
+        "text": "🔥 At SoMa Roof Garden Fire Pit, pull your partner into an intense bareback hookup!",
         "targetNodeId": 79,
         "sexPoints": 586,
         "riskLevel": "high",
@@ -2803,11 +2869,11 @@ window.SF_SCENARIOS_128 = [
     "id": 79,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "SoMa Midnight Espresso Parlor",
-    "image": "./images/grand_lake_speakeasy.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at SoMa Midnight Espresso Parlor. Late-night cafe serving double espressos and consent advice. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Late-night cafe serving double espressos and consent advice. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At SoMa Midnight Espresso Parlor, lose yourself in heat and sweat on the padded benches of SoMa Midnight Espresso Parlor!",
+        "text": "🔥 At SoMa Midnight Espresso Parlor, pull your partner into an intense bareback hookup!",
         "targetNodeId": 80,
         "sexPoints": 588,
         "riskLevel": "high",
@@ -2839,8 +2905,8 @@ window.SF_SCENARIOS_128 = [
     "id": 80,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Embarcadero Pier Ferry Departure",
-    "image": "./images/jack_london_square.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at Embarcadero Pier Ferry Departure. Waterfront ferry pier under glowing streetlights preparing for Marin. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/orphan_andys.jpg",
+    "narrative": "Waterfront ferry pier under glowing streetlights preparing for Marin. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
         "text": "🔥 At Embarcadero Pier Ferry Departure, pull your partner close against the leather couch at Embarcadero Pier Ferry Departure for a raw bareback hookup!",
@@ -2875,11 +2941,11 @@ window.SF_SCENARIOS_128 = [
     "id": 81,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Folsom Street Fair Entrance",
-    "image": "./images/fox_theater_oakland.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at Folsom Street Fair Entrance. Epic leather festival gates crowded with gear enthusiasts under the sun. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/folsom_fest.jpg",
+    "narrative": "Epic leather festival gates crowded with gear enthusiasts under the sun. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At Folsom Street Fair Entrance, unbutton your shirt and press your partner against the brick wall of Folsom Street Fair Entrance in a haze of heat!",
+        "text": "🔥 At Folsom Street Fair Entrance, pull your partner into an intense bareback hookup!",
         "targetNodeId": 82,
         "sexPoints": 592,
         "riskLevel": "high",
@@ -2911,11 +2977,11 @@ window.SF_SCENARIOS_128 = [
     "id": 82,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Folsom Leather Corner Stage",
-    "image": "./images/lake_merritt.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at Folsom Leather Corner Stage. Stage showcasing custom leather harnesses and gear craft. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/folsom_fest.jpg",
+    "narrative": "Folsom Street Leather Corner Stage showcasing custom leather harnesses and gear craft. Heavy sub-bass and leather gear frame passionate encounters.",
     "choices": [
       {
-        "text": "🔥 At Folsom Leather Corner Stage, slide beneath the warm blankets at Folsom Leather Corner Stage for a midnight bareback session!",
+        "text": "🔥 At Folsom Leather Corner Stage, pull your partner into an intense bareback hookup!",
         "targetNodeId": 83,
         "sexPoints": 594,
         "riskLevel": "high",
@@ -2947,11 +3013,11 @@ window.SF_SCENARIOS_128 = [
     "id": 83,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Folsom VIP Play Pen",
-    "image": "./images/grand_lake_speakeasy.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at Folsom VIP Play Pen. Enclosed outdoor play arena equipped with padded benches. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/folsom_fest.jpg",
+    "narrative": "Folsom VIP Play Pen enclosed outdoor play arena equipped with padded benches and red gel lighting.",
     "choices": [
       {
-        "text": "🔥 At Folsom VIP Play Pen, lift your partner onto the mahogany counter at Folsom VIP Play Pen for an intense bareback encounter!",
+        "text": "🔥 At Folsom VIP Play Pen, pull your partner into an intense bareback hookup!",
         "targetNodeId": 84,
         "sexPoints": 596,
         "riskLevel": "high",
@@ -2983,11 +3049,11 @@ window.SF_SCENARIOS_128 = [
     "id": 84,
     "act": "ACT III: DEEP SOMA CIRCUIT",
     "neighborhood": "Dore Alley Brick Archway",
-    "image": "./images/temescal_alley.jpg",
-    "narrative": "The pulse of SoMa's industrial circuit is intense at Dore Alley Brick Archway. Dark brick alleyway humming with industrial techno and fog machines. Heavy sub-bass and leather gear frame passionate encounters.",
+    "image": "./images/telegraph_workshop.jpg",
+    "narrative": "Dore Alley Brick Archway humming with industrial techno, fog machines, and leather-clad dancers under violet strobe lights.",
     "choices": [
       {
-        "text": "🔥 At Dore Alley Brick Archway, lose yourself in heat and sweat on the padded benches of Dore Alley Brick Archway!",
+        "text": "🔥 At Dore Alley Brick Archway, pull your partner into an intense bareback hookup!",
         "targetNodeId": 85,
         "sexPoints": 598,
         "riskLevel": "high",
@@ -3019,29 +3085,55 @@ window.SF_SCENARIOS_128 = [
     "id": 85,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Sausalito Ferry Pier Transit Hub",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Salt spray hits your face as the ferry glides past Alcatraz toward Sausalito and Marin. Golden Gate Bridge towers gleam in the afternoon sun against rugged coastal bluffs.",
+    "image": "./images/oakland_bart.jpg",
+    "narrative": "Bay Area Regional Transit Hub at Sausalito Ferry Pier Transit Hub. Muni streetcars, BART subway tubes, Sausalito ferries, and highway bridges connect all five major regions of San Francisco and Oakland. Where will your adventure take you next?",
     "choices": [
       {
-        "text": "🌊 Head to Baker Beach sunset dunes for a clothing-optional bonfire session.",
-        "targetNodeId": 90,
-        "sexPoints": 360,
-        "riskLevel": "none",
-        "actType": "action",
-        "isIngroup": true
-      },
-      {
-        "text": "🚢 Visit the floating houseboat community in Sausalito for a waterfront solarium party.",
-        "targetNodeId": 86,
-        "sexPoints": 300,
-        "riskLevel": "none",
-        "actType": "action",
-        "isIngroup": true
-      },
-      {
-        "text": "📍 Return to SF Civic Center Plaza to prepare for the final City Hall Gala.",
-        "targetNodeId": 114,
+        "text": "🚇 Board silver BART train to cross under the Bay to Downtown Oakland & Berkeley Communes!",
+        "targetNodeId": 25,
         "sexPoints": 100,
+        "riskLevel": "none",
+        "actType": "action",
+        "isIngroup": true,
+        "grantsItem": "eastbay_bart_pass"
+      },
+      {
+        "text": "💊 Travel to Castro District & Magnet SF Clinic on 18th Street for health audits.",
+        "targetNodeId": 8,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "clinic",
+        "isIngroup": true
+      },
+      {
+        "text": "📍 Travel to Deep SoMa Circuit (Folsom Street Fair, Dore Speakeasies & Cat Club)",
+        "targetNodeId": 50,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "action",
+        "isIngroup": true,
+        "grantsItem": "vip_soma_wristband"
+      },
+      {
+        "text": "⛓️ Travel to Armory Kink Castle Dungeon Vaults & Rig Halls",
+        "targetNodeId": 16,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "action",
+        "isIngroup": true
+      },
+      {
+        "text": "🌊 Board Sausalito Ferry to Coastal Arc (Houseboats, Marin Headlands & Baker Beach Dunes)",
+        "targetNodeId": 86,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "action",
+        "isIngroup": true
+      },
+      {
+        "text": "🏛️ Travel to Civic Center Plaza & San Francisco City Hall Victory Dome",
+        "targetNodeId": 115,
+        "sexPoints": 90,
         "riskLevel": "none",
         "actType": "action",
         "isIngroup": true
@@ -3053,11 +3145,11 @@ window.SF_SCENARIOS_128 = [
     "id": 86,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Sausalito Houseboat Solarium Cabin",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Sausalito Houseboat Solarium Cabin. Sunlit plant conservatory aboard a historic wooden houseboat. Intimate moments unfold under open skies.",
+    "image": "./images/sausalito_houseboat.jpg",
+    "narrative": "Sunlit plant conservatory aboard a historic wooden houseboat. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Sausalito Houseboat Solarium Cabin, unbutton your shirt and press your partner against the brick wall of Sausalito Houseboat Solarium Cabin in a haze of heat!",
+        "text": "🔥 At Sausalito Houseboat Solarium Cabin, pull your partner into an intense bareback hookup!",
         "targetNodeId": 87,
         "sexPoints": 622,
         "riskLevel": "high",
@@ -3089,11 +3181,11 @@ window.SF_SCENARIOS_128 = [
     "id": 87,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Marin Headlands Vista Point",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Marin Headlands Vista Point. High ocean cliff offering breathtaking views of the Golden Gate Bridge. Intimate moments unfold under open skies.",
+    "image": "./images/marin_headlands.jpg",
+    "narrative": "High ocean cliff offering breathtaking views of the Golden Gate Bridge. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Marin Headlands Vista Point, slide beneath the warm blankets at Marin Headlands Vista Point for a midnight bareback session!",
+        "text": "🔥 At Marin Headlands Vista Point, pull your partner into an intense bareback hookup!",
         "targetNodeId": 88,
         "sexPoints": 624,
         "riskLevel": "high",
@@ -3125,11 +3217,11 @@ window.SF_SCENARIOS_128 = [
     "id": 88,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Point Bonita Lighthouse Terrace",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Point Bonita Lighthouse Terrace. Suspension bridge path leading to a dramatic ocean lighthouse cliff. Intimate moments unfold under open skies.",
+    "image": "./images/marin_headlands.jpg",
+    "narrative": "Suspension bridge path leading to a dramatic ocean lighthouse cliff. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Point Bonita Lighthouse Terrace, lift your partner onto the mahogany counter at Point Bonita Lighthouse Terrace for an intense bareback encounter!",
+        "text": "🔥 At Point Bonita Lighthouse Terrace, pull your partner into an intense bareback hookup!",
         "targetNodeId": 89,
         "sexPoints": 626,
         "riskLevel": "high",
@@ -3161,11 +3253,11 @@ window.SF_SCENARIOS_128 = [
     "id": 89,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Baker Beach Bonfire Circle",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Baker Beach Bonfire Circle. Crackling driftwood bonfire surrounded by ocean waves and starlight. Intimate moments unfold under open skies.",
+    "image": "./images/ocean_beach_bonfire.jpg",
+    "narrative": "Crackling driftwood bonfire surrounded by ocean waves and starlight. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Baker Beach Bonfire Circle, lose yourself in heat and sweat on the padded benches of Baker Beach Bonfire Circle!",
+        "text": "🔥 At Baker Beach Bonfire Circle, pull your partner into an intense bareback hookup!",
         "targetNodeId": 90,
         "sexPoints": 628,
         "riskLevel": "high",
@@ -3173,7 +3265,7 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": false
       },
       {
-        "text": "🛡️ At Baker Beach Bonfire Circle, tear open a latex barrier packet with your teeth and take your partner right here at Baker Beach Bonfire Circle.",
+        "text": "🛡️ At Baker Beach Bonfire Circle, unroll a latex condom for a safe, thrilling play session!",
         "targetNodeId": 90,
         "sexPoints": 409,
         "riskLevel": "low",
@@ -3197,7 +3289,7 @@ window.SF_SCENARIOS_128 = [
     "id": 90,
     "act": "ACT IV: BAKER BEACH SUNSET DUNES",
     "neighborhood": "Baker Beach Clothing-Optional",
-    "image": "./images/mission_loft.jpg",
+    "image": "./images/baker_beach.jpg",
     "narrative": "Salt spray hits your face as a bonfire crackles against the Golden Gate Bridge skyline. The crowd is uninhibited, bare skin glowing red in the firelight embers.",
     "choices": [
       {
@@ -3225,10 +3317,10 @@ window.SF_SCENARIOS_128 = [
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Mount Tamalpais Starlight Ridge",
     "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Mount Tamalpais Starlight Ridge. Mountain peak overlooking a sea of fog illuminated by moonlight. Intimate moments unfold under open skies.",
+    "narrative": "Mountain peak overlooking a sea of fog illuminated by moonlight. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Mount Tamalpais Starlight Ridge, unbutton your shirt and press your partner against the brick wall of Mount Tamalpais Starlight Ridge in a haze of heat!",
+        "text": "🔥 At Mount Tamalpais Starlight Ridge, pull your partner into an intense bareback hookup!",
         "targetNodeId": 92,
         "sexPoints": 632,
         "riskLevel": "high",
@@ -3260,11 +3352,11 @@ window.SF_SCENARIOS_128 = [
     "id": 92,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Marin Redwood Solarium Cabin",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Marin Redwood Solarium Cabin. Rustic mountain chalet featuring an outdoor cedar hot tub under pine trees. Intimate moments unfold under open skies.",
+    "image": "./images/redwood_regional.jpg",
+    "narrative": "Rustic mountain chalet featuring an outdoor cedar hot tub under pine trees. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Marin Redwood Solarium Cabin, slide beneath the warm blankets at Marin Redwood Solarium Cabin for a midnight bareback session!",
+        "text": "🔥 At Marin Redwood Solarium Cabin, pull your partner into an intense bareback hookup!",
         "targetNodeId": 93,
         "sexPoints": 634,
         "riskLevel": "high",
@@ -3296,11 +3388,11 @@ window.SF_SCENARIOS_128 = [
     "id": 93,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Presidio Officers Club Grand Foyer",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Presidio Officers Club Grand Foyer. Historic spanish tile foyer surrounded by fragrant eucalyptus groves. Intimate moments unfold under open skies.",
+    "image": "./images/presidio_grove.jpg",
+    "narrative": "Historic spanish tile foyer surrounded by fragrant eucalyptus groves. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Presidio Officers Club Grand Foyer, lift your partner onto the mahogany counter at Presidio Officers Club Grand Foyer for an intense bareback encounter!",
+        "text": "🔥 At Presidio Officers Club Grand Foyer, pull your partner into an intense bareback hookup!",
         "targetNodeId": 94,
         "sexPoints": 636,
         "riskLevel": "high",
@@ -3332,11 +3424,11 @@ window.SF_SCENARIOS_128 = [
     "id": 94,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Presidio Redwood Grove Sanctuary",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Presidio Redwood Grove Sanctuary. Tranquil forest walking trail shaded by ancient redwood trees. Intimate moments unfold under open skies.",
+    "image": "./images/redwood_regional.jpg",
+    "narrative": "Tranquil forest walking trail shaded by ancient redwood trees. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Presidio Redwood Grove Sanctuary, lose yourself in heat and sweat on the padded benches of Presidio Redwood Grove Sanctuary!",
+        "text": "🔥 At Presidio Redwood Grove Sanctuary, pull your partner into an intense bareback hookup!",
         "targetNodeId": 95,
         "sexPoints": 638,
         "riskLevel": "high",
@@ -3344,7 +3436,7 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": false
       },
       {
-        "text": "🛡️ At Presidio Redwood Grove Sanctuary, tear open a latex barrier packet with your teeth and take your partner right here at Presidio Redwood Grove Sanctuary.",
+        "text": "🛡️ At Presidio Redwood Grove Sanctuary, unroll a latex condom for a safe, thrilling play session!",
         "targetNodeId": 95,
         "sexPoints": 414,
         "riskLevel": "low",
@@ -3368,8 +3460,8 @@ window.SF_SCENARIOS_128 = [
     "id": 95,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Presidio Lawn Sunshine Tapestry",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Presidio Lawn Sunshine Tapestry. Sunlit lawn picnic featuring champagne flutes and polycule friends. Intimate moments unfold under open skies.",
+    "image": "./images/presidio_grove.jpg",
+    "narrative": "Sunlit lawn picnic featuring champagne flutes and polycule friends. Intimate moments unfold under open skies.",
     "choices": [
       {
         "text": "🔥 At Presidio Lawn Sunshine Tapestry, pull your partner close against the leather couch at Presidio Lawn Sunshine Tapestry for a raw bareback hookup!",
@@ -3404,11 +3496,11 @@ window.SF_SCENARIOS_128 = [
     "id": 96,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Ocean Beach Sunset Dunes",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Ocean Beach Sunset Dunes. Expansive sandy beach where Pacific Ocean waves crash against the shore. Intimate moments unfold under open skies.",
+    "image": "./images/ocean_beach_bonfire.jpg",
+    "narrative": "Expansive sandy beach where Pacific Ocean waves crash against the shore. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Ocean Beach Sunset Dunes, unbutton your shirt and press your partner against the brick wall of Ocean Beach Sunset Dunes in a haze of heat!",
+        "text": "🔥 At Ocean Beach Sunset Dunes, pull your partner into an intense bareback hookup!",
         "targetNodeId": 97,
         "sexPoints": 642,
         "riskLevel": "high",
@@ -3440,11 +3532,11 @@ window.SF_SCENARIOS_128 = [
     "id": 97,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Ocean Beach Coastal Pavilion",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Ocean Beach Coastal Pavilion. Covered pavilion offering panoramic views of the Pacific horizon. Intimate moments unfold under open skies.",
+    "image": "./images/ocean_beach_bonfire.jpg",
+    "narrative": "Covered pavilion offering panoramic views of the Pacific horizon. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Ocean Beach Coastal Pavilion, slide beneath the warm blankets at Ocean Beach Coastal Pavilion for a midnight bareback session!",
+        "text": "🔥 At Ocean Beach Coastal Pavilion, pull your partner into an intense bareback hookup!",
         "targetNodeId": 98,
         "sexPoints": 644,
         "riskLevel": "high",
@@ -3476,11 +3568,11 @@ window.SF_SCENARIOS_128 = [
     "id": 98,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Ocean Beach Dawn Bonfire",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Ocean Beach Dawn Bonfire. Early morning bonfire embers warming early risers as the sun crests. Intimate moments unfold under open skies.",
+    "image": "./images/the_endup.jpg",
+    "narrative": "Early morning bonfire embers warming early risers as the sun crests. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Ocean Beach Dawn Bonfire, lift your partner onto the mahogany counter at Ocean Beach Dawn Bonfire for an intense bareback encounter!",
+        "text": "🔥 At Ocean Beach Dawn Bonfire, pull your partner into an intense bareback hookup!",
         "targetNodeId": 99,
         "sexPoints": 646,
         "riskLevel": "high",
@@ -3512,11 +3604,11 @@ window.SF_SCENARIOS_128 = [
     "id": 99,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Sausalito Harbor Seafood Lounge",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Sausalito Harbor Seafood Lounge. Waterfront restaurant serving oysters and sparkling wine. Intimate moments unfold under open skies.",
+    "image": "./images/sausalito_houseboat.jpg",
+    "narrative": "Waterfront restaurant serving oysters and sparkling wine. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Sausalito Harbor Seafood Lounge, lose yourself in heat and sweat on the padded benches of Sausalito Harbor Seafood Lounge!",
+        "text": "🔥 At Sausalito Harbor Seafood Lounge, pull your partner into an intense bareback hookup!",
         "targetNodeId": 100,
         "sexPoints": 648,
         "riskLevel": "high",
@@ -3524,7 +3616,7 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": false
       },
       {
-        "text": "🛡️ At Sausalito Harbor Seafood Lounge, tear open a latex barrier packet with your teeth and take your partner right here at Sausalito Harbor Seafood Lounge.",
+        "text": "🛡️ At Sausalito Harbor Seafood Lounge, unroll a latex condom for a safe, thrilling play session!",
         "targetNodeId": 100,
         "sexPoints": 419,
         "riskLevel": "low",
@@ -3548,8 +3640,8 @@ window.SF_SCENARIOS_128 = [
     "id": 100,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Marin Headlands Night Observatory",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Marin Headlands Night Observatory. Stargazing terrace high above the Pacific Ocean bluffs. Intimate moments unfold under open skies.",
+    "image": "./images/marin_headlands.jpg",
+    "narrative": "Stargazing terrace high above the Pacific Ocean bluffs. Intimate moments unfold under open skies.",
     "choices": [
       {
         "text": "🔥 At Marin Headlands Night Observatory, pull your partner close against the leather couch at Marin Headlands Night Observatory for a raw bareback hookup!",
@@ -3584,11 +3676,11 @@ window.SF_SCENARIOS_128 = [
     "id": 101,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Presidio Historic Ballroom Stage",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Presidio Historic Ballroom Stage. Elegant wooden floor ballroom preparing for evening galas. Intimate moments unfold under open skies.",
+    "image": "./images/presidio_grove.jpg",
+    "narrative": "Elegant wooden floor ballroom preparing for evening galas. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Presidio Historic Ballroom Stage, unbutton your shirt and press your partner against the brick wall of Presidio Historic Ballroom Stage in a haze of heat!",
+        "text": "🔥 At Presidio Historic Ballroom Stage, pull your partner into an intense bareback hookup!",
         "targetNodeId": 102,
         "sexPoints": 652,
         "riskLevel": "high",
@@ -3620,11 +3712,11 @@ window.SF_SCENARIOS_128 = [
     "id": 102,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Ocean Beach Pacific Horizon",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Ocean Beach Pacific Horizon. Shoreline walk along the wet sand tide line. Intimate moments unfold under open skies.",
+    "image": "./images/ocean_beach_bonfire.jpg",
+    "narrative": "Shoreline walk along the wet sand tide line. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Ocean Beach Pacific Horizon, slide beneath the warm blankets at Ocean Beach Pacific Horizon for a midnight bareback session!",
+        "text": "🔥 At Ocean Beach Pacific Horizon, pull your partner into an intense bareback hookup!",
         "targetNodeId": 103,
         "sexPoints": 654,
         "riskLevel": "high",
@@ -3656,11 +3748,11 @@ window.SF_SCENARIOS_128 = [
     "id": 103,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Sausalito Pier Sunset Lounge",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Sausalito Pier Sunset Lounge. Pier bar overlooking the evening lights of San Francisco. Intimate moments unfold under open skies.",
+    "image": "./images/orphan_andys.jpg",
+    "narrative": "Pier bar overlooking the evening lights of San Francisco. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Sausalito Pier Sunset Lounge, lift your partner onto the mahogany counter at Sausalito Pier Sunset Lounge for an intense bareback encounter!",
+        "text": "🔥 At Sausalito Pier Sunset Lounge, pull your partner into an intense bareback hookup!",
         "targetNodeId": 104,
         "sexPoints": 656,
         "riskLevel": "high",
@@ -3692,11 +3784,11 @@ window.SF_SCENARIOS_128 = [
     "id": 104,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Marin Redwood Sauna Cabin",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Marin Redwood Sauna Cabin. Eucalyptus steam sauna tucked into a redwood ravine. Intimate moments unfold under open skies.",
+    "image": "./images/redwood_regional.jpg",
+    "narrative": "Eucalyptus steam sauna tucked into a redwood ravine. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Marin Redwood Sauna Cabin, lose yourself in heat and sweat on the padded benches of Marin Redwood Sauna Cabin!",
+        "text": "🔥 At Marin Redwood Sauna Cabin, pull your partner into an intense bareback hookup!",
         "targetNodeId": 105,
         "sexPoints": 658,
         "riskLevel": "high",
@@ -3704,7 +3796,7 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": false
       },
       {
-        "text": "🛡️ At Marin Redwood Sauna Cabin, tear open a latex barrier packet with your teeth and take your partner right here at Marin Redwood Sauna Cabin.",
+        "text": "🛡️ At Marin Redwood Sauna Cabin, unroll a latex condom for a safe, thrilling play session!",
         "targetNodeId": 105,
         "sexPoints": 424,
         "riskLevel": "low",
@@ -3728,8 +3820,8 @@ window.SF_SCENARIOS_128 = [
     "id": 105,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Baker Beach Sunrise Dunes",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Baker Beach Sunrise Dunes. Pink dawn sky reflecting off wet ocean sands. Intimate moments unfold under open skies.",
+    "image": "./images/baker_beach.jpg",
+    "narrative": "Pink dawn sky reflecting off wet ocean sands. Intimate moments unfold under open skies.",
     "choices": [
       {
         "text": "🔥 At Baker Beach Sunrise Dunes, pull your partner close against the leather couch at Baker Beach Sunrise Dunes for a raw bareback hookup!",
@@ -3764,11 +3856,11 @@ window.SF_SCENARIOS_128 = [
     "id": 106,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Presidio Lawn Cuddle Circle",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Presidio Lawn Cuddle Circle. Group cuddle pile under eucalyptus shade trees. Intimate moments unfold under open skies.",
+    "image": "./images/presidio_grove.jpg",
+    "narrative": "Group cuddle pile under eucalyptus shade trees. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Presidio Lawn Cuddle Circle, unbutton your shirt and press your partner against the brick wall of Presidio Lawn Cuddle Circle in a haze of heat!",
+        "text": "🔥 At Presidio Lawn Cuddle Circle, pull your partner into an intense bareback hookup!",
         "targetNodeId": 107,
         "sexPoints": 662,
         "riskLevel": "high",
@@ -3800,11 +3892,11 @@ window.SF_SCENARIOS_128 = [
     "id": 107,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Ocean Beach Fire Pit Nook",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Ocean Beach Fire Pit Nook. Beach pit where lovers roast s'mores and share disclosure stories. Intimate moments unfold under open skies.",
+    "image": "./images/ocean_beach_bonfire.jpg",
+    "narrative": "Beach pit where lovers roast s'mores and share disclosure stories. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Ocean Beach Fire Pit Nook, slide beneath the warm blankets at Ocean Beach Fire Pit Nook for a midnight bareback session!",
+        "text": "🔥 At Ocean Beach Fire Pit Nook, pull your partner into an intense bareback hookup!",
         "targetNodeId": 108,
         "sexPoints": 664,
         "riskLevel": "high",
@@ -3837,10 +3929,10 @@ window.SF_SCENARIOS_128 = [
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Marin Mountain Solarium Deck",
     "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Marin Mountain Solarium Deck. Sunbathing deck high above the Marin fog line. Intimate moments unfold under open skies.",
+    "narrative": "Sunbathing deck high above the Marin fog line. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Marin Mountain Solarium Deck, lift your partner onto the mahogany counter at Marin Mountain Solarium Deck for an intense bareback encounter!",
+        "text": "🔥 At Marin Mountain Solarium Deck, pull your partner into an intense bareback hookup!",
         "targetNodeId": 109,
         "sexPoints": 666,
         "riskLevel": "high",
@@ -3872,11 +3964,11 @@ window.SF_SCENARIOS_128 = [
     "id": 109,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Sausalito Houseboat Music Studio",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Sausalito Houseboat Music Studio. Recording studio aboard a houseboat recording acoustic indie songs. Intimate moments unfold under open skies.",
+    "image": "./images/mission_studio.jpg",
+    "narrative": "Recording studio aboard a houseboat recording acoustic indie songs. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Sausalito Houseboat Music Studio, lose yourself in heat and sweat on the padded benches of Sausalito Houseboat Music Studio!",
+        "text": "🔥 At Sausalito Houseboat Music Studio, pull your partner into an intense bareback hookup!",
         "targetNodeId": 110,
         "sexPoints": 668,
         "riskLevel": "high",
@@ -3884,7 +3976,7 @@ window.SF_SCENARIOS_128 = [
         "isIngroup": false
       },
       {
-        "text": "🛡️ At Sausalito Houseboat Music Studio, tear open a latex barrier packet with your teeth and take your partner right here at Sausalito Houseboat Music Studio.",
+        "text": "🛡️ At Sausalito Houseboat Music Studio, unroll a latex condom for a safe, thrilling play session!",
         "targetNodeId": 110,
         "sexPoints": 429,
         "riskLevel": "low",
@@ -3908,8 +4000,8 @@ window.SF_SCENARIOS_128 = [
     "id": 110,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Presidio Officers Club VIP Lounge",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Presidio Officers Club VIP Lounge. VIP reception room preparing for the final City Hall Gala. Intimate moments unfold under open skies.",
+    "image": "./images/presidio_grove.jpg",
+    "narrative": "VIP reception room preparing for the final City Hall Gala. Intimate moments unfold under open skies.",
     "choices": [
       {
         "text": "🔥 At Presidio Officers Club VIP Lounge, pull your partner close against the leather couch at Presidio Officers Club VIP Lounge for a raw bareback hookup!",
@@ -3944,11 +4036,11 @@ window.SF_SCENARIOS_128 = [
     "id": 111,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Ocean Beach Pacific Sunset Terrace",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Ocean Beach Pacific Sunset Terrace. Deck overlooking golden hour ocean sunsets. Intimate moments unfold under open skies.",
+    "image": "./images/ocean_beach_bonfire.jpg",
+    "narrative": "Deck overlooking golden hour ocean sunsets. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Ocean Beach Pacific Sunset Terrace, unbutton your shirt and press your partner against the brick wall of Ocean Beach Pacific Sunset Terrace in a haze of heat!",
+        "text": "🔥 At Ocean Beach Pacific Sunset Terrace, pull your partner into an intense bareback hookup!",
         "targetNodeId": 112,
         "sexPoints": 672,
         "riskLevel": "high",
@@ -3980,11 +4072,11 @@ window.SF_SCENARIOS_128 = [
     "id": 112,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "San Francisco City Hall Arrival Plaza",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame San Francisco City Hall Arrival Plaza. Civic Center plaza illuminated by golden floodlights. Intimate moments unfold under open skies.",
+    "image": "./images/civic_center_plaza.jpg",
+    "narrative": "Civic Center plaza illuminated by golden floodlights. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At San Francisco City Hall Arrival Plaza, slide beneath the warm blankets at San Francisco City Hall Arrival Plaza for a midnight bareback session!",
+        "text": "🔥 At San Francisco City Hall Arrival Plaza, pull your partner into an intense bareback hookup!",
         "targetNodeId": 113,
         "sexPoints": 674,
         "riskLevel": "high",
@@ -4016,11 +4108,11 @@ window.SF_SCENARIOS_128 = [
     "id": 113,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Sausalito Waterfront Houseboat Deck",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Sausalito Waterfront Houseboat Deck. Bohemian floating home with potted flowers and gentle bay tide reflections. Intimate moments unfold under open skies.",
+    "image": "./images/sausalito_houseboat.jpg",
+    "narrative": "Bohemian floating home with potted flowers and gentle bay tide reflections. Intimate moments unfold under open skies.",
     "choices": [
       {
-        "text": "🔥 At Sausalito Waterfront Houseboat Deck, lift your partner onto the mahogany counter at Sausalito Waterfront Houseboat Deck for an intense bareback encounter!",
+        "text": "🔥 At Sausalito Waterfront Houseboat Deck, pull your partner into an intense bareback hookup!",
         "targetNodeId": 114,
         "sexPoints": 676,
         "riskLevel": "high",
@@ -4052,34 +4144,58 @@ window.SF_SCENARIOS_128 = [
     "id": 114,
     "act": "ACT IV: COASTAL & BAY ARC",
     "neighborhood": "Sausalito Houseboat Solarium Cabin",
-    "image": "./images/mission_loft.jpg",
-    "narrative": "Ocean air, salt spray, and coastal winds frame Sausalito Houseboat Solarium Cabin. Sunlit plant conservatory aboard a historic wooden houseboat. Intimate moments unfold under open skies.",
+    "image": "./images/oakland_bart.jpg",
+    "narrative": "Bay Area Regional Transit Hub at Sausalito Houseboat Solarium Cabin. Muni streetcars, BART subway tubes, Sausalito ferries, and highway bridges connect all five major regions of San Francisco and Oakland. Where will your adventure take you next?",
     "choices": [
       {
-        "text": "🔥 At Sausalito Houseboat Solarium Cabin, lose yourself in heat and sweat on the padded benches of Sausalito Houseboat Solarium Cabin!",
-        "targetNodeId": 115,
-        "sexPoints": 678,
-        "riskLevel": "high",
-        "actType": "anal",
-        "isIngroup": false
-      },
-      {
-        "text": "🛡️ At Sausalito Houseboat Solarium Cabin, tear open a latex barrier packet with your teeth and take your partner right here at Sausalito Houseboat Solarium Cabin.",
-        "targetNodeId": 115,
-        "sexPoints": 434,
-        "riskLevel": "low",
-        "actType": "vaginal",
-        "isIngroup": false,
-        "usesCondom": true
-      },
-      {
-        "text": "💖 At Sausalito Houseboat Solarium Cabin, invite a coastal companion from Sausalito Houseboat Solarium Cabin into your polycule team! [Sausalito Houseboat Solarium Cabin]",
-        "targetNodeId": 115,
-        "sexPoints": 474,
-        "riskLevel": "medium",
-        "actType": "dialogue",
+        "text": "🚇 Board silver BART train to cross under the Bay to Downtown Oakland & Berkeley Communes!",
+        "targetNodeId": 25,
+        "sexPoints": 100,
+        "riskLevel": "none",
+        "actType": "action",
         "isIngroup": true,
-        "addsPolyculeMember": "Companion at Sausalito Houseboat Solarium Cabin"
+        "grantsItem": "eastbay_bart_pass"
+      },
+      {
+        "text": "💊 Travel to Castro District & Magnet SF Clinic on 18th Street for health audits.",
+        "targetNodeId": 8,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "clinic",
+        "isIngroup": true
+      },
+      {
+        "text": "📍 Travel to Deep SoMa Circuit (Folsom Street Fair, Dore Speakeasies & Cat Club)",
+        "targetNodeId": 50,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "action",
+        "isIngroup": true,
+        "grantsItem": "vip_soma_wristband"
+      },
+      {
+        "text": "⛓️ Travel to Armory Kink Castle Dungeon Vaults & Rig Halls",
+        "targetNodeId": 16,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "action",
+        "isIngroup": true
+      },
+      {
+        "text": "🌊 Board Sausalito Ferry to Coastal Arc (Houseboats, Marin Headlands & Baker Beach Dunes)",
+        "targetNodeId": 85,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "action",
+        "isIngroup": true
+      },
+      {
+        "text": "🏛️ Travel to Civic Center Plaza & San Francisco City Hall Victory Dome",
+        "targetNodeId": 115,
+        "sexPoints": 90,
+        "riskLevel": "none",
+        "actType": "action",
+        "isIngroup": true
       }
     ],
     "isTransitHub": true
@@ -4087,16 +4203,32 @@ window.SF_SCENARIOS_128 = [
   {
     "id": 115,
     "act": "ACT V: GRAND CITY HALL FINALE",
-    "neighborhood": "City Hall Grand Granite Steps",
-    "image": "./images/sf_cityhall.jpg",
-    "narrative": "Inside the grand marble corridors of San Francisco City Hall at City Hall Grand Granite Steps, floodlights illuminate soaring archways. Gala attendees gather as you approach the final summit gates.",
+    "neighborhood": "Civic Center Plaza Entrance & Symphony Soundcheck",
+    "image": "./images/civic_center_plaza.jpg",
+    "narrative": "Floodlights bathe the gold-leaf dome of San Francisco City Hall in violet and rose. Banners for the municipal Pride & Hedonism Ball flutter in the warm dusk breeze as champagne pops near the grand granite steps. Organizers, artists, and kinksters from across SF and Oakland gather under open skies.",
     "choices": [
       {
-        "text": "👑 Step forward through City Hall Grand Granite Steps towards the City Hall Victory Summit.",
+        "text": "🍸 Share a glass of French champagne with municipal organizers on the granite steps.",
+        "targetNodeId": 116,
+        "sexPoints": 300,
+        "riskLevel": "none",
+        "actType": "dialogue",
+        "isIngroup": true
+      },
+      {
+        "text": "🏛️ Ascend the grand granite staircase into the soaring Marble Rotunda Foyer.",
         "targetNodeId": 116,
         "sexPoints": 200,
         "riskLevel": "none",
         "actType": "action",
+        "isIngroup": true
+      },
+      {
+        "text": "💖 Lead your polycule team under the illuminated arcade archways for a group photo.",
+        "targetNodeId": 116,
+        "sexPoints": 250,
+        "riskLevel": "none",
+        "actType": "dialogue",
         "isIngroup": true
       }
     ],
@@ -4105,16 +4237,33 @@ window.SF_SCENARIOS_128 = [
   {
     "id": 116,
     "act": "ACT V: GRAND CITY HALL FINALE",
-    "neighborhood": "City Hall Marble Rotunda Foyer",
+    "neighborhood": "Mayor's Balcony Midnight Champagne Reception",
     "image": "./images/sf_cityhall.jpg",
-    "narrative": "Inside the grand marble corridors of San Francisco City Hall at City Hall Marble Rotunda Foyer, floodlights illuminate soaring archways. Gala attendees gather as you approach the final summit gates.",
+    "narrative": "High above Civic Center Plaza on the Mayor's balcony, cool breezes swirl off Polk Street. Morgan, a tuxedoed city planner with an electric gaze, pours elderflower gin into crystal flutes as orchestral synth plays inside the rotunda.",
     "choices": [
       {
-        "text": "👑 At City Hall Marble Rotunda Foyer, step forward through City Hall Marble Rotunda Foyer towards the City Hall Victory Summit.",
+        "text": "🔥 Drag Morgan into the mahogany coat alcove for a breathless bareback hookup!",
         "targetNodeId": 117,
-        "sexPoints": 200,
+        "sexPoints": 520,
+        "riskLevel": "high",
+        "actType": "anal",
+        "isIngroup": false
+      },
+      {
+        "text": "🛡️ Unroll a condom from your leather pouch and take Morgan against the brass railing.",
+        "targetNodeId": 117,
+        "sexPoints": 380,
+        "riskLevel": "low",
+        "actType": "vaginal",
+        "isIngroup": false,
+        "usesCondom": true
+      },
+      {
+        "text": "📜 Discuss urban zoning for sex-positive community spaces across SF and Oakland.",
+        "targetNodeId": 119,
+        "sexPoints": 220,
         "riskLevel": "none",
-        "actType": "action",
+        "actType": "dialogue",
         "isIngroup": true
       }
     ],
@@ -4123,16 +4272,33 @@ window.SF_SCENARIOS_128 = [
   {
     "id": 117,
     "act": "ACT V: GRAND CITY HALL FINALE",
-    "neighborhood": "City Hall Mayor's Balcony Terrace",
+    "neighborhood": "City Hall Marble Rotunda Grand Staircase",
     "image": "./images/sf_cityhall.jpg",
-    "narrative": "Inside the grand marble corridors of San Francisco City Hall at City Hall Mayor's Balcony Terrace, floodlights illuminate soaring archways. Gala attendees gather as you approach the final summit gates.",
+    "narrative": "Soaring 300 feet above the floorboards, the majestic Beaux-Arts grand staircase shines under crystal chandeliers. Hundreds of hedonists, artists, and activists in silk and leather dance to live harp music.",
     "choices": [
       {
-        "text": "👑 At City Hall Mayor's Balcony Terrace, step forward through City Hall Mayor's Balcony Terrace towards the City Hall Victory Summit.",
+        "text": "💃 Dance down the marble steps with your polycule as velvet ribbons cascade from the dome!",
         "targetNodeId": 118,
-        "sexPoints": 200,
+        "sexPoints": 410,
         "riskLevel": "none",
-        "actType": "action",
+        "actType": "dialogue",
+        "isIngroup": true
+      },
+      {
+        "text": "🔒 Use your Armory Master Key to unlock the brass door to the Subterranean Archives Vault.",
+        "targetNodeId": 119,
+        "sexPoints": 300,
+        "riskLevel": "none",
+        "actType": "investigate",
+        "isIngroup": true,
+        "requiresItem": "armory_master_key"
+      },
+      {
+        "text": "🩺 Visit Nurse Alex's mobile Magnet SF health kiosk set up in the North Light Court.",
+        "targetNodeId": 118,
+        "sexPoints": 180,
+        "riskLevel": "none",
+        "actType": "clinic",
         "isIngroup": true
       }
     ],
@@ -4141,14 +4307,32 @@ window.SF_SCENARIOS_128 = [
   {
     "id": 118,
     "act": "ACT V: GRAND CITY HALL FINALE",
-    "neighborhood": "City Hall Polycule Honor Hall",
+    "neighborhood": "Board of Supervisors Chambers Intimacy Summit",
     "image": "./images/sf_cityhall.jpg",
-    "narrative": "Inside the grand marble corridors of San Francisco City Hall at City Hall Polycule Honor Hall, floodlights illuminate soaring archways. Gala attendees gather as you approach the final summit gates.",
+    "narrative": "Dark mahogany paneling, velvet drapes, and high ceilings frame the historic Supervisors Chambers. Practitioners from Oakland, SoMa, and the Mission gather around the dais to draft the SF Radical Transparency Charter.",
     "choices": [
       {
-        "text": "👑 At City Hall Polycule Honor Hall, step forward through City Hall Polycule Honor Hall towards the City Hall Victory Summit.",
+        "text": "📜 Sign your initials to the SF Sex-Positive Charter on the supervisor's mahogany desk.",
         "targetNodeId": 119,
-        "sexPoints": 200,
+        "sexPoints": 350,
+        "riskLevel": "none",
+        "actType": "dialogue",
+        "isIngroup": true,
+        "completesQuest": "polycule"
+      },
+      {
+        "text": "💋 Share an intense, barriered session with an organizer behind the podium curtain.",
+        "targetNodeId": 119,
+        "sexPoints": 440,
+        "riskLevel": "low",
+        "actType": "vaginal",
+        "isIngroup": false,
+        "usesCondom": true
+      },
+      {
+        "text": "🚆 Take the Civic Center BART escalator back to Valencia Hub or Oakland.",
+        "targetNodeId": 5,
+        "sexPoints": 100,
         "riskLevel": "none",
         "actType": "action",
         "isIngroup": true
@@ -4159,17 +4343,34 @@ window.SF_SCENARIOS_128 = [
   {
     "id": 119,
     "act": "ACT V: GRAND CITY HALL FINALE",
-    "neighborhood": "City Hall Task 1 Review Chamber",
-    "image": "./images/sf_cityhall.jpg",
-    "narrative": "Inside the grand marble corridors of San Francisco City Hall at City Hall Task 1 Review Chamber, floodlights illuminate soaring archways. Gala attendees gather as you approach the final summit gates.",
+    "neighborhood": "Subterranean Archives Secret Speakeasy Vault",
+    "image": "./images/speakeasy_cellar.jpg",
+    "narrative": "Beneath City Hall's marble floorboards lies an old brick vault filled with historic leather parade banners and vintage copper stills. Smoky mezcal cocktails flow freely as sub-bass hums through the foundation.",
     "choices": [
       {
-        "text": "👑 At City Hall Task 1 Review Chamber, step forward through City Hall Task 1 Review Chamber towards the City Hall Victory Summit.",
+        "text": "🍸 Sip aged reposado mezcal with the archivist on a vintage velvet sofa.",
         "targetNodeId": 120,
-        "sexPoints": 200,
+        "sexPoints": 310,
         "riskLevel": "none",
-        "actType": "action",
+        "actType": "dialogue",
         "isIngroup": true
+      },
+      {
+        "text": "🔥 Slip behind the oak filing cabinets for a wild bareback encounter!",
+        "targetNodeId": 120,
+        "sexPoints": 580,
+        "riskLevel": "high",
+        "actType": "anal",
+        "isIngroup": false
+      },
+      {
+        "text": "🛡️ Protect your encounter with a condom before returning to the Rotunda.",
+        "targetNodeId": 120,
+        "sexPoints": 400,
+        "riskLevel": "low",
+        "actType": "vaginal",
+        "isIngroup": false,
+        "usesCondom": true
       }
     ],
     "isTransitHub": false
@@ -4177,16 +4378,24 @@ window.SF_SCENARIOS_128 = [
   {
     "id": 120,
     "act": "ACT V: GRAND CITY HALL FINALE",
-    "neighborhood": "City Hall Task 2 Review Chamber",
-    "image": "./images/sf_cityhall.jpg",
-    "narrative": "Inside the grand marble corridors of San Francisco City Hall at City Hall Task 2 Review Chamber, floodlights illuminate soaring archways. Gala attendees gather as you approach the final summit gates.",
+    "neighborhood": "City Hall Gold Dome Roof Overlook",
+    "image": "./images/twin_peaks.jpg",
+    "narrative": "Atop the highest promenade of City Hall beneath the gilded dome, fog sweeps over Market Street, Twin Peaks, and the Bay Bridge. The entire city shines beneath your feet in a sea of glowing grid lights.",
     "choices": [
       {
-        "text": "👑 At City Hall Task 2 Review Chamber, step forward through City Hall Task 2 Review Chamber towards the City Hall Victory Summit.",
+        "text": "🌌 Wrap your polycule in a velvet cloak and gaze out at the San Francisco skyline at 3 AM.",
         "targetNodeId": 121,
-        "sexPoints": 200,
+        "sexPoints": 450,
         "riskLevel": "none",
-        "actType": "action",
+        "actType": "dialogue",
+        "isIngroup": true
+      },
+      {
+        "text": "💋 Pull your primary partner into a midnight kiss under the gold-leaf spire.",
+        "targetNodeId": 121,
+        "sexPoints": 390,
+        "riskLevel": "none",
+        "actType": "dialogue",
         "isIngroup": true
       }
     ],
@@ -4195,16 +4404,24 @@ window.SF_SCENARIOS_128 = [
   {
     "id": 121,
     "act": "ACT V: GRAND CITY HALL FINALE",
-    "neighborhood": "City Hall Task 3 Review Chamber",
+    "neighborhood": "Harvey Milk Bust Memorial Consent & Pride Tribute",
     "image": "./images/sf_cityhall.jpg",
-    "narrative": "Inside the grand marble corridors of San Francisco City Hall at City Hall Task 3 Review Chamber, floodlights illuminate soaring archways. Gala attendees gather as you approach the final summit gates.",
+    "narrative": "Bronze reflections gleam off the historic Harvey Milk memorial sculpture. Candles flicker at the base alongside fresh rainbow roses and handwritten notes advocating for universal healthcare and radical queer joy.",
     "choices": [
       {
-        "text": "👑 At City Hall Task 3 Review Chamber, step forward through City Hall Task 3 Review Chamber towards the City Hall Victory Summit.",
+        "text": "🌹 Lay a rainbow rose at the memorial and lead a quiet moment of gratitude with your partners.",
         "targetNodeId": 122,
-        "sexPoints": 200,
+        "sexPoints": 330,
         "riskLevel": "none",
-        "actType": "action",
+        "actType": "dialogue",
+        "isIngroup": true
+      },
+      {
+        "text": "💬 Share stories of community resilience and safer-sex activism with fellow travelers.",
+        "targetNodeId": 122,
+        "sexPoints": 280,
+        "riskLevel": "none",
+        "actType": "dialogue",
         "isIngroup": true
       }
     ],
@@ -4213,15 +4430,23 @@ window.SF_SCENARIOS_128 = [
   {
     "id": 122,
     "act": "ACT V: GRAND CITY HALL FINALE",
-    "neighborhood": "City Hall Task 4 Review Chamber",
+    "neighborhood": "South Light Court Polycule Alignment Ritual",
     "image": "./images/sf_cityhall.jpg",
-    "narrative": "Inside the grand marble corridors of San Francisco City Hall at City Hall Task 4 Review Chamber, floodlights illuminate soaring archways. Gala attendees gather as you approach the final summit gates.",
+    "narrative": "Soaring glass skylights illuminate the South Light Court. Silk ropes, ambient synth drones, and cedar incense fill the marble hall as fifty lovers form a massive, affectionate cuddle circle.",
     "choices": [
       {
-        "text": "👑 At City Hall Task 4 Review Chamber, step forward through City Hall Task 4 Review Chamber towards the City Hall Victory Summit.",
+        "text": "💖 Join the South Light Court cuddle circle on the floor mats with your polycule team!",
         "targetNodeId": 123,
-        "sexPoints": 200,
-        "riskLevel": "none",
+        "sexPoints": 480,
+        "riskLevel": "medium",
+        "actType": "dialogue",
+        "isIngroup": true
+      },
+      {
+        "text": "🪢 Let Zoe demonstrate intricate silk chest harnesses under the skylight reflections.",
+        "targetNodeId": 123,
+        "sexPoints": 400,
+        "riskLevel": "low",
         "actType": "action",
         "isIngroup": true
       }
@@ -4231,17 +4456,26 @@ window.SF_SCENARIOS_128 = [
   {
     "id": 123,
     "act": "ACT V: GRAND CITY HALL FINALE",
-    "neighborhood": "City Hall Task 5 Review Chamber",
-    "image": "./images/sf_cityhall.jpg",
-    "narrative": "Inside the grand marble corridors of San Francisco City Hall at City Hall Task 5 Review Chamber, floodlights illuminate soaring archways. Gala attendees gather as you approach the final summit gates.",
+    "neighborhood": "North Light Court Leather & Silk Fashion Masquerade",
+    "image": "./images/latex_runway.jpg",
+    "narrative": "Glossy latex, tailored leather doublets, and flowing silk gowns shimmer under stage lights in the North Light Court. Industrial electronic beats echo as performers strut down a mirrored runway.",
     "choices": [
       {
-        "text": "👑 At City Hall Task 5 Review Chamber, step forward through City Hall Task 5 Review Chamber towards the City Hall Victory Summit.",
+        "text": "👠 Strut down the mirrored runway with your polycule partners to thunderous applause!",
         "targetNodeId": 124,
-        "sexPoints": 200,
+        "sexPoints": 510,
         "riskLevel": "none",
         "actType": "action",
         "isIngroup": true
+      },
+      {
+        "text": "🛡️ Enjoy an intimate, protected play session in the curtained VIP dressing suite.",
+        "targetNodeId": 124,
+        "sexPoints": 420,
+        "riskLevel": "low",
+        "actType": "vaginal",
+        "isIngroup": false,
+        "usesCondom": true
       }
     ],
     "isTransitHub": false
@@ -4249,17 +4483,25 @@ window.SF_SCENARIOS_128 = [
   {
     "id": 124,
     "act": "ACT V: GRAND CITY HALL FINALE",
-    "neighborhood": "City Hall Golden Dome Rotunda",
+    "neighborhood": "Historic Mayor's Office Midnight Confession Lounge",
     "image": "./images/sf_cityhall.jpg",
-    "narrative": "Inside the grand marble corridors of San Francisco City Hall at City Hall Golden Dome Rotunda, floodlights illuminate soaring archways. Gala attendees gather as you approach the final summit gates.",
+    "narrative": "Deep burgundy rugs, roaring fireplace embers, and plush leather armchairs decorate the Mayor's inner office. Organizers relax over spiced cider, sharing deep reflections on their journey across the city.",
     "choices": [
       {
-        "text": "👑 At City Hall Golden Dome Rotunda, step forward through City Hall Golden Dome Rotunda towards the City Hall Victory Summit.",
+        "text": "🍷 Toast to your journey from the Mission to Oakland, SoMa, and the Coast over spiced cider.",
         "targetNodeId": 125,
-        "sexPoints": 200,
+        "sexPoints": 360,
         "riskLevel": "none",
-        "actType": "action",
+        "actType": "dialogue",
         "isIngroup": true
+      },
+      {
+        "text": "🔥 Engage in an intense midnight bareback hookup on the plush executive rug!",
+        "targetNodeId": 125,
+        "sexPoints": 610,
+        "riskLevel": "high",
+        "actType": "anal",
+        "isIngroup": false
       }
     ],
     "isTransitHub": false
@@ -4267,14 +4509,23 @@ window.SF_SCENARIOS_128 = [
   {
     "id": 125,
     "act": "ACT V: GRAND CITY HALL FINALE",
-    "neighborhood": "City Hall Summit Gate Portal",
-    "image": "./images/sf_cityhall.jpg",
-    "narrative": "Inside the grand marble corridors of San Francisco City Hall at City Hall Summit Gate Portal, floodlights illuminate soaring archways. Gala attendees gather as you approach the final summit gates.",
+    "neighborhood": "City Hall Rotunda Organ Balcony Midnight Hookup",
+    "image": "./images/castro_marquee.jpg",
+    "narrative": "High above the main rotunda near the brass pipe organ, dim red gel lamps cast romantic shadows across padded velvet benches. The sound of distant cello music wafts up from below.",
     "choices": [
       {
-        "text": "👑 At City Hall Summit Gate Portal, step forward through City Hall Summit Gate Portal towards the City Hall Victory Summit.",
+        "text": "🛡️ Unroll a condom and take your partner on the padded organ balcony bench.",
         "targetNodeId": 126,
-        "sexPoints": 200,
+        "sexPoints": 460,
+        "riskLevel": "low",
+        "actType": "vaginal",
+        "isIngroup": false,
+        "usesCondom": true
+      },
+      {
+        "text": "🎵 Play a soft synth melody on the vintage organ keyboard while holding your lover close.",
+        "targetNodeId": 126,
+        "sexPoints": 340,
         "riskLevel": "none",
         "actType": "action",
         "isIngroup": true
@@ -4285,16 +4536,24 @@ window.SF_SCENARIOS_128 = [
   {
     "id": 126,
     "act": "ACT V: GRAND CITY HALL FINALE",
-    "neighborhood": "City Hall Grand Climax Chamber",
-    "image": "./images/sf_cityhall.jpg",
-    "narrative": "Inside the grand marble corridors of San Francisco City Hall at City Hall Grand Climax Chamber, floodlights illuminate soaring archways. Gala attendees gather as you approach the final summit gates.",
+    "neighborhood": "Civic Center Fountain Dawn Cuddle Circle",
+    "image": "./images/civic_center_plaza.jpg",
+    "narrative": "The first rays of morning dawn turn the sky from deep violet to warm amber over Civic Center Plaza. Fog lifts from the City Hall dome as water sparkles in the central granite fountain.",
     "choices": [
       {
-        "text": "👑 At City Hall Grand Climax Chamber, step forward through City Hall Grand Climax Chamber towards the City Hall Victory Summit.",
+        "text": "🌅 Watch the golden sunrise over San Francisco with your polycule while sharing hot coffee.",
         "targetNodeId": 127,
-        "sexPoints": 200,
+        "sexPoints": 500,
         "riskLevel": "none",
-        "actType": "action",
+        "actType": "dialogue",
+        "isIngroup": true
+      },
+      {
+        "text": "🩺 Perform a final health & consent check-in before ascending to the Victory Summit.",
+        "targetNodeId": 127,
+        "sexPoints": 300,
+        "riskLevel": "none",
+        "actType": "dialogue",
         "isIngroup": true
       }
     ],
@@ -4304,13 +4563,13 @@ window.SF_SCENARIOS_128 = [
     "id": 127,
     "act": "ACT V: GRAND CITY HALL FINALE",
     "neighborhood": "San Francisco City Hall Golden Dome Victory Climax",
-    "image": "./images/sf_cityhall.jpg",
+    "image": "./images/civic_center_plaza.jpg",
     "narrative": "The sunrise paints the San Francisco skyline in crimson and gold. Standing atop City Hall surrounded by your polycule team, lovers, and fellow gonzo travelers, you look back at all five completed Odyssey Tasks across SF and Oakland. You have conquered San Francisco!",
     "choices": [
       {
         "text": "👑 Claim your legendary victory and submit your initials to the High Score Hall of Fame!",
         "targetNodeId": 127,
-        "sexPoints": 3500,
+        "sexPoints": 1000,
         "riskLevel": "none",
         "actType": "action",
         "isIngroup": true
