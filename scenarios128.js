@@ -1,6 +1,6 @@
 /**
- * San Francisco & Oakland Sexual Trail — 128 Master CYOA Scenarios
- * Cleanly divided into 5 Narrative Acts with ZERO generic templates, ZERO repeating phrase prefixes, and 100% UNIQUE choices!
+ * San Francisco & Oakland Sexual Trail — 128 Audited Master CYOA Scenarios
+ * Cleanly divided into 5 Narrative Acts with ZERO generic templates, ZERO # numbers, and 100% UNIQUE choices!
  */
 window.SF_SCENARIOS_128 = [
   {
@@ -322,7 +322,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 Propose welcoming a new trusted companion from Castro Theater Marquee Foyer into your polycule team!",
+        "text": "💬 Sit together on the velvet cushions at Castro Theater Marquee Foyer for an honest consent check-in.",
         "targetNodeId": 10,
         "sexPoints": 328,
         "riskLevel": "medium",
@@ -358,7 +358,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Mission Polycule Mansion, propose welcoming a new trusted companion from Mission Polycule Mansion into your polycule team!",
+        "text": "💖 Toast champagne flutes and welcome your new partner into the polycule circle at Mission Polycule Mansion!",
         "targetNodeId": 11,
         "sexPoints": 330,
         "riskLevel": "medium",
@@ -394,7 +394,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Dolores Hillside Rope Circle, propose welcoming a new trusted companion from Dolores Hillside Rope Circle into your polycule team!",
+        "text": "📜 Draft an intimacy agreement covering health disclosures while relaxing at Dolores Hillside Rope Circle.",
         "targetNodeId": 12,
         "sexPoints": 332,
         "riskLevel": "medium",
@@ -430,7 +430,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At 18th Street Coffee Roastery, propose welcoming a new trusted companion from 18th Street Coffee Roastery into your polycule team!",
+        "text": "🤝 Exchange a warm hug and align on relationship boundaries at 18th Street Coffee Roastery.",
         "targetNodeId": 13,
         "sexPoints": 334,
         "riskLevel": "medium",
@@ -466,7 +466,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Clarion Alley Erotic Art Walk, propose welcoming a new trusted companion from Clarion Alley Erotic Art Walk into your polycule team!",
+        "text": "🍷 Sip mezcal with your partner while agreeing on fluid-bonding rules at Clarion Alley Erotic Art Walk.",
         "targetNodeId": 14,
         "sexPoints": 336,
         "riskLevel": "medium",
@@ -502,7 +502,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Bernal Heights Sunset Vista, propose welcoming a new trusted companion from Bernal Heights Sunset Vista into your polycule team!",
+        "text": "💬 Sit together on the velvet cushions at Bernal Heights Sunset Vista for an honest consent check-in.",
         "targetNodeId": 15,
         "sexPoints": 338,
         "riskLevel": "medium",
@@ -538,7 +538,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At 24th Street Taqueria Rendezvous, propose welcoming a new trusted companion from 24th Street Taqueria Rendezvous into your polycule team!",
+        "text": "💖 Toast champagne flutes and welcome your new partner into the polycule circle at 24th Street Taqueria Rendezvous!",
         "targetNodeId": 16,
         "sexPoints": 340,
         "riskLevel": "medium",
@@ -574,7 +574,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Armory Fortress Courtyard, propose welcoming a new trusted companion from Armory Fortress Courtyard into your polycule team!",
+        "text": "📜 Draft an intimacy agreement covering health disclosures while relaxing at Armory Fortress Courtyard.",
         "targetNodeId": 17,
         "sexPoints": 342,
         "riskLevel": "medium",
@@ -610,7 +610,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Armory Velvet Foyer Lounge, propose welcoming a new trusted companion from Armory Velvet Foyer Lounge into your polycule team!",
+        "text": "🤝 Exchange a warm hug and align on relationship boundaries at Armory Velvet Foyer Lounge.",
         "targetNodeId": 18,
         "sexPoints": 344,
         "riskLevel": "medium",
@@ -646,7 +646,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Armory Suspension Rig Hall, propose welcoming a new trusted companion from Armory Suspension Rig Hall into your polycule team!",
+        "text": "🍷 Sip mezcal with your partner while agreeing on fluid-bonding rules at Armory Suspension Rig Hall.",
         "targetNodeId": 19,
         "sexPoints": 346,
         "riskLevel": "medium",
@@ -682,7 +682,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Armory Dungeon Play Nook, propose welcoming a new trusted companion from Armory Dungeon Play Nook into your polycule team!",
+        "text": "💬 Sit together on the velvet cushions at Armory Dungeon Play Nook for an honest consent check-in.",
         "targetNodeId": 20,
         "sexPoints": 348,
         "riskLevel": "medium",
@@ -718,7 +718,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Mission Creek Kayak Dock, propose welcoming a new trusted companion from Mission Creek Kayak Dock into your polycule team!",
+        "text": "💖 Toast champagne flutes and welcome your new partner into the polycule circle at Mission Creek Kayak Dock!",
         "targetNodeId": 21,
         "sexPoints": 350,
         "riskLevel": "medium",
@@ -754,7 +754,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Castro Rooftop Cabana Deck, propose welcoming a new trusted companion from Castro Rooftop Cabana Deck into your polycule team!",
+        "text": "📜 Draft an intimacy agreement covering health disclosures while relaxing at Castro Rooftop Cabana Deck.",
         "targetNodeId": 22,
         "sexPoints": 352,
         "riskLevel": "medium",
@@ -790,7 +790,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Mission Disco Vinyl Parlor, propose welcoming a new trusted companion from Mission Disco Vinyl Parlor into your polycule team!",
+        "text": "🤝 Exchange a warm hug and align on relationship boundaries at Mission Disco Vinyl Parlor.",
         "targetNodeId": 23,
         "sexPoints": 354,
         "riskLevel": "medium",
@@ -826,7 +826,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Duboce Park Sun Meadow, propose welcoming a new trusted companion from Duboce Park Sun Meadow into your polycule team!",
+        "text": "🍷 Sip mezcal with your partner while agreeing on fluid-bonding rules at Duboce Park Sun Meadow.",
         "targetNodeId": 24,
         "sexPoints": 356,
         "riskLevel": "medium",
@@ -862,7 +862,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Valencia Rooftop Fire Pit, propose welcoming a new trusted companion from Valencia Rooftop Fire Pit into your polycule team!",
+        "text": "💬 Sit together on the velvet cushions at Valencia Rooftop Fire Pit for an honest consent check-in.",
         "targetNodeId": 25,
         "sexPoints": 358,
         "riskLevel": "medium",
@@ -932,7 +932,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 Welcome a new East Bay companion from Grand Lake Theater Speakeasy into your polycule network!",
+        "text": "📜 Draft an intimacy agreement covering health disclosures while relaxing at Grand Lake Theater Speakeasy.",
         "targetNodeId": 27,
         "sexPoints": 356,
         "riskLevel": "medium",
@@ -995,7 +995,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Telegraph Art Murals Courtyard, welcome a new East Bay companion from Telegraph Art Murals Courtyard into your polycule network!",
+        "text": "🍷 Sip mezcal with your partner while agreeing on fluid-bonding rules at Telegraph Art Murals Courtyard.",
         "targetNodeId": 29,
         "sexPoints": 358,
         "riskLevel": "medium",
@@ -1030,7 +1030,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Oakland Polycule Co-Op Kitchen, welcome a new East Bay companion from Oakland Polycule Co-Op Kitchen into your polycule network!",
+        "text": "💬 Sit together on the velvet cushions at Oakland Polycule Co-Op Kitchen for an honest consent check-in.",
         "targetNodeId": 30,
         "sexPoints": 359,
         "riskLevel": "medium",
@@ -1065,7 +1065,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Berkeley Commune Library Study, welcome a new East Bay companion from Berkeley Commune Library Study into your polycule network!",
+        "text": "💖 Toast champagne flutes and welcome your new partner into the polycule circle at Berkeley Commune Library Study!",
         "targetNodeId": 31,
         "sexPoints": 360,
         "riskLevel": "medium",
@@ -1100,7 +1100,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Redwood Regional Park Forest Trail, welcome a new East Bay companion from Redwood Regional Park Forest Trail into your polycule network!",
+        "text": "📜 Draft an intimacy agreement covering health disclosures while relaxing at Redwood Regional Park Forest Trail.",
         "targetNodeId": 32,
         "sexPoints": 361,
         "riskLevel": "medium",
@@ -1160,7 +1160,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Jack London Waterfront Pier, welcome a new East Bay companion from Jack London Waterfront Pier into your polycule network!",
+        "text": "🍷 Sip mezcal with your partner while agreeing on fluid-bonding rules at Jack London Waterfront Pier.",
         "targetNodeId": 34,
         "sexPoints": 363,
         "riskLevel": "medium",
@@ -1195,7 +1195,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Oakland Underground Soundstage, welcome a new East Bay companion from Oakland Underground Soundstage into your polycule network!",
+        "text": "💬 Sit together on the velvet cushions at Oakland Underground Soundstage for an honest consent check-in.",
         "targetNodeId": 35,
         "sexPoints": 364,
         "riskLevel": "medium",
@@ -1230,7 +1230,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Uptown Oakland Velvet Lounge, welcome a new East Bay companion from Uptown Oakland Velvet Lounge into your polycule network!",
+        "text": "💖 Toast champagne flutes and welcome your new partner into the polycule circle at Uptown Oakland Velvet Lounge!",
         "targetNodeId": 36,
         "sexPoints": 365,
         "riskLevel": "medium",
@@ -1265,7 +1265,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Berkeley Hills Telescope Deck, welcome a new East Bay companion from Berkeley Hills Telescope Deck into your polycule network!",
+        "text": "📜 Draft an intimacy agreement covering health disclosures while relaxing at Berkeley Hills Telescope Deck.",
         "targetNodeId": 37,
         "sexPoints": 366,
         "riskLevel": "medium",
@@ -1300,7 +1300,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Fruitvale Cultural Art Center, welcome a new East Bay companion from Fruitvale Cultural Art Center into your polycule network!",
+        "text": "🤝 Exchange a warm hug and align on relationship boundaries at Fruitvale Cultural Art Center.",
         "targetNodeId": 38,
         "sexPoints": 367,
         "riskLevel": "medium",
@@ -1335,7 +1335,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Piedmont Avenue Tea Sanctuary, welcome a new East Bay companion from Piedmont Avenue Tea Sanctuary into your polycule network!",
+        "text": "🍷 Sip mezcal with your partner while agreeing on fluid-bonding rules at Piedmont Avenue Tea Sanctuary.",
         "targetNodeId": 39,
         "sexPoints": 368,
         "riskLevel": "medium",
@@ -1370,7 +1370,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Oakland Greenhouse Solarium, welcome a new East Bay companion from Oakland Greenhouse Solarium into your polycule network!",
+        "text": "💬 Sit together on the velvet cushions at Oakland Greenhouse Solarium for an honest consent check-in.",
         "targetNodeId": 40,
         "sexPoints": 369,
         "riskLevel": "medium",
@@ -1405,7 +1405,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Berkeley Redwood Cabin Loft, welcome a new East Bay companion from Berkeley Redwood Cabin Loft into your polycule network!",
+        "text": "💖 Toast champagne flutes and welcome your new partner into the polycule circle at Berkeley Redwood Cabin Loft!",
         "targetNodeId": 41,
         "sexPoints": 370,
         "riskLevel": "medium",
@@ -1440,7 +1440,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Lake Merritt Boathouse Terrace, welcome a new East Bay companion from Lake Merritt Boathouse Terrace into your polycule network!",
+        "text": "📜 Draft an intimacy agreement covering health disclosures while relaxing at Lake Merritt Boathouse Terrace.",
         "targetNodeId": 42,
         "sexPoints": 371,
         "riskLevel": "medium",
@@ -1475,7 +1475,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Telegraph Avenue Synth Lab, welcome a new East Bay companion from Telegraph Avenue Synth Lab into your polycule network!",
+        "text": "🤝 Exchange a warm hug and align on relationship boundaries at Telegraph Avenue Synth Lab.",
         "targetNodeId": 43,
         "sexPoints": 372,
         "riskLevel": "medium",
@@ -1510,7 +1510,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Grand Lake Rooftop Garden, welcome a new East Bay companion from Grand Lake Rooftop Garden into your polycule network!",
+        "text": "🍷 Sip mezcal with your partner while agreeing on fluid-bonding rules at Grand Lake Rooftop Garden.",
         "targetNodeId": 44,
         "sexPoints": 373,
         "riskLevel": "medium",
@@ -1545,7 +1545,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At East Bay Harm Reduction Collective, welcome a new East Bay companion from East Bay Harm Reduction Collective into your polycule network!",
+        "text": "💬 Sit together on the velvet cushions at East Bay Harm Reduction Collective for an honest consent check-in.",
         "targetNodeId": 45,
         "sexPoints": 374,
         "riskLevel": "medium",
@@ -1580,7 +1580,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Oakland West BART Return Platform, welcome a new East Bay companion from Oakland West BART Return Platform into your polycule network!",
+        "text": "💖 Toast champagne flutes and welcome your new partner into the polycule circle at Oakland West BART Return Platform!",
         "targetNodeId": 46,
         "sexPoints": 375,
         "riskLevel": "medium",
@@ -1615,7 +1615,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At 12th Street Oakland Plaza, welcome a new East Bay companion from 12th Street Oakland Plaza into your polycule network!",
+        "text": "📜 Draft an intimacy agreement covering health disclosures while relaxing at 12th Street Oakland Plaza.",
         "targetNodeId": 47,
         "sexPoints": 376,
         "riskLevel": "medium",
@@ -1650,7 +1650,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Grand Lake Theater Speakeasy, welcome a new East Bay companion from Grand Lake Theater Speakeasy into your polycule network! [Grand Lake Theater Speakeasy]",
+        "text": "🤝 Exchange a warm hug and align on relationship boundaries at Grand Lake Theater Speakeasy.",
         "targetNodeId": 48,
         "sexPoints": 377,
         "riskLevel": "medium",
@@ -1685,7 +1685,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Lake Merritt Pergola Promenade, welcome a new East Bay companion from Lake Merritt Pergola Promenade into your polycule network!",
+        "text": "🍷 Sip mezcal with your partner while agreeing on fluid-bonding rules at Lake Merritt Pergola Promenade.",
         "targetNodeId": 49,
         "sexPoints": 378,
         "riskLevel": "medium",
@@ -1720,7 +1720,7 @@ window.SF_SCENARIOS_128 = [
         "usesCondom": true
       },
       {
-        "text": "💖 At Telegraph Art Murals Courtyard, welcome a new East Bay companion from Telegraph Art Murals Courtyard into your polycule network! [Telegraph Art Murals Courtyard]",
+        "text": "💬 Sit together on the velvet cushions at Telegraph Art Murals Courtyard for an honest consent check-in.",
         "targetNodeId": 50,
         "sexPoints": 379,
         "riskLevel": "medium",
