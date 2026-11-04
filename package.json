@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite --host",
+    "test": "node --test test/security-dos.test.js test/e2e-dos.test.js",
     "build": "node -e \"const fs=require('fs'); let h=fs.readFileSync('index.html','utf8').replace(/src=\\\"\\.\\/assets\\/index-[^\\\"]+\\.js\\\"/g, 'src=\\\"/src/main.js\\\"'); fs.writeFileSync('index.html',h);\" && vite build && cp -r dist/assets . && cp dist/index.html .",
     "preview": "vite preview",
     "deploy": "npx gh-pages -d dist"
