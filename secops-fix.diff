@@ -1,0 +1,290 @@
+diff --git a/package.json b/package.json
+index aa4dd69..486ded1 100644
+--- a/package.json
++++ b/package.json
+@@ -5,6 +5,7 @@
+   "main": "index.js",
+   "scripts": {
+     "dev": "vite --host",
++    "test": "node --test test/security-dos.test.js test/e2e-dos.test.js",
+     "build": "node -e \"const fs=require('fs'); let h=fs.readFileSync('index.html','utf8').replace(/src=\\\"\\.\\/assets\\/index-[^\\\"]+\\.js\\\"/g, 'src=\\\"/src/main.js\\\"'); fs.writeFileSync('index.html',h);\" && vite build && cp -r dist/assets . && cp dist/index.html .",
+     "preview": "vite preview",
+     "deploy": "npx gh-pages -d dist"
+diff --git a/src/networkGenerator.js b/src/networkGenerator.js
+index 256a819..02c17af 100644
+--- a/src/networkGenerator.js
++++ b/src/networkGenerator.js
+@@ -1,5 +1,17 @@
+ import Graph from 'graphology';
+ 
++/**
++ * Coerces an untrusted numeric param (shared-profile URL / profile import / sliders)
++ * to an integer within [0, max]. Non-finite values fall back to `fallback`.
++ * Prevents malicious profiles from forcing unbounded loops / node creation
++ * and freezing the browser tab (CWE-400).
++ */
++function clampParam(value, fallback, max) {
++  const n = Math.floor(Number(value));
++  if (!Number.isFinite(n)) return fallback;
++  return Math.min(max, Math.max(0, n));
++}
++
+ export class NetworkGenerator {
+   constructor(params = {}) {
+     this.params = params;
+@@ -19,7 +31,8 @@ export class NetworkGenerator {
+     const p = this.params;
+ 
+     let nodeCounter = 0;
+-    const maxNodes = p.maxNodesLimit || 250;
++    // Clamp untrusted params (shared-profile URLs / imports) to safe bounds.
++    const maxNodes = Math.max(1, clampParam(p.maxNodesLimit, 250, 2000));
+ 
+     const createNode = (type, label, degree = 1, extra = {}) => {
+       nodeCounter++;
+@@ -85,7 +98,7 @@ export class NetworkGenerator {
+     const egoId = createNode('ego', 'Ego (You)', 0);
+ 
+     // 2. Determine Direct Partner Allocations (Degree 1)
+-    const totalPartners = Math.max(0, p.egoPartners);
++    const totalPartners = clampParam(p.egoPartners, 0, 100);
+     const partnerSum = (p.polyculePct + p.monogamousPct + p.slutPct) || 100;
+     const numMono = Math.round((p.monogamousPct / partnerSum) * totalPartners);
+     const numSlut = Math.round((p.slutPct / partnerSum) * totalPartners);
+@@ -138,11 +151,12 @@ export class NetworkGenerator {
+ 
+     // 3. Extended Network Expansion with Party Scene Loopback Dynamics
+     const loopbackRatio = ((p.partyLoopbackPct !== undefined ? p.partyLoopbackPct : 40) / 100);
++    const maxRenderDegrees = clampParam(p.nDegrees, 3, 10);
+ 
+-    if (p.previewExtended && p.nDegrees >= 2) {
++    if (p.previewExtended && maxRenderDegrees >= 2) {
+       let currentDegreeNodes = [...directPartnerNodes.map(d => ({ ...d, degree: 1 }))];
+ 
+-      for (let degree = 2; degree <= p.nDegrees; degree++) {
++      for (let degree = 2; degree <= maxRenderDegrees; degree++) {
+         if (graph.order >= maxNodes) break;
+         const nextDegreeNodes = [];
+ 
+@@ -219,7 +233,9 @@ export class NetworkGenerator {
+    */
+   calculateNetworkMetrics(graph) {
+     const p = this.params;
+-    const egoPartners = p.egoPartners;
++    // Clamp untrusted params (shared-profile URLs / imports) to safe bounds.
++    const egoPartners = clampParam(p.egoPartners, 0, 100);
++    const nDegrees = clampParam(p.nDegrees, 3, 10);
+     const loopbackRatio = ((p.partyLoopbackPct !== undefined ? p.partyLoopbackPct : 40) / 100);
+     
+     const slutRatio = p.slutPct / 100;
+@@ -236,7 +252,7 @@ export class NetworkGenerator {
+     let cumulativeTheoretical = 1;
+     const maxSubculturePoolSize = p.demographicProfile === 'sf_high_risk' ? 50000 : 500000;
+ 
+-    for (let d = 1; d <= p.nDegrees; d++) {
++    for (let d = 1; d <= nDegrees; d++) {
+       if (d === 1) {
+         const d1Count = Math.min(maxSubculturePoolSize, egoPartners);
+         theoreticalCountByDegree.push(d1Count);
+diff --git a/test/e2e-dos.test.js b/test/e2e-dos.test.js
+new file mode 100644
+index 0000000..dd449d1
+--- /dev/null
++++ b/test/e2e-dos.test.js
+@@ -0,0 +1,116 @@
++import { test, before, after } from 'node:test';
++import assert from 'node:assert/strict';
++import { execFileSync } from 'node:child_process';
++import { mkdtempSync, cpSync, rmSync, symlinkSync, existsSync, statSync, createReadStream } from 'node:fs';
++import http from 'node:http';
++import { tmpdir } from 'node:os';
++import path from 'node:path';
++import { fileURLToPath } from 'node:url';
++import { chromium } from 'playwright';
++
++const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
++
++const MIME = {
++  '.html': 'text/html; charset=utf-8',
++  '.js': 'text/javascript',
++  '.css': 'text/css',
++  '.csv': 'text/csv',
++  '.json': 'application/json',
++  '.png': 'image/png',
++  '.jpg': 'image/jpeg',
++  '.svg': 'image/svg+xml'
++};
++
++// Builds the app exactly like the project's own `npm run build`, but inside a
++// throwaway copy of the repo (the build script rewrites index.html and copies
++// fresh bundles into the repo root, so we keep the working tree clean).
++function buildApp() {
++  const tmp = mkdtempSync(path.join(tmpdir(), 'polygraph-e2e-'));
++  cpSync(ROOT, tmp, {
++    recursive: true,
++    filter: (src) => {
++      const base = path.basename(src);
++      return !['node_modules', '.git', 'assets', 'dist', 'images', 'test'].includes(base);
++    }
++  });
++  symlinkSync(path.join(ROOT, 'node_modules'), path.join(tmp, 'node_modules'));
++  execFileSync('npm', ['run', 'build'], { cwd: tmp, stdio: 'inherit', timeout: 900000 });
++  return { dir: tmp, cleanup: () => rmSync(tmp, { recursive: true, force: true }) };
++}
++
++function serveStatic(dir) {
++  const server = http.createServer((req, res) => {
++    let p = decodeURIComponent((req.url || '/').split('?')[0]);
++    if (p === '/') p = '/index.html';
++    const file = path.join(dir, path.normalize(p));
++    if (!file.startsWith(dir) || !existsSync(file) || !statSync(file).isFile()) {
++      res.writeHead(404);
++      res.end('not found');
++      return;
++    }
++    res.writeHead(200, { 'Content-Type': MIME[path.extname(file)] || 'application/octet-stream' });
++    createReadStream(file).pipe(res);
++  });
++  return new Promise((resolve) => {
++    server.listen(0, '127.0.0.1', () => {
++      resolve({
++        url: `http://127.0.0.1:${server.address().port}`,
++        close: () => new Promise((r) => server.close(r))
++      });
++    });
++  });
++}
++
++// Emulates ProfileManager.generateShareableURL(): #profile=<encodeURIComponent(btoa(json))>
++function profileFragment(params) {
++  const json = JSON.stringify({ p: params });
++  const b64 = Buffer.from(json, 'utf8').toString('base64');
++  return `#profile=${encodeURIComponent(b64)}`;
++}
++
++let app;
++let site;
++let browser;
++
++before(async () => {
++  app = buildApp();
++  site = await serveStatic(app.dir);
++  browser = await chromium.launch();
++}, { timeout: 900000 });
++
++after(async () => {
++  if (browser) await browser.close();
++  if (site) await site.close();
++  if (app) app.cleanup();
++});
++
++/**
++ * Regression test for the confirmed browser DoS (CWE-400): a shared-profile URL
++ * with egoPartners=1e15 / nDegrees=1e9 used to spin an unbounded loop on the main
++ * thread (the page never even reached DOMContentLoaded). After the fix the app
++ * must still initialize and render a bounded node count.
++ */
++test('shared-profile numeric params cannot freeze the tab (DoS regression)', async () => {
++  const page = await browser.newPage();
++  const params = {
++    egoPartners: 1e15,
++    polyculePct: 100,
++    monogamousPct: 0,
++    slutPct: 0,
++    nDegrees: 1e9,
++    maxNodesLimit: 1e9
++  };
++
++  await page.goto(site.url + '/index.html' + profileFragment(params), {
++    waitUntil: 'domcontentloaded',
++    timeout: 30000
++  });
++  await page.waitForFunction(
++    "window.polygraphApp && document.getElementById('stat-renderedNodes') && document.getElementById('stat-renderedNodes').textContent",
++    null,
++    { timeout: 25000, polling: 200 }
++  );
++  const nodes = await page.evaluate(() => Number(document.getElementById('stat-renderedNodes').textContent));
++  assert.ok(Number.isFinite(nodes) && nodes <= 2100, `rendered node count should be bounded, got ${nodes}`);
++  await page.close();
++});
+diff --git a/test/security-dos.test.js b/test/security-dos.test.js
+new file mode 100644
+index 0000000..1d2d47a
+--- /dev/null
++++ b/test/security-dos.test.js
+@@ -0,0 +1,74 @@
++import { test } from 'node:test';
++import assert from 'node:assert/strict';
++import { NetworkGenerator } from '../src/networkGenerator.js';
++
++const baseParams = {
++  demographicProfile: 'hetero_mixed',
++  egoPartners: 2,
++  monogamousPct: 32,
++  polyculePct: 100,
++  slutPct: 50,
++  polyculeSize: 7,
++  slutAvgPartners: 6,
++  sluttinessIndex: 0.86,
++  cheatingLikelihood: 10,
++  nDegrees: 3,
++  partyLoopbackPct: 40,
++  previewExtended: true,
++  condomUsageInternal: 0.0,
++  condomUsageExternal: 0.9
++};
++
++/**
++ * Regression tests for the confirmed browser DoS (CWE-400): shared-profile URL
++ * params (e.g. egoPartners=1e15) used to drive an unbounded node-creation loop in
++ * generateGraph() and a multi-million-iteration loop in calculateNetworkMetrics(),
++ * freezing the browser tab. After the fix, rendered node counts and per-degree
++ * series lengths are hard-bounded.
++ */
++test('generateGraph bounds node count for malicious shared-profile params', () => {
++  const gen = new NetworkGenerator({
++    ...baseParams,
++    // 2e6 keeps the (pre-fix) unbounded loop short enough to fail fast;
++    // 1e15 also triggers the bug but spins for hours pre-fix.
++    egoPartners: 2e6,
++    polyculePct: 100,
++    monogamousPct: 0,
++    slutPct: 0,
++    maxNodesLimit: 1e9
++  });
++  const g = gen.generateGraph();
++  assert.ok(g.order <= 2010, `rendered node count should be bounded (<=2010), got ${g.order}`);
++});
++
++test('generateGraph respects a sane maxNodesLimit cap', () => {
++  const gen = new NetworkGenerator({
++    ...baseParams,
++    egoPartners: 100,
++    slutPct: 100,
++    polyculePct: 0,
++    monogamousPct: 0,
++    slutAvgPartners: 100,
++    nDegrees: 10,
++    maxNodesLimit: 5000
++  });
++  const g = gen.generateGraph();
++  assert.ok(g.order <= 2010, `rendered node count should respect the 2000-node cap, got ${g.order}`);
++});
++
++test('calculateNetworkMetrics completes with bounded series for huge nDegrees/egoPartners', () => {
++  const gen = new NetworkGenerator({
++    ...baseParams,
++    egoPartners: 1e15,
++    nDegrees: 5e6,
++    maxNodesLimit: 1e9
++  });
++  const g = gen.generateGraph();
++  const t0 = Date.now();
++  const metrics = gen.calculateNetworkMetrics(g);
++  const elapsedMs = Date.now() - t0;
++  assert.ok(metrics.theoreticalCountByDegree.length <= 11,
++    `per-degree series should be bounded (<=11 entries), got ${metrics.theoreticalCountByDegree.length}`);
++  assert.ok(Number.isFinite(metrics.theoreticalTotalNodes));
++  assert.ok(elapsedMs < 2000, `metrics computation should be fast, took ${elapsedMs}ms`);
++});
