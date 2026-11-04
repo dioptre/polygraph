@@ -1,0 +1,349 @@
+diff --git a/package.json b/package.json
+index aa4dd69..2459a9d 100644
+--- a/package.json
++++ b/package.json
+@@ -5,6 +5,7 @@
+   "main": "index.js",
+   "scripts": {
+     "dev": "vite --host",
++    "test": "node --test test/security-xss.test.js test/e2e-security.test.js",
+     "build": "node -e \"const fs=require('fs'); let h=fs.readFileSync('index.html','utf8').replace(/src=\\\"\\.\\/assets\\/index-[^\\\"]+\\.js\\\"/g, 'src=\\\"/src/main.js\\\"'); fs.writeFileSync('index.html',h);\" && vite build && cp -r dist/assets . && cp dist/index.html .",
+     "preview": "vite preview",
+     "deploy": "npx gh-pages -d dist"
+diff --git a/src/chartsManager.js b/src/chartsManager.js
+index b517d38..f402ede 100644
+--- a/src/chartsManager.js
++++ b/src/chartsManager.js
+@@ -1,4 +1,5 @@
+ import * as echarts from 'echarts';
++import { escapeHtml } from './sanitize.js';
+ 
+ export class ChartsManager {
+   constructor() {
+@@ -368,11 +369,11 @@ export class ChartsManager {
+ 
+           return `
+             <div style="font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+-              <span>${pathogen.name}</span>
++              <span>${escapeHtml(pathogen.name)}</span>
+               ${statusBadge}
+             </div>
+             <div style="font-size: 11px; color: #94a3b8; margin-bottom: 6px;">
+-              ${pathogen.category} | ${pathogen.curable === 'Yes' || pathogen.curable?.includes('Curable') ? '💊 Curable with Antibiotics' : '🛡️ Chronic / Managed Pathogen'}
++              ${escapeHtml(pathogen.category)} | ${pathogen.curable === 'Yes' || pathogen.curable?.includes('Curable') ? '💊 Curable with Antibiotics' : '🛡️ Chronic / Managed Pathogen'}
+             </div>
+             <div style="font-size: 11px; color: #e2e8f0; font-style: italic; background: rgba(255,255,255,0.05); padding: 6px 8px; border-radius: 6px; margin-bottom: 8px; border-left: 3px solid #00f0ff;">
+               "${qualDesc}"
+@@ -387,7 +388,7 @@ export class ChartsManager {
+               🛡️ Prophylactic Barrier Avoided: <strong>-${blocked}%</strong>
+             </div>
+             <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">
+-              💊 Primary Protocol: ${pathogen.primaryTreatment || 'Standard Care'}
++              💊 Primary Protocol: ${escapeHtml(pathogen.primaryTreatment || 'Standard Care')}
+             </div>
+           `;
+         }
+@@ -446,9 +447,9 @@ export class ChartsManager {
+         confine: true,
+         extraCssText: 'z-index: 99999 !important; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px;',
+         formatter: (params) => {
+-          let html = `<strong>${params[0].name}</strong><br/>`;
++          let html = `<strong>${escapeHtml(params[0].name)}</strong><br/>`;
+           params.forEach(p => {
+-            html += `${p.marker} ${p.seriesName}: <strong>${p.value.toFixed(2)}%</strong><br/>`;
++            html += `${p.marker} ${escapeHtml(p.seriesName)}: <strong>${p.value.toFixed(2)}%</strong><br/>`;
+           });
+           return html;
+         }
+diff --git a/src/graphVisualizer.js b/src/graphVisualizer.js
+index 8175d0e..ff43eaf 100644
+--- a/src/graphVisualizer.js
++++ b/src/graphVisualizer.js
+@@ -1,5 +1,6 @@
+ import Sigma from 'sigma';
+ import forceAtlas2 from 'graphology-layout-forceatlas2';
++import { escapeHtml } from './sanitize.js';
+ 
+ /**
+  * Layouts nodes in distinct sub-network community clusters/clumps:
+@@ -249,11 +250,13 @@ export class GraphVisualizer {
+     else if (type.includes('slut')) typeColor = '#ff2a85';
+     else if (type.includes('monogamous')) typeColor = '#00ff87';
+ 
++    // Escape node attributes: labels can derive from shared-profile URL params
++    // (#profile=...) which are untrusted input (see ProfileManager.loadFromURLIfPresent).
+     this.tooltip.innerHTML = `
+-      <div style="font-weight: 700; color: ${typeColor}; font-size: 13px;">${label}</div>
+-      <div style="margin-top: 4px; color: #cbd5e1;">Type: <strong>${type.toUpperCase()}</strong></div>
+-      <div style="color: #cbd5e1;">Network Distance: <strong>Degree ${degree}</strong></div>
+-      <div style="color: #cbd5e1;">Partners Count: <strong>${partnersCount}</strong></div>
++      <div style="font-weight: 700; color: ${typeColor}; font-size: 13px;">${escapeHtml(label)}</div>
++      <div style="margin-top: 4px; color: #cbd5e1;">Type: <strong>${escapeHtml(type.toUpperCase())}</strong></div>
++      <div style="color: #cbd5e1;">Network Distance: <strong>Degree ${escapeHtml(degree)}</strong></div>
++      <div style="color: #cbd5e1;">Partners Count: <strong>${escapeHtml(partnersCount)}</strong></div>
+     `;
+ 
+     this.tooltip.style.display = 'block';
+diff --git a/src/main.js b/src/main.js
+index 1db32d5..97a745e 100644
+--- a/src/main.js
++++ b/src/main.js
+@@ -6,6 +6,7 @@ import { STIRiskCalculator } from './riskCalculator.js';
+ import { ChartsManager } from './chartsManager.js';
+ import { PartnerOptimizer } from './partnerOptimizer.js';
+ import { ProfileManager } from './profileManager.js';
++import { escapeHtml } from './sanitize.js';
+ 
+ class AppController {
+   constructor() {
+@@ -1144,13 +1145,14 @@ class AppController {
+     const tbody = document.getElementById('sti-table-body');
+     if (!tbody) return;
+ 
++    // Escape dataset fields: custom CSV uploads (parseCustomCSV) are untrusted input.
+     tbody.innerHTML = pathogens.slice(0, 15).map(p => `
+       <tr>
+-        <td><strong>${p.name}</strong></td>
+-        <td>${p.category}</td>
+-        <td>${p.curable}</td>
+-        <td>${p.sfHighRiskGroup || 'General'}</td>
+-        <td>${p.condomTypicalEfficacy}%</td>
++        <td><strong>${escapeHtml(p.name)}</strong></td>
++        <td>${escapeHtml(p.category)}</td>
++        <td>${escapeHtml(p.curable)}</td>
++        <td>${escapeHtml(p.sfHighRiskGroup || 'General')}</td>
++        <td>${escapeHtml(p.condomTypicalEfficacy)}%</td>
+       </tr>
+     `).join('');
+   }
+diff --git a/src/sanitize.js b/src/sanitize.js
+new file mode 100644
+index 0000000..6657f8a
+--- /dev/null
++++ b/src/sanitize.js
+@@ -0,0 +1,27 @@
++/**
++ * sanitize - Small HTML-escaping utilities.
++ *
++ * Values rendered into innerHTML (graph node labels derived from shared-profile
++ * URL params, CSV dataset fields, ...) must be escaped so untrusted strings
++ * cannot inject markup/scripts into the page (DOM XSS).
++ */
++const ESCAPE_MAP = {
++  '&': '&amp;',
++  '<': '&lt;',
++  '>': '&gt;',
++  '"': '&quot;',
++  "'": '&#39;',
++  '`': '&#96;'
++};
++
++/**
++ * Escapes HTML-significant characters in a value for safe interpolation into HTML.
++ * @param {*} value - Any value; converted to a string (null/undefined -> '').
++ * @returns {string} Escaped string.
++ */
++export function escapeHtml(value) {
++  if (value === null || value === undefined) return '';
++  return String(value).replace(/[&<>"'`]/g, (ch) => ESCAPE_MAP[ch]);
++}
++
++export default escapeHtml;
+diff --git a/test/e2e-security.test.js b/test/e2e-security.test.js
+new file mode 100644
+index 0000000..000cf8e
+--- /dev/null
++++ b/test/e2e-security.test.js
+@@ -0,0 +1,142 @@
++import { test, before, after } from 'node:test';
++import assert from 'node:assert/strict';
++import { execFileSync } from 'node:child_process';
++import { mkdtempSync, cpSync, rmSync, symlinkSync, existsSync, statSync, createReadStream } from 'node:fs';
++import http from 'node:http';
++import { tmpdir } from 'node:os';
++import path from 'node:path';
++import { fileURLToPath } from 'node:url';
++import { chromium } from 'playwright';
++
++const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
++
++const MIME = {
++  '.html': 'text/html; charset=utf-8',
++  '.js': 'text/javascript',
++  '.css': 'text/css',
++  '.csv': 'text/csv',
++  '.json': 'application/json',
++  '.png': 'image/png',
++  '.jpg': 'image/jpeg',
++  '.svg': 'image/svg+xml'
++};
++
++// Builds the app exactly like the project's own `npm run build`, but inside a
++// throwaway copy of the repo (the build script rewrites index.html and copies
++// fresh bundles into the repo root, so we keep the working tree clean).
++function buildApp() {
++  const tmp = mkdtempSync(path.join(tmpdir(), 'polygraph-e2e-'));
++  cpSync(ROOT, tmp, {
++    recursive: true,
++    filter: (src) => {
++      const base = path.basename(src);
++      return !['node_modules', '.git', 'assets', 'dist', 'images', 'test'].includes(base);
++    }
++  });
++  symlinkSync(path.join(ROOT, 'node_modules'), path.join(tmp, 'node_modules'));
++  execFileSync('npm', ['run', 'build'], { cwd: tmp, stdio: 'inherit', timeout: 900000 });
++  return { dir: tmp, cleanup: () => rmSync(tmp, { recursive: true, force: true }) };
++}
++
++function serveStatic(dir) {
++  const server = http.createServer((req, res) => {
++    let p = decodeURIComponent((req.url || '/').split('?')[0]);
++    if (p === '/') p = '/index.html';
++    const file = path.join(dir, path.normalize(p));
++    if (!file.startsWith(dir) || !existsSync(file) || !statSync(file).isFile()) {
++      res.writeHead(404);
++      res.end('not found');
++      return;
++    }
++    res.writeHead(200, { 'Content-Type': MIME[path.extname(file)] || 'application/octet-stream' });
++    createReadStream(file).pipe(res);
++  });
++  return new Promise((resolve) => {
++    server.listen(0, '127.0.0.1', () => {
++      resolve({
++        url: `http://127.0.0.1:${server.address().port}`,
++        close: () => new Promise((r) => server.close(r))
++      });
++    });
++  });
++}
++
++// Emulates ProfileManager.generateShareableURL(): #profile=<encodeURIComponent(btoa(json))>
++function profileFragment(params) {
++  const json = JSON.stringify({ p: params });
++  const b64 = Buffer.from(json, 'utf8').toString('base64');
++  return `#profile=${encodeURIComponent(b64)}`;
++}
++
++let app;
++let site;
++let browser;
++
++before(async () => {
++  app = buildApp();
++  site = await serveStatic(app.dir);
++  browser = await chromium.launch();
++}, { timeout: 900000 });
++
++after(async () => {
++  if (browser) await browser.close();
++  if (site) await site.close();
++  if (app) app.cleanup();
++});
++
++/**
++ * Regression test for the confirmed reflected DOM XSS (CWE-79):
++ * a shared-profile URL (#profile=...) with a hostile `slutAvgPartners` string used
++ * to inject raw HTML into the graph node tooltip innerHTML, executing script on
++ * node hover. After the fix the tooltip must escape the label and no injected
++ * element/script may run.
++ */
++test('shared-profile URL params cannot inject HTML into the graph tooltip (DOM XSS regression)', async () => {
++  const page = await browser.newPage();
++  const params = {
++    slutPct: 100,
++    polyculePct: 0,
++    monogamousPct: 0,
++    egoPartners: 3,
++    nDegrees: 2,
++    slutAvgPartners: '<img src=x onerror="window.__xss_url=1"><script>window.__xss_url2=1</script>'
++  };
++
++  await page.goto(site.url + '/index.html' + profileFragment(params), {
++    waitUntil: 'domcontentloaded',
++    timeout: 30000
++  });
++  await page.waitForFunction('window.polygraphApp !== undefined', null, { timeout: 20000 });
++  await page.waitForTimeout(1500);
++
++  const info = await page.evaluate(() => {
++    const v = window.polygraphApp.visualizer;
++    if (!v || !v.graph) return null;
++    let node = null;
++    for (const id of v.graph.nodes()) {
++      const a = v.graph.getNodeAttributes(id);
++      if (a && a.relationshipType === 'slut' && a.degree === 1) { node = id; break; }
++    }
++    if (!node) return null;
++    const vp = v.renderer.graphToViewport({
++      x: v.graph.getNodeAttribute(node, 'x'),
++      y: v.graph.getNodeAttribute(node, 'y')
++    });
++    const c = v.container.getBoundingClientRect();
++    return { x: c.left + vp.x, y: c.top + vp.y };
++  });
++  assert.ok(info, 'a degree-1 slut node must exist so the tooltip can be rendered');
++
++  await page.mouse.move(info.x, info.y, { steps: 5 });
++  await page.waitForTimeout(500);
++
++  const result = await page.evaluate(() => ({
++    marker: window.__xss_url ?? null,
++    marker2: window.__xss_url2 ?? null,
++    imgInTooltip: !!document.querySelector('#graph-tooltip img, #graph-tooltip script')
++  }));
++  assert.equal(result.marker, null, 'injected onerror handler must NOT execute');
++  assert.equal(result.marker2, null, 'injected <script> must NOT execute');
++  assert.equal(result.imgInTooltip, false, 'tooltip must NOT contain injected elements');
++  await page.close();
++});
+diff --git a/test/security-xss.test.js b/test/security-xss.test.js
+new file mode 100644
+index 0000000..f6b16ad
+--- /dev/null
++++ b/test/security-xss.test.js
+@@ -0,0 +1,44 @@
++import { test } from 'node:test';
++import assert from 'node:assert/strict';
++import { readFileSync } from 'node:fs';
++import { fileURLToPath } from 'node:url';
++import path from 'node:path';
++
++import { escapeHtml } from '../src/sanitize.js';
++
++const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
++const src = (p) => readFileSync(path.join(ROOT, p), 'utf8');
++
++test('escapeHtml escapes all HTML-significant characters', () => {
++  assert.equal(escapeHtml('<script>'), '&lt;script&gt;');
++  assert.equal(escapeHtml('a"b\'c`d&e'), 'a&quot;b&#39;c&#96;d&amp;e');
++  assert.equal(escapeHtml('<img src=x onerror=alert(1)>'),
++    '&lt;img src=x onerror=alert(1)&gt;');
++  assert.equal(escapeHtml(42), '42');
++  assert.equal(escapeHtml(null), '');
++  assert.equal(escapeHtml(undefined), '');
++});
++
++// Regression guards: the confirmed DOM XSS (CWE-79) fired because untrusted strings
++// (shared-profile URL params -> node labels; CSV fields) were interpolated raw into
++// innerHTML sinks. These assertions fail if a sink stops escaping its data.
++test('graph tooltip escapes node label/type/partners (shared-profile URL params)', () => {
++  const code = src('src/graphVisualizer.js');
++  assert.ok(code.includes('escapeHtml(label)'), 'showTooltip must escape the node label');
++  assert.ok(code.includes('escapeHtml(type.toUpperCase())'), 'showTooltip must escape the node type');
++  assert.ok(code.includes('escapeHtml(partnersCount)'), 'showTooltip must escape partnersCount');
++});
++
++test('STI raw table escapes dataset fields (custom CSV uploads)', () => {
++  const code = src('src/main.js');
++  assert.ok(code.includes('escapeHtml(p.name)'), 'populateSTIRawTable must escape p.name');
++  assert.ok(code.includes('escapeHtml(p.category)'), 'populateSTIRawTable must escape p.category');
++  assert.ok(code.includes('escapeHtml(p.curable)'), 'populateSTIRawTable must escape p.curable');
++});
++
++test('echarts HTML tooltips escape pathogen fields', () => {
++  const code = src('src/chartsManager.js');
++  assert.ok(code.includes('escapeHtml(pathogen.name)'), 'STI risk tooltip must escape pathogen.name');
++  assert.ok(code.includes('escapeHtml(pathogen.category)'), 'STI risk tooltip must escape pathogen.category');
++  assert.ok(code.includes('escapeHtml(params[0].name)'), 'longitudinal tooltip must escape series name');
++});
