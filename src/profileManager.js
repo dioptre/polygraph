@@ -1,9 +1,56 @@
 /**
  * ProfileManager - Handles Export, Import, and Shareable URL Links for PolyGraph Profiles.
  */
+// Whitelists used to sanitize untrusted profile data (share URLs, imports,
+// localStorage) before it is merged into app state. Only keys on these lists
+// are accepted, each coerced to its expected type, and dangerous prototype
+// keys are dropped. This prevents type confusion (e.g. HTML/strings where a
+// number is expected) and second-order prototype pollution via __proto__.
+const NUMERIC_PARAMS = [
+  'sessionDurationMin', 'ejaculationPct', 'fluidActsPerMonth', 'casualActsInitial',
+  'coolidgeDecayRate', 'casualActsFloor', 'pctAnalSex', 'pctVaginalSex', 'pctOralSex',
+  'pctSkinContact', 'egoPartners', 'monogamousPct', 'polyculePct', 'slutPct',
+  'polyculeSize', 'slutAvgPartners', 'sluttinessIndex', 'cheatingLikelihood', 'nDegrees',
+  'partyLoopbackPct', 'condomUsageInternal', 'condomUsageExternal', 'condomUsageCheating',
+  'newPartnersPerMonth', 'testingCadenceMonths', 'financialAccessIndex', 'maxNodesLimit'
+];
+const STRING_PARAMS = ['demographicProfile', 'exposureCurveModel'];
+const BOOL_PARAMS = ['previewExtended'];
+const BOOL_PROPHYLACTICS = ['prepActive', 'doxyPepActive', 'hpvVaccinated', 'hepBVaccinated', 'mpoxVaccinated'];
+
 export class ProfileManager {
   constructor(appController) {
     this.app = appController;
+  }
+
+  /**
+   * Returns a clean copy of an untrusted profile object, keeping only
+   * whitelisted keys coerced to their expected types. `kind` is either
+   * 'params' or 'prophylactics'.
+   */
+  sanitizeProfile(input, kind) {
+    const out = {};
+    if (!input || typeof input !== 'object') return out;
+
+    const numeric = kind === 'params' ? NUMERIC_PARAMS : [];
+    const str = kind === 'params' ? STRING_PARAMS : [];
+    const bool = kind === 'params' ? BOOL_PARAMS : BOOL_PROPHYLACTICS;
+
+    // Object.entries only enumerates own keys, so an inherited __proto__ is
+    // never copied; we also explicitly skip dangerous key names.
+    for (const [key, value] of Object.entries(input)) {
+      if (key === '__proto__' || key === 'constructor' || key === 'prototype') continue;
+      if (numeric.includes(key)) {
+        const n = Number(value);
+        if (Number.isFinite(n)) out[key] = n;
+      } else if (str.includes(key)) {
+        out[key] = String(value);
+      } else if (bool.includes(key)) {
+        out[key] = Boolean(value);
+      }
+      // Unknown keys are dropped.
+    }
+    return out;
   }
 
   /**
@@ -119,10 +166,10 @@ export class ProfileManager {
       const prophylactics = data.pr || data.prophylactics;
 
       if (params) {
-        this.app.params = { ...this.app.params, ...params };
+        this.app.params = { ...this.app.params, ...this.sanitizeProfile(params, 'params') };
       }
       if (prophylactics) {
-        this.app.prophylactics = { ...this.app.prophylactics, ...prophylactics };
+        this.app.prophylactics = { ...this.app.prophylactics, ...this.sanitizeProfile(prophylactics, 'prophylactics') };
       }
 
       this.app.currentPresetKey = 'me';
