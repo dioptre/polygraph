@@ -1,0 +1,185 @@
+From 336c6af8b5db3ab4b7d705ce7da1fff4a4a31a83 Mon Sep 17 00:00:00 2001
+From: SecOps Auditor <secops@secops.local>
+Date: Thu, 5 Nov 2026 18:41:15 +0000
+Subject: [PATCH] Fix DOM XSS (CWE-79) & prototype pollution in profile loading
+
+- graphVisualizer.showTooltip: HTML-escape node label/type/degree/partners
+  before innerHTML (attacker strings from profile params reach node labels)
+- profileManager: sanitize untrusted profile objects with a typed whitelist,
+  dropping __proto__/constructor/prototype keys and coercing types (fixes
+  second-order prototype pollution and string->number type confusion)
+- main.populateSTIRawTable: HTML-escape pathogen name/category/curable/
+  sfHighRiskGroup fields before innerHTML
+
+Verified: injected <img onerror> in slutAvgPartners no longer executes;
+__proto__ no longer pollutes app state.
+---
+ src/graphVisualizer.js | 26 +++++++++++++++------
+ src/main.js            | 21 ++++++++++++-----
+ src/profileManager.js  | 51 ++++++++++++++++++++++++++++++++++++++++--
+ 3 files changed, 84 insertions(+), 14 deletions(-)
+
+diff --git a/src/graphVisualizer.js b/src/graphVisualizer.js
+index 8175d0e..65bfa5b 100644
+--- a/src/graphVisualizer.js
++++ b/src/graphVisualizer.js
+@@ -1,6 +1,18 @@
+ import Sigma from 'sigma';
+ import forceAtlas2 from 'graphology-layout-forceatlas2';
+ 
++// Escape a value for safe interpolation into HTML. Node labels and other
++// node attributes can carry user-derived strings (e.g. profile params), so
++// never interpolate them raw into innerHTML.
++function escapeHtml(value) {
++  return String(value)
++    .replace(/&/g, '&amp;')
++    .replace(/</g, '&lt;')
++    .replace(/>/g, '&gt;')
++    .replace(/"/g, '&quot;')
++    .replace(/'/g, '&#39;');
++}
++
+ /**
+  * Layouts nodes in distinct sub-network community clusters/clumps:
+  * - Ego at center (0,0)
+@@ -239,15 +251,15 @@ export class GraphVisualizer {
+     if (!this.tooltip || !this.graph) return;
+ 
+     const attrs = this.graph.getNodeAttributes(node);
+-    const label = attrs.label || node;
+-    const type = attrs.relationshipType || 'extended';
+-    const degree = attrs.degree !== undefined ? attrs.degree : '?';
+-    const partnersCount = attrs.partnersCount || 'N/A';
++    const label = escapeHtml(attrs.label || node);
++    const type = escapeHtml(attrs.relationshipType || 'extended');
++    const degree = escapeHtml(attrs.degree !== undefined ? attrs.degree : '?');
++    const partnersCount = escapeHtml(attrs.partnersCount || 'N/A');
+ 
+     let typeColor = '#00f0ff';
+-    if (type.includes('polycule')) typeColor = '#00f0ff';
+-    else if (type.includes('slut')) typeColor = '#ff2a85';
+-    else if (type.includes('monogamous')) typeColor = '#00ff87';
++    if (String(attrs.relationshipType).includes('polycule')) typeColor = '#00f0ff';
++    else if (String(attrs.relationshipType).includes('slut')) typeColor = '#ff2a85';
++    else if (String(attrs.relationshipType).includes('monogamous')) typeColor = '#00ff87';
+ 
+     this.tooltip.innerHTML = `
+       <div style="font-weight: 700; color: ${typeColor}; font-size: 13px;">${label}</div>
+diff --git a/src/main.js b/src/main.js
+index 1db32d5..0100dad 100644
+--- a/src/main.js
++++ b/src/main.js
+@@ -7,6 +7,17 @@ import { ChartsManager } from './chartsManager.js';
+ import { PartnerOptimizer } from './partnerOptimizer.js';
+ import { ProfileManager } from './profileManager.js';
+ 
++// Escape a value for safe interpolation into HTML (pathogen fields from the
++// dataset / uploaded CSV are not trusted).
++function escapeHtml(value) {
++  return String(value ?? '')
++    .replace(/&/g, '&amp;')
++    .replace(/</g, '&lt;')
++    .replace(/>/g, '&gt;')
++    .replace(/"/g, '&quot;')
++    .replace(/'/g, '&#39;');
++}
++
+ class AppController {
+   constructor() {
+     window.polygraphApp = this;
+@@ -1146,11 +1157,11 @@ class AppController {
+ 
+     tbody.innerHTML = pathogens.slice(0, 15).map(p => `
+       <tr>
+-        <td><strong>${p.name}</strong></td>
+-        <td>${p.category}</td>
+-        <td>${p.curable}</td>
+-        <td>${p.sfHighRiskGroup || 'General'}</td>
+-        <td>${p.condomTypicalEfficacy}%</td>
++        <td><strong>${escapeHtml(p.name)}</strong></td>
++        <td>${escapeHtml(p.category)}</td>
++        <td>${escapeHtml(p.curable)}</td>
++        <td>${escapeHtml(p.sfHighRiskGroup || 'General')}</td>
++        <td>${escapeHtml(p.condomTypicalEfficacy)}%</td>
+       </tr>
+     `).join('');
+   }
+diff --git a/src/profileManager.js b/src/profileManager.js
+index 56b4907..17852cf 100644
+--- a/src/profileManager.js
++++ b/src/profileManager.js
+@@ -1,11 +1,58 @@
+ /**
+  * ProfileManager - Handles Export, Import, and Shareable URL Links for PolyGraph Profiles.
+  */
++// Whitelists used to sanitize untrusted profile data (share URLs, imports,
++// localStorage) before it is merged into app state. Only keys on these lists
++// are accepted, each coerced to its expected type, and dangerous prototype
++// keys are dropped. This prevents type confusion (e.g. HTML/strings where a
++// number is expected) and second-order prototype pollution via __proto__.
++const NUMERIC_PARAMS = [
++  'sessionDurationMin', 'ejaculationPct', 'fluidActsPerMonth', 'casualActsInitial',
++  'coolidgeDecayRate', 'casualActsFloor', 'pctAnalSex', 'pctVaginalSex', 'pctOralSex',
++  'pctSkinContact', 'egoPartners', 'monogamousPct', 'polyculePct', 'slutPct',
++  'polyculeSize', 'slutAvgPartners', 'sluttinessIndex', 'cheatingLikelihood', 'nDegrees',
++  'partyLoopbackPct', 'condomUsageInternal', 'condomUsageExternal', 'condomUsageCheating',
++  'newPartnersPerMonth', 'testingCadenceMonths', 'financialAccessIndex', 'maxNodesLimit'
++];
++const STRING_PARAMS = ['demographicProfile', 'exposureCurveModel'];
++const BOOL_PARAMS = ['previewExtended'];
++const BOOL_PROPHYLACTICS = ['prepActive', 'doxyPepActive', 'hpvVaccinated', 'hepBVaccinated', 'mpoxVaccinated'];
++
+ export class ProfileManager {
+   constructor(appController) {
+     this.app = appController;
+   }
+ 
++  /**
++   * Returns a clean copy of an untrusted profile object, keeping only
++   * whitelisted keys coerced to their expected types. `kind` is either
++   * 'params' or 'prophylactics'.
++   */
++  sanitizeProfile(input, kind) {
++    const out = {};
++    if (!input || typeof input !== 'object') return out;
++
++    const numeric = kind === 'params' ? NUMERIC_PARAMS : [];
++    const str = kind === 'params' ? STRING_PARAMS : [];
++    const bool = kind === 'params' ? BOOL_PARAMS : BOOL_PROPHYLACTICS;
++
++    // Object.entries only enumerates own keys, so an inherited __proto__ is
++    // never copied; we also explicitly skip dangerous key names.
++    for (const [key, value] of Object.entries(input)) {
++      if (key === '__proto__' || key === 'constructor' || key === 'prototype') continue;
++      if (numeric.includes(key)) {
++        const n = Number(value);
++        if (Number.isFinite(n)) out[key] = n;
++      } else if (str.includes(key)) {
++        out[key] = String(value);
++      } else if (bool.includes(key)) {
++        out[key] = Boolean(value);
++      }
++      // Unknown keys are dropped.
++    }
++    return out;
++  }
++
+   /**
+    * Generates a clean profile export payload object.
+    */
+@@ -119,10 +166,10 @@ export class ProfileManager {
+       const prophylactics = data.pr || data.prophylactics;
+ 
+       if (params) {
+-        this.app.params = { ...this.app.params, ...params };
++        this.app.params = { ...this.app.params, ...this.sanitizeProfile(params, 'params') };
+       }
+       if (prophylactics) {
+-        this.app.prophylactics = { ...this.app.prophylactics, ...prophylactics };
++        this.app.prophylactics = { ...this.app.prophylactics, ...this.sanitizeProfile(prophylactics, 'prophylactics') };
+       }
+ 
+       this.app.currentPresetKey = 'me';
+-- 
+2.53.0
+

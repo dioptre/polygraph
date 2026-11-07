@@ -1,6 +1,18 @@
 import Sigma from 'sigma';
 import forceAtlas2 from 'graphology-layout-forceatlas2';
 
+// Escape a value for safe interpolation into HTML. Node labels and other
+// node attributes can carry user-derived strings (e.g. profile params), so
+// never interpolate them raw into innerHTML.
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 /**
  * Layouts nodes in distinct sub-network community clusters/clumps:
  * - Ego at center (0,0)
@@ -239,15 +251,15 @@ export class GraphVisualizer {
     if (!this.tooltip || !this.graph) return;
 
     const attrs = this.graph.getNodeAttributes(node);
-    const label = attrs.label || node;
-    const type = attrs.relationshipType || 'extended';
-    const degree = attrs.degree !== undefined ? attrs.degree : '?';
-    const partnersCount = attrs.partnersCount || 'N/A';
+    const label = escapeHtml(attrs.label || node);
+    const type = escapeHtml(attrs.relationshipType || 'extended');
+    const degree = escapeHtml(attrs.degree !== undefined ? attrs.degree : '?');
+    const partnersCount = escapeHtml(attrs.partnersCount || 'N/A');
 
     let typeColor = '#00f0ff';
-    if (type.includes('polycule')) typeColor = '#00f0ff';
-    else if (type.includes('slut')) typeColor = '#ff2a85';
-    else if (type.includes('monogamous')) typeColor = '#00ff87';
+    if (String(attrs.relationshipType).includes('polycule')) typeColor = '#00f0ff';
+    else if (String(attrs.relationshipType).includes('slut')) typeColor = '#ff2a85';
+    else if (String(attrs.relationshipType).includes('monogamous')) typeColor = '#00ff87';
 
     this.tooltip.innerHTML = `
       <div style="font-weight: 700; color: ${typeColor}; font-size: 13px;">${label}</div>
