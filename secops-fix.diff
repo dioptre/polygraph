@@ -1,0 +1,276 @@
+diff --git a/package.json b/package.json
+index aa4dd69..6d9cdef 100644
+--- a/package.json
++++ b/package.json
+@@ -7,6 +7,7 @@
+     "dev": "vite --host",
+     "build": "node -e \"const fs=require('fs'); let h=fs.readFileSync('index.html','utf8').replace(/src=\\\"\\.\\/assets\\/index-[^\\\"]+\\.js\\\"/g, 'src=\\\"/src/main.js\\\"'); fs.writeFileSync('index.html',h);\" && vite build && cp -r dist/assets . && cp dist/index.html .",
+     "preview": "vite preview",
++    "test": "npm run build && node tests/xss-regression.mjs",
+     "deploy": "npx gh-pages -d dist"
+   },
+   "keywords": [],
+diff --git a/src/chartsManager.js b/src/chartsManager.js
+index b517d38..b66f770 100644
+--- a/src/chartsManager.js
++++ b/src/chartsManager.js
+@@ -1,4 +1,5 @@
+ import * as echarts from 'echarts';
++import { escapeHtml } from './domUtil.js';
+ 
+ export class ChartsManager {
+   constructor() {
+@@ -368,11 +369,11 @@ export class ChartsManager {
+ 
+           return `
+             <div style="font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+-              <span>${pathogen.name}</span>
++              <span>${escapeHtml(pathogen.name)}</span>
+               ${statusBadge}
+             </div>
+             <div style="font-size: 11px; color: #94a3b8; margin-bottom: 6px;">
+-              ${pathogen.category} | ${pathogen.curable === 'Yes' || pathogen.curable?.includes('Curable') ? '💊 Curable with Antibiotics' : '🛡️ Chronic / Managed Pathogen'}
++              ${escapeHtml(pathogen.category)} | ${pathogen.curable === 'Yes' || pathogen.curable?.includes('Curable') ? '💊 Curable with Antibiotics' : '🛡️ Chronic / Managed Pathogen'}
+             </div>
+             <div style="font-size: 11px; color: #e2e8f0; font-style: italic; background: rgba(255,255,255,0.05); padding: 6px 8px; border-radius: 6px; margin-bottom: 8px; border-left: 3px solid #00f0ff;">
+               "${qualDesc}"
+@@ -387,7 +388,7 @@ export class ChartsManager {
+               🛡️ Prophylactic Barrier Avoided: <strong>-${blocked}%</strong>
+             </div>
+             <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">
+-              💊 Primary Protocol: ${pathogen.primaryTreatment || 'Standard Care'}
++              💊 Primary Protocol: ${escapeHtml(pathogen.primaryTreatment || 'Standard Care')}
+             </div>
+           `;
+         }
+@@ -446,9 +447,9 @@ export class ChartsManager {
+         confine: true,
+         extraCssText: 'z-index: 99999 !important; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px;',
+         formatter: (params) => {
+-          let html = `<strong>${params[0].name}</strong><br/>`;
++          let html = `<strong>${escapeHtml(params[0].name)}</strong><br/>`;
+           params.forEach(p => {
+-            html += `${p.marker} ${p.seriesName}: <strong>${p.value.toFixed(2)}%</strong><br/>`;
++            html += `${p.marker} ${escapeHtml(p.seriesName)}: <strong>${p.value.toFixed(2)}%</strong><br/>`;
+           });
+           return html;
+         }
+diff --git a/src/domUtil.js b/src/domUtil.js
+new file mode 100644
+index 0000000..c49c127
+--- /dev/null
++++ b/src/domUtil.js
+@@ -0,0 +1,20 @@
++/**
++ * domUtil - Small DOM/HTML helpers shared across PolyGraph modules.
++ */
++
++/**
++ * Escapes a value for safe interpolation into HTML.
++ *
++ * Used wherever untrusted (user-supplied) data is written into `innerHTML`
++ * or an ECharts "html" tooltip formatter, to prevent DOM-based XSS
++ * (e.g. hostile values in a custom pathogen CSV's Pathogen_Name column).
++ */
++export function escapeHtml(value) {
++  if (value === null || value === undefined) return '';
++  return String(value)
++    .replace(/&/g, '&amp;')
++    .replace(/</g, '&lt;')
++    .replace(/>/g, '&gt;')
++    .replace(/"/g, '&quot;')
++    .replace(/'/g, '&#39;');
++}
+diff --git a/src/main.js b/src/main.js
+index 1db32d5..dc0e295 100644
+--- a/src/main.js
++++ b/src/main.js
+@@ -6,6 +6,7 @@ import { STIRiskCalculator } from './riskCalculator.js';
+ import { ChartsManager } from './chartsManager.js';
+ import { PartnerOptimizer } from './partnerOptimizer.js';
+ import { ProfileManager } from './profileManager.js';
++import { escapeHtml } from './domUtil.js';
+ 
+ class AppController {
+   constructor() {
+@@ -1146,10 +1147,10 @@ class AppController {
+ 
+     tbody.innerHTML = pathogens.slice(0, 15).map(p => `
+       <tr>
+-        <td><strong>${p.name}</strong></td>
+-        <td>${p.category}</td>
+-        <td>${p.curable}</td>
+-        <td>${p.sfHighRiskGroup || 'General'}</td>
++        <td><strong>${escapeHtml(p.name)}</strong></td>
++        <td>${escapeHtml(p.category)}</td>
++        <td>${escapeHtml(p.curable)}</td>
++        <td>${escapeHtml(p.sfHighRiskGroup) || 'General'}</td>
+         <td>${p.condomTypicalEfficacy}%</td>
+       </tr>
+     `).join('');
+diff --git a/tests/xss-regression.mjs b/tests/xss-regression.mjs
+new file mode 100644
+index 0000000..4e72d41
+--- /dev/null
++++ b/tests/xss-regression.mjs
+@@ -0,0 +1,160 @@
++/**
++ * Regression test: DOM-based XSS via custom pathogen CSV data (CWE-79).
++ *
++ * Serves the built app (run `npm run build` first / `npm test`), loads a
++ * malicious pathogen CSV through the app's #csv-file-input flow, and asserts
++ * that no script executes and that pathogen string fields are HTML-escaped in
++ * the STI reference table and the ECharts HTML tooltips.
++ *
++ * Fails on the unfixed code (window.__pwned is set, raw <img> tag in DOM).
++ */
++import http from 'node:http';
++import { readFile } from 'node:fs/promises';
++import path from 'node:path';
++import { fileURLToPath } from 'node:url';
++import { chromium } from 'playwright';
++
++const __dirname = path.dirname(fileURLToPath(import.meta.url));
++const distDir = path.join(__dirname, '..', 'dist');
++
++const MIME = {
++  '.html': 'text/html',
++  '.js': 'text/javascript',
++  '.css': 'text/css',
++  '.csv': 'text/csv',
++  '.png': 'image/png',
++  '.jpg': 'image/jpeg',
++  '.svg': 'image/svg+xml'
++};
++
++const server = http.createServer(async (req, res) => {
++  const urlPath = decodeURIComponent(req.url.split('?')[0]);
++  const filePath = path.normalize(path.join(distDir, urlPath === '/' ? 'index.html' : urlPath));
++  if (!filePath.startsWith(distDir)) {
++    res.writeHead(403);
++    res.end();
++    return;
++  }
++  try {
++    const data = await readFile(filePath);
++    res.writeHead(200, { 'Content-Type': MIME[path.extname(filePath)] || 'application/octet-stream' });
++    res.end(data);
++  } catch {
++    res.writeHead(404);
++    res.end('not found');
++  }
++});
++
++let failures = 0;
++function check(name, cond, detail = '') {
++  if (cond) {
++    console.log(`PASS: ${name}`);
++  } else {
++    failures++;
++    console.error(`FAIL: ${name} ${detail}`);
++  }
++}
++
++await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
++const port = server.address().port;
++
++// High baseline transmission values so the malicious row ranks into the
++// STI risk chart's top-8 bars (the tooltip sink under test).
++const csvPayload = [
++  'Pathogen_ID,Pathogen_Name,Pathogen_Category,Curable_Status,SF_High_Risk_Group,Primary_Treatment,Baseline_Receptive_Anal_Pct,Baseline_Insertive_Anal_Pct,Baseline_Receptive_Vaginal_Pct,Baseline_Insertive_Vaginal_Pct,Baseline_Oral_Pct,Baseline_Skin_Contact_Pct',
++  '1,<img src=x onerror="window.__pwned=1;fetch(\'/beacon?x=1\')"><script>window.__pwned_script=1</script>,Malicious Category,Curable,Attack Group,<script>window.__pwned_treatment=1</script>,100,100,100,100,100,100',
++  '2,Second Pathogen,Control,Virus,General,Standard Care,5,2,5,2,1,2'
++].join('\n');
++
++const browser = await chromium.launch();
++try {
++  const page = await browser.newPage();
++  const beacons = [];
++  page.on('request', (r) => {
++    if (r.url().includes('/beacon')) beacons.push(r.url());
++  });
++
++  // The app binds a change handler to #csv-file-input (src/main.js) before DOMContentLoaded.
++  page.addInitScript(() => {
++    document.addEventListener('DOMContentLoaded', () => {
++      const inp = document.createElement('input');
++      inp.id = 'csv-file-input';
++      inp.type = 'file';
++      document.body.appendChild(inp);
++    });
++  });
++
++  await page.goto(`http://127.0.0.1:${port}/index.html`, { waitUntil: 'networkidle' });
++  await page.waitForFunction('window.polygraphApp !== undefined');
++  await page.waitForTimeout(1500);
++
++  await page.setInputFiles('#csv-file-input', {
++    name: 'evil_pathogens.csv',
++    mimeType: 'text/csv',
++    buffer: Buffer.from(csvPayload)
++  });
++  await page.waitForTimeout(2000);
++
++  // 1. No script may execute from the uploaded CSV.
++  check('no script execution in STI table', (await page.evaluate('window.__pwned')) !== 1);
++  check('no <script> execution in table', (await page.evaluate('window.__pwned_script')) !== 1);
++  check('no outbound beacon fired', beacons.length === 0, `beacons=${JSON.stringify(beacons)}`);
++
++  // 2. STI reference table must render escaped text, not live markup.
++  const rowHtml = await page.evaluate(() => {
++    const r = document.querySelector('#sti-table-body tr');
++    return r ? r.innerHTML : '';
++  });
++  check('table row contains escaped payload', rowHtml.includes('&lt;img'));
++  check('table row has no live <img> element', (await page.evaluate(() => !!document.querySelector('#sti-table-body tr img'))) === false);
++  const rowText = await page.evaluate(() => document.querySelector('#sti-table-body tr')?.textContent || '');
++  check('table row shows literal payload text', rowText.includes('<img src=x onerror='));
++
++  // 3. ECharts HTML tooltips must be escaped.
++  const tooltipResults = await page.evaluate(() => {
++    const cm = window.polygraphApp.chartsManager;
++    const out = {};
++    if (cm.longitudinalChart) {
++      const opt = cm.longitudinalChart.getOption();
++      const fmt = opt.tooltip[0].formatter;
++      out.long = fmt([{ name: '<img src=x onerror="window.__pwned_tip=1">', value: 3.2, marker: '', seriesName: '<b>series</b>' }]);
++    }
++    if (cm.stiRiskChart) {
++      const opt = cm.stiRiskChart.getOption();
++      const fmt = opt.tooltip[0].formatter;
++      // Pathogen names live in the formatter's closure, so scan every bar to
++      // find the one backed by our malicious CSV row, then capture its output.
++      let found = '';
++      for (let i = 0; i < 40; i++) {
++        const html = String(fmt([{ dataIndex: i }]));
++        if (html.includes('__pwned')) { found = html; break; }
++      }
++      out.sti = found;
++    }
++    return out;
++  });
++  if (typeof tooltipResults.long === 'string') {
++    check('longitudinal tooltip escaped', tooltipResults.long.includes('&lt;img') && !tooltipResults.long.includes('<img'));
++    check('longitudinal tooltip seriesName escaped', !tooltipResults.long.includes('<b>series</b>'));
++  } else {
++    check('longitudinal tooltip present', false, 'longitudinalChart unavailable');
++  }
++  if (tooltipResults.sti) {
++    check('STI risk tooltip escaped', tooltipResults.sti.includes('&lt;img') && !tooltipResults.sti.includes('<img'));
++    check('STI tooltip treatment escaped', !tooltipResults.sti.includes('<script>'));
++  } else {
++    // Non-fatal: only assert when our row made it into the chart's top-N bars.
++    console.log('NOTE: STI risk tooltip check skipped (malicious row not in top-N bars)');
++  }
++
++  check('no tooltip script execution', (await page.evaluate('window.__pwned_tip')) !== 1);
++} finally {
++  await browser.close();
++  server.close();
++}
++
++if (failures > 0) {
++  console.error(`\n${failures} check(s) failed`);
++  process.exit(1);
++}
++console.log('\nAll XSS regression checks passed');

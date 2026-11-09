@@ -1,4 +1,5 @@
 import * as echarts from 'echarts';
+import { escapeHtml } from './domUtil.js';
 
 export class ChartsManager {
   constructor() {
@@ -368,11 +369,11 @@ export class ChartsManager {
 
           return `
             <div style="font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
-              <span>${pathogen.name}</span>
+              <span>${escapeHtml(pathogen.name)}</span>
               ${statusBadge}
             </div>
             <div style="font-size: 11px; color: #94a3b8; margin-bottom: 6px;">
-              ${pathogen.category} | ${pathogen.curable === 'Yes' || pathogen.curable?.includes('Curable') ? '💊 Curable with Antibiotics' : '🛡️ Chronic / Managed Pathogen'}
+              ${escapeHtml(pathogen.category)} | ${pathogen.curable === 'Yes' || pathogen.curable?.includes('Curable') ? '💊 Curable with Antibiotics' : '🛡️ Chronic / Managed Pathogen'}
             </div>
             <div style="font-size: 11px; color: #e2e8f0; font-style: italic; background: rgba(255,255,255,0.05); padding: 6px 8px; border-radius: 6px; margin-bottom: 8px; border-left: 3px solid #00f0ff;">
               "${qualDesc}"
@@ -387,7 +388,7 @@ export class ChartsManager {
               🛡️ Prophylactic Barrier Avoided: <strong>-${blocked}%</strong>
             </div>
             <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">
-              💊 Primary Protocol: ${pathogen.primaryTreatment || 'Standard Care'}
+              💊 Primary Protocol: ${escapeHtml(pathogen.primaryTreatment || 'Standard Care')}
             </div>
           `;
         }
@@ -446,9 +447,9 @@ export class ChartsManager {
         confine: true,
         extraCssText: 'z-index: 99999 !important; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 8px;',
         formatter: (params) => {
-          let html = `<strong>${params[0].name}</strong><br/>`;
+          let html = `<strong>${escapeHtml(params[0].name)}</strong><br/>`;
           params.forEach(p => {
-            html += `${p.marker} ${p.seriesName}: <strong>${p.value.toFixed(2)}%</strong><br/>`;
+            html += `${p.marker} ${escapeHtml(p.seriesName)}: <strong>${p.value.toFixed(2)}%</strong><br/>`;
           });
           return html;
         }

@@ -7,6 +7,7 @@
     "dev": "vite --host",
     "build": "node -e \"const fs=require('fs'); let h=fs.readFileSync('index.html','utf8').replace(/src=\\\"\\.\\/assets\\/index-[^\\\"]+\\.js\\\"/g, 'src=\\\"/src/main.js\\\"'); fs.writeFileSync('index.html',h);\" && vite build && cp -r dist/assets . && cp dist/index.html .",
     "preview": "vite preview",
+    "test": "npm run build && node tests/xss-regression.mjs",
     "deploy": "npx gh-pages -d dist"
   },
   "keywords": [],
